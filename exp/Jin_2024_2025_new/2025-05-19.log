@@ -1,0 +1,422 @@
+2025-05-19 09:08:17,469 - Config loaded: {'task_name': 'Jin_2024_2025', 'train_model': 'rollingtrain', 'time_period': '2024-2025', 'factor_name': 'DrJin129', 'device': 'cuda:7', 'model_type': 'AttGRU', 'input_dim': 129, 'window_size': 30, 'hidden_dim': 256, 'num_layers': 3, 'output_dim': 1, 'dropout': 0.0, 'num_heads': 4, 'seq_len': 32, 'enc_in': 312, 'dec_in': 312, 'c_out': 312, 'down_sampling_layers': 2, 'down_sampling_window': 2, 'e_layers': 2, 'down_sampling_method': 'avg', 'decomp_method': 'moving_avg', 'moving_avg': 25, 'pred_len': 1, 'd_ff': 32, 'use_norm': 0, 'learning_rate': 0.0001, 'shuffle_time': True, 'early_stop_patience': 5, 'train_epochs': 50, 'num_val_windows': 300, 'val_sample_mode': 'random', 'loss': 'MHMSE', 'pct_start': 0.2, 'lradj': 'TST', 'exp_path': '/home/hongkou/TimeSeries/exp/Jin_2024_2025_new', 'cross_train': False, 'Ding128_alb_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_label/', 'Ding128_alb_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_label/', 'Ding128_amc_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_mktcap/', 'Ding128_amc_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_mktcap/', 'Ding128_label_path': '/home/hongkou/chenx/data_warehouse/labels/', 'CY312_factor_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/factors', 'CY312_label_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/labels', 'CY312_rollinglbl_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label_align_factor', 'CY312_rollinglabel_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label', 'CY312_rollingmkt_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_market_align_factor', 'DrJin129_hal_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/factors/', 'DrJin129_all_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/allday_factors/', 'DrJin129_label_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/labels/', 'DrJin129_rollinglbl_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label_align_factor/', 'DrJin129_rollinglabel_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label/', 'DrJin129_rollingmkt_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_market_align_factor/', 'min5_factor_path': '/home/hongkou/chenx/data_warehouse/5min_factors/factors/', 'min5_label_path': '/home/hongkou/chenx/data_warehouse/5min_factors/lables/'} 
+2025-05-19 09:08:17,469 - Using device: cuda:7 
+2025-05-19 09:08:17,502 - Using model: AttGRU 
+2025-05-19 09:08:17,502 - Using criterion: mse_reg_mh(
+  (mh): multihead_loss()
+) 
+2025-05-19 09:08:34,551 - 	time_step: 100, epoch: 1 | train_loss: 1.2590503 | cval_loss: 1.2306287 | cval_ic: -0.0457 
+2025-05-19 09:08:48,040 - 	time_step: 200, epoch: 1 | train_loss: 1.2299553 | cval_loss: 1.2213564 | cval_ic: 0.0080 
+2025-05-19 09:09:00,103 - 	time_step: 300, epoch: 1 | train_loss: 1.2495131 | cval_loss: 1.2241651 | cval_ic: -0.0285 
+2025-05-19 09:09:12,341 - 	time_step: 400, epoch: 1 | train_loss: 1.2796370 | cval_loss: 1.2169504 | cval_ic: -0.0344 
+2025-05-19 09:09:24,353 - 	time_step: 500, epoch: 1 | train_loss: 1.2603638 | cval_loss: 1.1923170 | cval_ic: -0.0484 
+2025-05-19 09:09:36,372 - 	time_step: 600, epoch: 1 | train_loss: 1.2343863 | cval_loss: 1.2366208 | cval_ic: 0.0525 
+2025-05-19 09:09:48,351 - 	time_step: 700, epoch: 1 | train_loss: 1.1539160 | cval_loss: 1.2437106 | cval_ic: -0.0163 
+2025-05-19 09:10:00,257 - 	time_step: 800, epoch: 1 | train_loss: 1.2431105 | cval_loss: 1.2228991 | cval_ic: 0.0635 
+2025-05-19 09:10:12,361 - 	time_step: 900, epoch: 1 | train_loss: 1.1985809 | cval_loss: 1.2140317 | cval_ic: -0.0328 
+2025-05-19 09:10:24,530 - 	time_step: 1000, epoch: 1 | train_loss: 1.2557733 | cval_loss: 1.1618944 | cval_ic: -0.0193 
+2025-05-19 09:10:36,512 - 	time_step: 1100, epoch: 1 | train_loss: 1.2067816 | cval_loss: 1.2223728 | cval_ic: 0.0437 
+2025-05-19 09:10:48,466 - 	time_step: 1200, epoch: 1 | train_loss: 1.2256858 | cval_loss: 1.2289048 | cval_ic: 0.0005 
+2025-05-19 09:11:00,439 - 	time_step: 1300, epoch: 1 | train_loss: 1.2674587 | cval_loss: 1.2604359 | cval_ic: 0.0398 
+2025-05-19 09:11:12,445 - 	time_step: 1400, epoch: 1 | train_loss: 1.2654945 | cval_loss: 1.2192003 | cval_ic: 0.0651 
+2025-05-19 09:11:24,681 - 	time_step: 1500, epoch: 1 | train_loss: 1.1372868 | cval_loss: 1.2789812 | cval_ic: 0.0752 
+2025-05-19 09:11:36,083 - 	time_step: 1600, epoch: 1 | train_loss: 1.2385603 | cval_loss: 1.2394240 | cval_ic: 0.0454 
+2025-05-19 09:12:08,554 - Epoch: 0 | Time: 230.10s 
+2025-05-19 09:12:08,555 - Train Loss: 1.2223 | Val Loss: 1.2189 | Test Loss: 1.2224 | Val IC Mean: 0.0192| Test IC Mean: 0.0215 
+2025-05-19 09:12:08,564 - Updating learning rate to 6.349575780962964e-06 
+2025-05-19 09:12:08,571 - best model saved with test ic : 0.0215 
+2025-05-19 09:12:21,803 - 	time_step: 100, epoch: 2 | train_loss: 1.2150656 | cval_loss: 1.2449352 | cval_ic: 0.0874 
+2025-05-19 09:12:33,940 - 	time_step: 200, epoch: 2 | train_loss: 1.1713639 | cval_loss: 1.2073877 | cval_ic: 0.0611 
+2025-05-19 09:12:45,785 - 	time_step: 300, epoch: 2 | train_loss: 1.2423099 | cval_loss: 1.1756620 | cval_ic: 0.0108 
+2025-05-19 09:12:57,729 - 	time_step: 400, epoch: 2 | train_loss: 1.2559069 | cval_loss: 1.2477428 | cval_ic: 0.0738 
+2025-05-19 09:13:09,848 - 	time_step: 500, epoch: 2 | train_loss: 1.2081857 | cval_loss: 1.2406254 | cval_ic: -0.0523 
+2025-05-19 09:13:21,788 - 	time_step: 600, epoch: 2 | train_loss: 1.2448317 | cval_loss: 1.1987655 | cval_ic: 0.0883 
+2025-05-19 09:13:33,626 - 	time_step: 700, epoch: 2 | train_loss: 1.2288799 | cval_loss: 1.2034929 | cval_ic: 0.0170 
+2025-05-19 09:13:45,302 - 	time_step: 800, epoch: 2 | train_loss: 1.2205055 | cval_loss: 1.2465566 | cval_ic: 0.0321 
+2025-05-19 09:13:57,045 - 	time_step: 900, epoch: 2 | train_loss: 1.2992573 | cval_loss: 1.1954848 | cval_ic: 0.0580 
+2025-05-19 09:14:08,778 - 	time_step: 1000, epoch: 2 | train_loss: 1.2306160 | cval_loss: 1.1831837 | cval_ic: -0.0454 
+2025-05-19 09:14:20,576 - 	time_step: 1100, epoch: 2 | train_loss: 1.1978343 | cval_loss: 1.2105368 | cval_ic: -0.0095 
+2025-05-19 09:14:32,404 - 	time_step: 1200, epoch: 2 | train_loss: 1.3007001 | cval_loss: 1.1817896 | cval_ic: 0.1844 
+2025-05-19 09:14:44,244 - 	time_step: 1300, epoch: 2 | train_loss: 1.1880949 | cval_loss: 1.2303958 | cval_ic: -0.0041 
+2025-05-19 09:14:56,053 - 	time_step: 1400, epoch: 2 | train_loss: 1.1454129 | cval_loss: 1.2157432 | cval_ic: 0.0097 
+2025-05-19 09:15:07,726 - 	time_step: 1500, epoch: 2 | train_loss: 1.2031550 | cval_loss: 1.2499862 | cval_ic: 0.1092 
+2025-05-19 09:15:18,763 - 	time_step: 1600, epoch: 2 | train_loss: 1.2392515 | cval_loss: 1.2466681 | cval_ic: -0.0329 
+2025-05-19 09:15:48,670 - Epoch: 1 | Time: 220.10s 
+2025-05-19 09:15:48,670 - Train Loss: 1.2204 | Val Loss: 1.2170 | Test Loss: 1.2219 | Val IC Mean: 0.0456| Test IC Mean: 0.0399 
+2025-05-19 09:15:48,679 - Updating learning rate to 1.316828202591489e-05 
+2025-05-19 09:15:48,687 - best model saved with test ic : 0.0399 
+2025-05-19 09:16:01,403 - 	time_step: 100, epoch: 3 | train_loss: 1.1641397 | cval_loss: 1.2206794 | cval_ic: 0.0757 
+2025-05-19 09:16:13,091 - 	time_step: 200, epoch: 3 | train_loss: 1.1882279 | cval_loss: 1.2428166 | cval_ic: -0.0135 
+2025-05-19 09:16:24,878 - 	time_step: 300, epoch: 3 | train_loss: 1.1599855 | cval_loss: 1.2425120 | cval_ic: 0.1380 
+2025-05-19 09:16:36,555 - 	time_step: 400, epoch: 3 | train_loss: 1.1380086 | cval_loss: 1.2225413 | cval_ic: 0.0969 
+2025-05-19 09:16:48,275 - 	time_step: 500, epoch: 3 | train_loss: 1.2525721 | cval_loss: 1.2022775 | cval_ic: -0.0158 
+2025-05-19 09:16:59,958 - 	time_step: 600, epoch: 3 | train_loss: 1.1686044 | cval_loss: 1.1459996 | cval_ic: 0.0805 
+2025-05-19 09:17:11,710 - 	time_step: 700, epoch: 3 | train_loss: 1.2114375 | cval_loss: 1.2205329 | cval_ic: 0.1091 
+2025-05-19 09:17:23,511 - 	time_step: 800, epoch: 3 | train_loss: 1.2576282 | cval_loss: 1.2286298 | cval_ic: 0.0441 
+2025-05-19 09:17:35,247 - 	time_step: 900, epoch: 3 | train_loss: 1.1694511 | cval_loss: 1.2394288 | cval_ic: 0.0577 
+2025-05-19 09:17:47,013 - 	time_step: 1000, epoch: 3 | train_loss: 1.1819984 | cval_loss: 1.1979380 | cval_ic: 0.1077 
+2025-05-19 09:17:58,805 - 	time_step: 1100, epoch: 3 | train_loss: 1.1992267 | cval_loss: 1.2368274 | cval_ic: 0.1297 
+2025-05-19 09:18:10,455 - 	time_step: 1200, epoch: 3 | train_loss: 1.2558537 | cval_loss: 1.2123253 | cval_ic: 0.0745 
+2025-05-19 09:18:22,065 - 	time_step: 1300, epoch: 3 | train_loss: 1.2329000 | cval_loss: 1.2386220 | cval_ic: 0.1120 
+2025-05-19 09:18:33,652 - 	time_step: 1400, epoch: 3 | train_loss: 1.2334465 | cval_loss: 1.2041342 | cval_ic: 0.0170 
+2025-05-19 09:18:45,470 - 	time_step: 1500, epoch: 3 | train_loss: 1.2036357 | cval_loss: 1.2332665 | cval_ic: -0.0005 
+2025-05-19 09:18:56,610 - 	time_step: 1600, epoch: 3 | train_loss: 1.2486147 | cval_loss: 1.2535049 | cval_ic: 0.0407 
+2025-05-19 09:19:26,796 - Epoch: 2 | Time: 218.11s 
+2025-05-19 09:19:26,796 - Train Loss: 1.2181 | Val Loss: 1.2147 | Test Loss: 1.2213 | Val IC Mean: 0.0645| Test IC Mean: 0.0514 
+2025-05-19 09:19:26,805 - Updating learning rate to 2.3788574274412417e-05 
+2025-05-19 09:19:26,812 - best model saved with test ic : 0.0514 
+2025-05-19 09:19:39,798 - 	time_step: 100, epoch: 4 | train_loss: 1.2468711 | cval_loss: 1.2394794 | cval_ic: 0.0261 
+2025-05-19 09:19:51,419 - 	time_step: 200, epoch: 4 | train_loss: 1.1947955 | cval_loss: 1.2514328 | cval_ic: 0.1256 
+2025-05-19 09:20:03,221 - 	time_step: 300, epoch: 4 | train_loss: 1.1907504 | cval_loss: 1.2543416 | cval_ic: 0.0277 
+2025-05-19 09:20:14,976 - 	time_step: 400, epoch: 4 | train_loss: 1.3153293 | cval_loss: 1.2524852 | cval_ic: 0.1587 
+2025-05-19 09:20:26,702 - 	time_step: 500, epoch: 4 | train_loss: 1.2403376 | cval_loss: 1.2005236 | cval_ic: 0.0479 
+2025-05-19 09:20:38,378 - 	time_step: 600, epoch: 4 | train_loss: 1.2104684 | cval_loss: 1.2087607 | cval_ic: 0.1333 
+2025-05-19 09:20:50,086 - 	time_step: 700, epoch: 4 | train_loss: 1.2530193 | cval_loss: 1.1717061 | cval_ic: -0.0250 
+2025-05-19 09:21:01,798 - 	time_step: 800, epoch: 4 | train_loss: 1.2092160 | cval_loss: 1.2364774 | cval_ic: 0.0607 
+2025-05-19 09:21:13,531 - 	time_step: 900, epoch: 4 | train_loss: 1.2490754 | cval_loss: 1.2387655 | cval_ic: 0.1761 
+2025-05-19 09:21:25,267 - 	time_step: 1000, epoch: 4 | train_loss: 1.2016450 | cval_loss: 1.2493349 | cval_ic: 0.0495 
+2025-05-19 09:21:36,989 - 	time_step: 1100, epoch: 4 | train_loss: 1.2166811 | cval_loss: 1.1989890 | cval_ic: 0.0939 
+2025-05-19 09:21:48,693 - 	time_step: 1200, epoch: 4 | train_loss: 1.2224369 | cval_loss: 1.1888661 | cval_ic: 0.1148 
+2025-05-19 09:22:00,337 - 	time_step: 1300, epoch: 4 | train_loss: 1.2424316 | cval_loss: 1.2409415 | cval_ic: 0.1608 
+2025-05-19 09:22:12,013 - 	time_step: 1400, epoch: 4 | train_loss: 1.2303864 | cval_loss: 1.2333772 | cval_ic: 0.0924 
+2025-05-19 09:22:23,746 - 	time_step: 1500, epoch: 4 | train_loss: 1.2008352 | cval_loss: 1.2844582 | cval_ic: 0.0006 
+2025-05-19 09:22:34,842 - 	time_step: 1600, epoch: 4 | train_loss: 1.2627882 | cval_loss: 1.2753403 | cval_ic: -0.0079 
+2025-05-19 09:23:04,603 - Epoch: 3 | Time: 217.79s 
+2025-05-19 09:23:04,604 - Train Loss: 1.2153 | Val Loss: 1.2123 | Test Loss: 1.2211 | Val IC Mean: 0.0822| Test IC Mean: 0.0619 
+2025-05-19 09:23:04,612 - Updating learning rate to 3.717073663254645e-05 
+2025-05-19 09:23:04,620 - best model saved with test ic : 0.0619 
+2025-05-19 09:23:17,448 - 	time_step: 100, epoch: 5 | train_loss: 1.2508793 | cval_loss: 1.1901268 | cval_ic: 0.1266 
+2025-05-19 09:23:29,053 - 	time_step: 200, epoch: 5 | train_loss: 1.1799823 | cval_loss: 1.2024888 | cval_ic: 0.1880 
+2025-05-19 09:23:40,739 - 	time_step: 300, epoch: 5 | train_loss: 1.2052809 | cval_loss: 1.2375356 | cval_ic: 0.0251 
+2025-05-19 09:23:52,533 - 	time_step: 400, epoch: 5 | train_loss: 1.1934637 | cval_loss: 1.2569020 | cval_ic: -0.0165 
+2025-05-19 09:24:04,317 - 	time_step: 500, epoch: 5 | train_loss: 1.2705075 | cval_loss: 1.2486790 | cval_ic: 0.1446 
+2025-05-19 09:24:15,941 - 	time_step: 600, epoch: 5 | train_loss: 1.2457126 | cval_loss: 1.2160145 | cval_ic: 0.0774 
+2025-05-19 09:24:27,682 - 	time_step: 700, epoch: 5 | train_loss: 1.2393334 | cval_loss: 1.2336349 | cval_ic: 0.0736 
+2025-05-19 09:24:39,507 - 	time_step: 800, epoch: 5 | train_loss: 1.2675583 | cval_loss: 1.2160261 | cval_ic: 0.0080 
+2025-05-19 09:24:51,275 - 	time_step: 900, epoch: 5 | train_loss: 1.2311575 | cval_loss: 1.2196858 | cval_ic: -0.0634 
+2025-05-19 09:25:02,951 - 	time_step: 1000, epoch: 5 | train_loss: 1.2299340 | cval_loss: 1.1579320 | cval_ic: 0.0481 
+2025-05-19 09:25:14,800 - 	time_step: 1100, epoch: 5 | train_loss: 1.2849343 | cval_loss: 1.2337532 | cval_ic: 0.0691 
+2025-05-19 09:25:26,506 - 	time_step: 1200, epoch: 5 | train_loss: 1.2957484 | cval_loss: 1.2612884 | cval_ic: 0.0567 
+2025-05-19 09:25:38,299 - 	time_step: 1300, epoch: 5 | train_loss: 1.1726694 | cval_loss: 1.1803422 | cval_ic: 0.1467 
+2025-05-19 09:25:49,955 - 	time_step: 1400, epoch: 5 | train_loss: 1.1991346 | cval_loss: 1.2222369 | cval_ic: 0.0079 
+2025-05-19 09:26:01,609 - 	time_step: 1500, epoch: 5 | train_loss: 1.1848452 | cval_loss: 1.1964586 | cval_ic: 0.0199 
+2025-05-19 09:26:12,642 - 	time_step: 1600, epoch: 5 | train_loss: 1.2123934 | cval_loss: 1.2283843 | cval_ic: 0.0093 
+2025-05-19 09:26:42,926 - Epoch: 4 | Time: 218.31s 
+2025-05-19 09:26:42,926 - Train Loss: 1.2128 | Val Loss: 1.2110 | Test Loss: 1.2206 | Val IC Mean: 0.0795| Test IC Mean: 0.0605 
+2025-05-19 09:26:42,935 - Updating learning rate to 5.2004668909750905e-05 
+2025-05-19 09:26:56,012 - 	time_step: 100, epoch: 6 | train_loss: 1.2293837 | cval_loss: 1.2190179 | cval_ic: 0.1274 
+2025-05-19 09:27:08,390 - 	time_step: 200, epoch: 6 | train_loss: 1.1692142 | cval_loss: 1.2121058 | cval_ic: 0.1518 
+2025-05-19 09:27:21,386 - 	time_step: 300, epoch: 6 | train_loss: 1.1921436 | cval_loss: 1.2150849 | cval_ic: 0.0488 
+2025-05-19 09:27:33,723 - 	time_step: 400, epoch: 6 | train_loss: 1.2207487 | cval_loss: 1.2094260 | cval_ic: 0.1324 
+2025-05-19 09:27:46,520 - 	time_step: 500, epoch: 6 | train_loss: 1.1888084 | cval_loss: 1.1981080 | cval_ic: 0.0573 
+2025-05-19 09:27:59,196 - 	time_step: 600, epoch: 6 | train_loss: 1.1828178 | cval_loss: 1.1970023 | cval_ic: 0.0439 
+2025-05-19 09:28:11,469 - 	time_step: 700, epoch: 6 | train_loss: 1.1916313 | cval_loss: 1.2113286 | cval_ic: 0.1489 
+2025-05-19 09:28:23,794 - 	time_step: 800, epoch: 6 | train_loss: 1.2471421 | cval_loss: 1.1699528 | cval_ic: 0.1086 
+2025-05-19 09:28:36,338 - 	time_step: 900, epoch: 6 | train_loss: 1.2239324 | cval_loss: 1.2079114 | cval_ic: 0.1106 
+2025-05-19 09:28:48,500 - 	time_step: 1000, epoch: 6 | train_loss: 1.2056785 | cval_loss: 1.1360812 | cval_ic: 0.1228 
+2025-05-19 09:29:00,476 - 	time_step: 1100, epoch: 6 | train_loss: 1.1758507 | cval_loss: 1.2324502 | cval_ic: 0.0812 
+2025-05-19 09:29:12,442 - 	time_step: 1200, epoch: 6 | train_loss: 1.2440886 | cval_loss: 1.1773510 | cval_ic: 0.1151 
+2025-05-19 09:29:24,412 - 	time_step: 1300, epoch: 6 | train_loss: 1.1765205 | cval_loss: 1.2241607 | cval_ic: 0.1134 
+2025-05-19 09:29:36,229 - 	time_step: 1400, epoch: 6 | train_loss: 1.2094265 | cval_loss: 1.1582781 | cval_ic: 0.2585 
+2025-05-19 09:29:48,202 - 	time_step: 1500, epoch: 6 | train_loss: 1.2107308 | cval_loss: 1.1865630 | cval_ic: 0.1632 
+2025-05-19 09:29:59,441 - 	time_step: 1600, epoch: 6 | train_loss: 1.2198066 | cval_loss: 1.2507519 | cval_ic: 0.0197 
+2025-05-19 09:30:30,054 - Epoch: 5 | Time: 227.12s 
+2025-05-19 09:30:30,055 - Train Loss: 1.2109 | Val Loss: 1.2084 | Test Loss: 1.2200 | Val IC Mean: 0.1002| Test IC Mean: 0.0789 
+2025-05-19 09:30:30,063 - Updating learning rate to 6.683814410540228e-05 
+2025-05-19 09:30:30,070 - best model saved with test ic : 0.0789 
+2025-05-19 09:30:43,178 - 	time_step: 100, epoch: 7 | train_loss: 1.2381163 | cval_loss: 1.1944562 | cval_ic: -0.0524 
+2025-05-19 09:30:55,250 - 	time_step: 200, epoch: 7 | train_loss: 1.2723839 | cval_loss: 1.1787933 | cval_ic: 0.1175 
+2025-05-19 09:31:07,347 - 	time_step: 300, epoch: 7 | train_loss: 1.2687659 | cval_loss: 1.2450030 | cval_ic: 0.0977 
+2025-05-19 09:31:19,264 - 	time_step: 400, epoch: 7 | train_loss: 1.1782782 | cval_loss: 1.2311226 | cval_ic: 0.1824 
+2025-05-19 09:31:31,028 - 	time_step: 500, epoch: 7 | train_loss: 1.2134824 | cval_loss: 1.2194338 | cval_ic: 0.0454 
+2025-05-19 09:31:43,103 - 	time_step: 600, epoch: 7 | train_loss: 1.2111312 | cval_loss: 1.1691078 | cval_ic: 0.1844 
+2025-05-19 09:31:55,124 - 	time_step: 700, epoch: 7 | train_loss: 1.2008612 | cval_loss: 1.2153738 | cval_ic: 0.0664 
+2025-05-19 09:32:07,153 - 	time_step: 800, epoch: 7 | train_loss: 1.1771406 | cval_loss: 1.2236013 | cval_ic: 0.0787 
+2025-05-19 09:32:19,039 - 	time_step: 900, epoch: 7 | train_loss: 1.2903920 | cval_loss: 1.2709622 | cval_ic: 0.0884 
+2025-05-19 09:32:31,119 - 	time_step: 1000, epoch: 7 | train_loss: 1.2090611 | cval_loss: 1.1961703 | cval_ic: 0.1044 
+2025-05-19 09:32:42,876 - 	time_step: 1100, epoch: 7 | train_loss: 1.2108282 | cval_loss: 1.1911142 | cval_ic: 0.0787 
+2025-05-19 09:32:54,806 - 	time_step: 1200, epoch: 7 | train_loss: 1.2849667 | cval_loss: 1.2067037 | cval_ic: 0.0409 
+2025-05-19 09:33:06,671 - 	time_step: 1300, epoch: 7 | train_loss: 1.2451651 | cval_loss: 1.3252283 | cval_ic: -0.0132 
+2025-05-19 09:33:18,643 - 	time_step: 1400, epoch: 7 | train_loss: 1.2515895 | cval_loss: 1.2645953 | cval_ic: 0.1103 
+2025-05-19 09:33:30,569 - 	time_step: 1500, epoch: 7 | train_loss: 1.2227401 | cval_loss: 1.2280942 | cval_ic: 0.1312 
+2025-05-19 09:33:42,245 - 	time_step: 1600, epoch: 7 | train_loss: 1.1435194 | cval_loss: 1.1554393 | cval_ic: 0.0064 
+2025-05-19 09:34:14,362 - Epoch: 6 | Time: 224.29s 
+2025-05-19 09:34:14,362 - Train Loss: 1.2091 | Val Loss: 1.2078 | Test Loss: 1.2190 | Val IC Mean: 0.1025| Test IC Mean: 0.0820 
+2025-05-19 09:34:14,370 - Updating learning rate to 8.021897996669984e-05 
+2025-05-19 09:34:14,378 - best model saved with test ic : 0.0820 
+2025-05-19 09:34:28,017 - 	time_step: 100, epoch: 8 | train_loss: 1.2074916 | cval_loss: 1.1714028 | cval_ic: 0.2086 
+2025-05-19 09:34:39,995 - 	time_step: 200, epoch: 8 | train_loss: 1.1725391 | cval_loss: 1.2388599 | cval_ic: 0.0898 
+2025-05-19 09:34:51,970 - 	time_step: 300, epoch: 8 | train_loss: 1.2192481 | cval_loss: 1.2326422 | cval_ic: 0.1174 
+2025-05-19 09:35:03,863 - 	time_step: 400, epoch: 8 | train_loss: 1.2102764 | cval_loss: 1.2377728 | cval_ic: 0.1133 
+2025-05-19 09:35:15,727 - 	time_step: 500, epoch: 8 | train_loss: 1.2433968 | cval_loss: 1.2045602 | cval_ic: 0.1477 
+2025-05-19 09:35:27,671 - 	time_step: 600, epoch: 8 | train_loss: 1.2213433 | cval_loss: 1.2174938 | cval_ic: 0.1388 
+2025-05-19 09:35:39,509 - 	time_step: 700, epoch: 8 | train_loss: 1.2231778 | cval_loss: 1.2820814 | cval_ic: 0.0068 
+2025-05-19 09:35:51,438 - 	time_step: 800, epoch: 8 | train_loss: 1.2179588 | cval_loss: 1.2295077 | cval_ic: 0.0134 
+2025-05-19 09:36:03,368 - 	time_step: 900, epoch: 8 | train_loss: 1.2326543 | cval_loss: 1.2079973 | cval_ic: 0.1013 
+2025-05-19 09:36:15,196 - 	time_step: 1000, epoch: 8 | train_loss: 1.2075099 | cval_loss: 1.2233564 | cval_ic: 0.1592 
+2025-05-19 09:36:27,014 - 	time_step: 1100, epoch: 8 | train_loss: 1.2106040 | cval_loss: 1.2072105 | cval_ic: 0.2173 
+2025-05-19 09:36:38,875 - 	time_step: 1200, epoch: 8 | train_loss: 1.1411253 | cval_loss: 1.2561643 | cval_ic: 0.0587 
+2025-05-19 09:36:50,721 - 	time_step: 1300, epoch: 8 | train_loss: 1.2137229 | cval_loss: 1.2460879 | cval_ic: 0.0958 
+2025-05-19 09:37:02,569 - 	time_step: 1400, epoch: 8 | train_loss: 1.1572950 | cval_loss: 1.2568996 | cval_ic: 0.0680 
+2025-05-19 09:37:14,432 - 	time_step: 1500, epoch: 8 | train_loss: 1.1976255 | cval_loss: 1.1411401 | cval_ic: 0.2014 
+2025-05-19 09:37:25,650 - 	time_step: 1600, epoch: 8 | train_loss: 1.1978229 | cval_loss: 1.2294147 | cval_ic: 0.0349 
+2025-05-19 09:37:56,008 - Epoch: 7 | Time: 221.63s 
+2025-05-19 09:37:56,009 - Train Loss: 1.2075 | Val Loss: 1.2066 | Test Loss: 1.2193 | Val IC Mean: 0.1128| Test IC Mean: 0.0885 
+2025-05-19 09:37:56,017 - Updating learning rate to 9.083720616577916e-05 
+2025-05-19 09:37:56,025 - best model saved with test ic : 0.0885 
+2025-05-19 09:38:08,922 - 	time_step: 100, epoch: 9 | train_loss: 1.1941724 | cval_loss: 1.2144204 | cval_ic: 0.1710 
+2025-05-19 09:38:20,807 - 	time_step: 200, epoch: 9 | train_loss: 1.2424030 | cval_loss: 1.2132103 | cval_ic: 0.1271 
+2025-05-19 09:38:32,412 - 	time_step: 300, epoch: 9 | train_loss: 1.1569231 | cval_loss: 1.2165854 | cval_ic: 0.1112 
+2025-05-19 09:38:44,205 - 	time_step: 400, epoch: 9 | train_loss: 1.1857736 | cval_loss: 1.1660403 | cval_ic: 0.2109 
+2025-05-19 09:38:55,976 - 	time_step: 500, epoch: 9 | train_loss: 1.2326936 | cval_loss: 1.1968876 | cval_ic: 0.1827 
+2025-05-19 09:39:07,732 - 	time_step: 600, epoch: 9 | train_loss: 1.2212744 | cval_loss: 1.1361704 | cval_ic: 0.1414 
+2025-05-19 09:39:19,496 - 	time_step: 700, epoch: 9 | train_loss: 1.2006713 | cval_loss: 1.2266678 | cval_ic: 0.0312 
+2025-05-19 09:39:31,228 - 	time_step: 800, epoch: 9 | train_loss: 1.1918013 | cval_loss: 1.2476463 | cval_ic: 0.1072 
+2025-05-19 09:39:43,168 - 	time_step: 900, epoch: 9 | train_loss: 1.2436386 | cval_loss: 1.2987775 | cval_ic: 0.1020 
+2025-05-19 09:39:54,860 - 	time_step: 1000, epoch: 9 | train_loss: 1.2156373 | cval_loss: 1.1961402 | cval_ic: 0.1788 
+2025-05-19 09:40:06,602 - 	time_step: 1100, epoch: 9 | train_loss: 1.1873264 | cval_loss: 1.1863296 | cval_ic: 0.1469 
+2025-05-19 09:40:18,335 - 	time_step: 1200, epoch: 9 | train_loss: 1.2320336 | cval_loss: 1.1680925 | cval_ic: 0.1445 
+2025-05-19 09:40:30,122 - 	time_step: 1300, epoch: 9 | train_loss: 1.1566947 | cval_loss: 1.2045294 | cval_ic: 0.0085 
+2025-05-19 09:40:41,955 - 	time_step: 1400, epoch: 9 | train_loss: 1.2188299 | cval_loss: 1.2074149 | cval_ic: 0.0011 
+2025-05-19 09:40:53,886 - 	time_step: 1500, epoch: 9 | train_loss: 1.2459737 | cval_loss: 1.2073011 | cval_ic: 0.1050 
+2025-05-19 09:41:05,083 - 	time_step: 1600, epoch: 9 | train_loss: 1.1743786 | cval_loss: 1.2276654 | cval_ic: 0.0246 
+2025-05-19 09:41:35,533 - Epoch: 8 | Time: 219.51s 
+2025-05-19 09:41:35,533 - Train Loss: 1.2059 | Val Loss: 1.2054 | Test Loss: 1.2201 | Val IC Mean: 0.1162| Test IC Mean: 0.0898 
+2025-05-19 09:41:35,562 - Updating learning rate to 9.765330907288432e-05 
+2025-05-19 09:41:35,570 - best model saved with test ic : 0.0898 
+2025-05-19 09:41:48,547 - 	time_step: 100, epoch: 10 | train_loss: 1.1931016 | cval_loss: 1.2032032 | cval_ic: 0.1060 
+2025-05-19 09:42:00,231 - 	time_step: 200, epoch: 10 | train_loss: 1.2394335 | cval_loss: 1.2524657 | cval_ic: 0.0711 
+2025-05-19 09:42:11,991 - 	time_step: 300, epoch: 10 | train_loss: 1.2386935 | cval_loss: 1.1035434 | cval_ic: 0.1804 
+2025-05-19 09:42:23,747 - 	time_step: 400, epoch: 10 | train_loss: 1.1906171 | cval_loss: 1.1521866 | cval_ic: 0.1353 
+2025-05-19 09:42:35,490 - 	time_step: 500, epoch: 10 | train_loss: 1.1637626 | cval_loss: 1.2081361 | cval_ic: 0.2472 
+2025-05-19 09:42:47,289 - 	time_step: 600, epoch: 10 | train_loss: 1.2199665 | cval_loss: 1.2227210 | cval_ic: 0.1210 
+2025-05-19 09:42:59,092 - 	time_step: 700, epoch: 10 | train_loss: 1.2446630 | cval_loss: 1.1743622 | cval_ic: 0.1584 
+2025-05-19 09:43:10,840 - 	time_step: 800, epoch: 10 | train_loss: 1.1974329 | cval_loss: 1.2303802 | cval_ic: 0.0432 
+2025-05-19 09:43:22,601 - 	time_step: 900, epoch: 10 | train_loss: 1.1390835 | cval_loss: 1.1565878 | cval_ic: 0.2062 
+2025-05-19 09:43:34,381 - 	time_step: 1000, epoch: 10 | train_loss: 1.2391720 | cval_loss: 1.1966783 | cval_ic: 0.1560 
+2025-05-19 09:43:46,272 - 	time_step: 1100, epoch: 10 | train_loss: 1.2428154 | cval_loss: 1.2105310 | cval_ic: 0.0699 
+2025-05-19 09:43:58,078 - 	time_step: 1200, epoch: 10 | train_loss: 1.2204163 | cval_loss: 1.2250973 | cval_ic: 0.0431 
+2025-05-19 09:44:09,759 - 	time_step: 1300, epoch: 10 | train_loss: 1.1404214 | cval_loss: 1.2048173 | cval_ic: 0.1036 
+2025-05-19 09:44:21,565 - 	time_step: 1400, epoch: 10 | train_loss: 1.1640158 | cval_loss: 1.2245610 | cval_ic: 0.0354 
+2025-05-19 09:44:33,303 - 	time_step: 1500, epoch: 10 | train_loss: 1.1334747 | cval_loss: 1.2065229 | cval_ic: 0.0622 
+2025-05-19 09:44:44,293 - 	time_step: 1600, epoch: 10 | train_loss: 1.1892195 | cval_loss: 1.2185032 | cval_ic: 0.0350 
+2025-05-19 09:45:14,742 - Epoch: 9 | Time: 219.17s 
+2025-05-19 09:45:14,742 - Train Loss: 1.2040 | Val Loss: 1.2058 | Test Loss: 1.2211 | Val IC Mean: 0.1227| Test IC Mean: 0.0969 
+2025-05-19 09:45:14,742 - Updating learning rate to 9.999999994087476e-05 
+2025-05-19 09:45:14,751 - best model saved with test ic : 0.0969 
+2025-05-19 09:45:27,692 - 	time_step: 100, epoch: 11 | train_loss: 1.2264425 | cval_loss: 1.2293272 | cval_ic: 0.2021 
+2025-05-19 09:45:39,553 - 	time_step: 200, epoch: 11 | train_loss: 1.2781498 | cval_loss: 1.1459500 | cval_ic: 0.2025 
+2025-05-19 09:45:51,364 - 	time_step: 300, epoch: 11 | train_loss: 1.2276335 | cval_loss: 1.2096043 | cval_ic: 0.1639 
+2025-05-19 09:46:03,194 - 	time_step: 400, epoch: 11 | train_loss: 1.2545934 | cval_loss: 1.1842963 | cval_ic: 0.2070 
+2025-05-19 09:46:15,045 - 	time_step: 500, epoch: 11 | train_loss: 1.1811643 | cval_loss: 1.1607665 | cval_ic: 0.1493 
+2025-05-19 09:46:26,881 - 	time_step: 600, epoch: 11 | train_loss: 1.1890922 | cval_loss: 1.2401710 | cval_ic: 0.1043 
+2025-05-19 09:46:38,769 - 	time_step: 700, epoch: 11 | train_loss: 1.2442938 | cval_loss: 1.2637262 | cval_ic: 0.0991 
+2025-05-19 09:46:50,572 - 	time_step: 800, epoch: 11 | train_loss: 1.1846712 | cval_loss: 1.1936698 | cval_ic: 0.1589 
+2025-05-19 09:47:02,317 - 	time_step: 900, epoch: 11 | train_loss: 1.1872076 | cval_loss: 1.2086978 | cval_ic: 0.0494 
+2025-05-19 09:47:14,017 - 	time_step: 1000, epoch: 11 | train_loss: 1.2115273 | cval_loss: 1.2316312 | cval_ic: 0.0533 
+2025-05-19 09:47:25,679 - 	time_step: 1100, epoch: 11 | train_loss: 1.3013403 | cval_loss: 1.1299014 | cval_ic: 0.2885 
+2025-05-19 09:47:37,336 - 	time_step: 1200, epoch: 11 | train_loss: 1.1501176 | cval_loss: 1.1440086 | cval_ic: 0.1715 
+2025-05-19 09:47:49,035 - 	time_step: 1300, epoch: 11 | train_loss: 1.1486109 | cval_loss: 1.1631149 | cval_ic: 0.2359 
+2025-05-19 09:48:00,713 - 	time_step: 1400, epoch: 11 | train_loss: 1.1423935 | cval_loss: 1.1397288 | cval_ic: 0.2153 
+2025-05-19 09:48:12,468 - 	time_step: 1500, epoch: 11 | train_loss: 1.1114483 | cval_loss: 1.1852009 | cval_ic: 0.1848 
+2025-05-19 09:48:23,547 - 	time_step: 1600, epoch: 11 | train_loss: 1.2301015 | cval_loss: 1.2735090 | cval_ic: 0.0082 
+2025-05-19 09:48:54,299 - Epoch: 10 | Time: 219.55s 
+2025-05-19 09:48:54,299 - Train Loss: 1.2020 | Val Loss: 1.2041 | Test Loss: 1.2173 | Val IC Mean: 0.1048| Test IC Mean: 0.0724 
+2025-05-19 09:48:54,307 - Updating learning rate to 9.984567646597059e-05 
+2025-05-19 09:49:08,376 - 	time_step: 100, epoch: 12 | train_loss: 1.2291911 | cval_loss: 1.1215625 | cval_ic: 0.1778 
+2025-05-19 09:49:20,145 - 	time_step: 200, epoch: 12 | train_loss: 1.1813300 | cval_loss: 1.2137733 | cval_ic: 0.0581 
+2025-05-19 09:49:31,980 - 	time_step: 300, epoch: 12 | train_loss: 1.1883795 | cval_loss: 1.2251848 | cval_ic: 0.0960 
+2025-05-19 09:49:43,599 - 	time_step: 400, epoch: 12 | train_loss: 1.2592472 | cval_loss: 1.1602492 | cval_ic: 0.2111 
+2025-05-19 09:49:55,360 - 	time_step: 500, epoch: 12 | train_loss: 1.2277021 | cval_loss: 1.2218678 | cval_ic: 0.1411 
+2025-05-19 09:50:07,002 - 	time_step: 600, epoch: 12 | train_loss: 1.2440385 | cval_loss: 1.2015216 | cval_ic: 0.1666 
+2025-05-19 09:50:18,720 - 	time_step: 700, epoch: 12 | train_loss: 1.0744259 | cval_loss: 1.1693358 | cval_ic: 0.1968 
+2025-05-19 09:50:30,422 - 	time_step: 800, epoch: 12 | train_loss: 1.0972171 | cval_loss: 1.1137282 | cval_ic: 0.1890 
+2025-05-19 09:50:42,157 - 	time_step: 900, epoch: 12 | train_loss: 1.1953357 | cval_loss: 1.1836351 | cval_ic: 0.0986 
+2025-05-19 09:50:53,836 - 	time_step: 1000, epoch: 12 | train_loss: 1.1445162 | cval_loss: 1.1935462 | cval_ic: 0.0802 
+2025-05-19 09:51:05,524 - 	time_step: 1100, epoch: 12 | train_loss: 1.2550151 | cval_loss: 1.1802344 | cval_ic: 0.2547 
+2025-05-19 09:51:17,178 - 	time_step: 1200, epoch: 12 | train_loss: 1.2235703 | cval_loss: 1.1862123 | cval_ic: 0.0493 
+2025-05-19 09:51:28,824 - 	time_step: 1300, epoch: 12 | train_loss: 1.0926888 | cval_loss: 1.1632611 | cval_ic: 0.1904 
+2025-05-19 09:51:40,563 - 	time_step: 1400, epoch: 12 | train_loss: 1.1925757 | cval_loss: 1.1530668 | cval_ic: 0.2570 
+2025-05-19 09:51:52,198 - 	time_step: 1500, epoch: 12 | train_loss: 1.2690704 | cval_loss: 1.1804566 | cval_ic: 0.1938 
+2025-05-19 09:52:03,204 - 	time_step: 1600, epoch: 12 | train_loss: 1.1904850 | cval_loss: 1.2340240 | cval_ic: 0.0461 
+2025-05-19 09:52:33,205 - Epoch: 11 | Time: 218.90s 
+2025-05-19 09:52:33,206 - Train Loss: 1.2000 | Val Loss: 1.2020 | Test Loss: 1.2170 | Val IC Mean: 0.1224| Test IC Mean: 0.0909 
+2025-05-19 09:52:33,214 - Updating learning rate to 9.93840390533508e-05 
+2025-05-19 09:52:46,227 - 	time_step: 100, epoch: 13 | train_loss: 1.2046727 | cval_loss: 1.1604295 | cval_ic: 0.2505 
+2025-05-19 09:52:57,937 - 	time_step: 200, epoch: 13 | train_loss: 1.2942948 | cval_loss: 1.1629422 | cval_ic: 0.1586 
+2025-05-19 09:53:09,655 - 	time_step: 300, epoch: 13 | train_loss: 1.2033005 | cval_loss: 1.2283443 | cval_ic: 0.1820 
+2025-05-19 09:53:21,443 - 	time_step: 400, epoch: 13 | train_loss: 1.1998665 | cval_loss: 1.0816978 | cval_ic: 0.3851 
+2025-05-19 09:53:33,107 - 	time_step: 500, epoch: 13 | train_loss: 1.3025243 | cval_loss: 1.1623025 | cval_ic: 0.0770 
+2025-05-19 09:53:44,909 - 	time_step: 600, epoch: 13 | train_loss: 1.2273718 | cval_loss: 1.2194576 | cval_ic: 0.1137 
+2025-05-19 09:53:56,634 - 	time_step: 700, epoch: 13 | train_loss: 1.2246900 | cval_loss: 1.1843717 | cval_ic: 0.1745 
+2025-05-19 09:54:08,415 - 	time_step: 800, epoch: 13 | train_loss: 1.1915696 | cval_loss: 1.1730769 | cval_ic: 0.1208 
+2025-05-19 09:54:20,101 - 	time_step: 900, epoch: 13 | train_loss: 1.1920282 | cval_loss: 1.2998798 | cval_ic: -0.0612 
+2025-05-19 09:54:31,874 - 	time_step: 1000, epoch: 13 | train_loss: 1.1752095 | cval_loss: 1.1639068 | cval_ic: 0.1432 
+2025-05-19 09:54:43,608 - 	time_step: 1100, epoch: 13 | train_loss: 1.2047848 | cval_loss: 1.1601996 | cval_ic: 0.1521 
+2025-05-19 09:54:55,294 - 	time_step: 1200, epoch: 13 | train_loss: 1.1379369 | cval_loss: 1.1558912 | cval_ic: 0.2216 
+2025-05-19 09:55:07,047 - 	time_step: 1300, epoch: 13 | train_loss: 1.2302753 | cval_loss: 1.2294811 | cval_ic: 0.0793 
+2025-05-19 09:55:18,744 - 	time_step: 1400, epoch: 13 | train_loss: 1.1544268 | cval_loss: 1.1989594 | cval_ic: 0.1477 
+2025-05-19 09:55:30,394 - 	time_step: 1500, epoch: 13 | train_loss: 1.2125880 | cval_loss: 1.2193100 | cval_ic: 0.0750 
+2025-05-19 09:55:41,478 - 	time_step: 1600, epoch: 13 | train_loss: 1.1451076 | cval_loss: 1.1990471 | cval_ic: -0.0015 
+2025-05-19 09:56:11,710 - Epoch: 12 | Time: 218.50s 
+2025-05-19 09:56:11,710 - Train Loss: 1.1980 | Val Loss: 1.2044 | Test Loss: 1.2197 | Val IC Mean: 0.1302| Test IC Mean: 0.1040 
+2025-05-19 09:56:11,710 - Updating learning rate to 9.861793385117421e-05 
+2025-05-19 09:56:11,719 - best model saved with test ic : 0.1040 
+2025-05-19 09:56:24,730 - 	time_step: 100, epoch: 14 | train_loss: 1.2270030 | cval_loss: 1.1320046 | cval_ic: 0.1898 
+2025-05-19 09:56:36,447 - 	time_step: 200, epoch: 14 | train_loss: 1.1921092 | cval_loss: 1.2162739 | cval_ic: 0.1299 
+2025-05-19 09:56:48,033 - 	time_step: 300, epoch: 14 | train_loss: 1.1508602 | cval_loss: 1.1792471 | cval_ic: 0.0845 
+2025-05-19 09:56:59,784 - 	time_step: 400, epoch: 14 | train_loss: 1.1794949 | cval_loss: 1.1847028 | cval_ic: 0.0931 
+2025-05-19 09:57:11,467 - 	time_step: 500, epoch: 14 | train_loss: 1.1943581 | cval_loss: 1.2193549 | cval_ic: 0.2121 
+2025-05-19 09:57:23,101 - 	time_step: 600, epoch: 14 | train_loss: 1.2221639 | cval_loss: 1.2016426 | cval_ic: 0.2267 
+2025-05-19 09:57:34,732 - 	time_step: 700, epoch: 14 | train_loss: 1.2404763 | cval_loss: 1.1683844 | cval_ic: 0.2244 
+2025-05-19 09:57:46,413 - 	time_step: 800, epoch: 14 | train_loss: 1.1783841 | cval_loss: 1.2012002 | cval_ic: 0.1521 
+2025-05-19 09:57:57,998 - 	time_step: 900, epoch: 14 | train_loss: 1.2152900 | cval_loss: 1.1779610 | cval_ic: 0.1333 
+2025-05-19 09:58:09,629 - 	time_step: 1000, epoch: 14 | train_loss: 1.2314332 | cval_loss: 1.1866794 | cval_ic: 0.1107 
+2025-05-19 09:58:21,272 - 	time_step: 1100, epoch: 14 | train_loss: 1.1516931 | cval_loss: 1.1891067 | cval_ic: 0.2381 
+2025-05-19 09:58:32,931 - 	time_step: 1200, epoch: 14 | train_loss: 1.1427808 | cval_loss: 1.2095315 | cval_ic: 0.0516 
+2025-05-19 09:58:44,648 - 	time_step: 1300, epoch: 14 | train_loss: 1.2381864 | cval_loss: 1.2349052 | cval_ic: 0.0692 
+2025-05-19 09:58:56,253 - 	time_step: 1400, epoch: 14 | train_loss: 1.2416044 | cval_loss: 1.1707363 | cval_ic: 0.2018 
+2025-05-19 09:59:07,788 - 	time_step: 1500, epoch: 14 | train_loss: 1.2280927 | cval_loss: 1.1794614 | cval_ic: 0.1387 
+2025-05-19 09:59:18,797 - 	time_step: 1600, epoch: 14 | train_loss: 1.2499573 | cval_loss: 1.3059783 | cval_ic: 0.0172 
+2025-05-19 09:59:48,719 - Epoch: 13 | Time: 217.00s 
+2025-05-19 09:59:48,720 - Train Loss: 1.1961 | Val Loss: 1.2005 | Test Loss: 1.2151 | Val IC Mean: 0.1258| Test IC Mean: 0.0963 
+2025-05-19 09:59:48,728 - Updating learning rate to 9.755208415276805e-05 
+2025-05-19 10:00:01,505 - 	time_step: 100, epoch: 15 | train_loss: 1.1901332 | cval_loss: 1.1788814 | cval_ic: 0.1215 
+2025-05-19 10:00:13,199 - 	time_step: 200, epoch: 15 | train_loss: 1.1867012 | cval_loss: 1.1845206 | cval_ic: 0.1152 
+2025-05-19 10:00:24,708 - 	time_step: 300, epoch: 15 | train_loss: 1.2578877 | cval_loss: 1.1969324 | cval_ic: 0.0662 
+2025-05-19 10:00:36,381 - 	time_step: 400, epoch: 15 | train_loss: 1.1925664 | cval_loss: 1.2078516 | cval_ic: 0.1726 
+2025-05-19 10:00:47,960 - 	time_step: 500, epoch: 15 | train_loss: 1.1155055 | cval_loss: 1.2270012 | cval_ic: 0.1538 
+2025-05-19 10:00:59,654 - 	time_step: 600, epoch: 15 | train_loss: 1.2084695 | cval_loss: 1.2608124 | cval_ic: 0.1358 
+2025-05-19 10:01:11,273 - 	time_step: 700, epoch: 15 | train_loss: 1.1513851 | cval_loss: 1.1604172 | cval_ic: 0.2568 
+2025-05-19 10:01:22,902 - 	time_step: 800, epoch: 15 | train_loss: 1.2272135 | cval_loss: 1.1945744 | cval_ic: 0.1309 
+2025-05-19 10:01:34,668 - 	time_step: 900, epoch: 15 | train_loss: 1.1739053 | cval_loss: 1.1823423 | cval_ic: 0.1840 
+2025-05-19 10:01:46,375 - 	time_step: 1000, epoch: 15 | train_loss: 1.1519054 | cval_loss: 1.1796892 | cval_ic: 0.0902 
+2025-05-19 10:01:57,928 - 	time_step: 1100, epoch: 15 | train_loss: 1.1979049 | cval_loss: 1.2016617 | cval_ic: 0.1436 
+2025-05-19 10:02:09,614 - 	time_step: 1200, epoch: 15 | train_loss: 1.2002995 | cval_loss: 1.1685606 | cval_ic: 0.2185 
+2025-05-19 10:02:21,131 - 	time_step: 1300, epoch: 15 | train_loss: 1.1725410 | cval_loss: 1.1368881 | cval_ic: 0.2396 
+2025-05-19 10:02:32,767 - 	time_step: 1400, epoch: 15 | train_loss: 1.2024825 | cval_loss: 1.1412354 | cval_ic: 0.1812 
+2025-05-19 10:02:44,438 - 	time_step: 1500, epoch: 15 | train_loss: 1.2173163 | cval_loss: 1.2246041 | cval_ic: 0.1239 
+2025-05-19 10:02:55,313 - 	time_step: 1600, epoch: 15 | train_loss: 1.1743282 | cval_loss: 1.1926830 | cval_ic: 0.0254 
+2025-05-19 10:03:24,749 - Epoch: 14 | Time: 216.02s 
+2025-05-19 10:03:24,749 - Train Loss: 1.1940 | Val Loss: 1.2034 | Test Loss: 1.2224 | Val IC Mean: 0.1321| Test IC Mean: 0.1018 
+2025-05-19 10:03:24,749 - Updating learning rate to 9.619306127595402e-05 
+2025-05-19 10:03:37,477 - 	time_step: 100, epoch: 16 | train_loss: 1.2234329 | cval_loss: 1.2173213 | cval_ic: 0.0356 
+2025-05-19 10:03:49,097 - 	time_step: 200, epoch: 16 | train_loss: 1.0883067 | cval_loss: 1.1484025 | cval_ic: 0.2311 
+2025-05-19 10:04:00,602 - 	time_step: 300, epoch: 16 | train_loss: 1.2081807 | cval_loss: 1.1659167 | cval_ic: 0.2674 
+2025-05-19 10:04:12,077 - 	time_step: 400, epoch: 16 | train_loss: 1.1850971 | cval_loss: 1.2442633 | cval_ic: 0.1256 
+2025-05-19 10:04:23,617 - 	time_step: 500, epoch: 16 | train_loss: 1.2225627 | cval_loss: 1.1733204 | cval_ic: 0.1905 
+2025-05-19 10:04:35,212 - 	time_step: 600, epoch: 16 | train_loss: 1.2612001 | cval_loss: 1.1666260 | cval_ic: 0.2061 
+2025-05-19 10:04:46,802 - 	time_step: 700, epoch: 16 | train_loss: 1.2092614 | cval_loss: 1.1926417 | cval_ic: 0.1715 
+2025-05-19 10:04:58,357 - 	time_step: 800, epoch: 16 | train_loss: 1.1881754 | cval_loss: 1.1370909 | cval_ic: 0.2668 
+2025-05-19 10:05:09,962 - 	time_step: 900, epoch: 16 | train_loss: 1.1060351 | cval_loss: 1.1990259 | cval_ic: 0.1345 
+2025-05-19 10:05:21,624 - 	time_step: 1000, epoch: 16 | train_loss: 1.1653094 | cval_loss: 1.1422502 | cval_ic: 0.2561 
+2025-05-19 10:05:33,234 - 	time_step: 1100, epoch: 16 | train_loss: 1.2122016 | cval_loss: 1.2092202 | cval_ic: 0.1312 
+2025-05-19 10:05:44,876 - 	time_step: 1200, epoch: 16 | train_loss: 1.1858304 | cval_loss: 1.1583154 | cval_ic: 0.1944 
+2025-05-19 10:05:56,486 - 	time_step: 1300, epoch: 16 | train_loss: 1.2043426 | cval_loss: 1.2445201 | cval_ic: 0.1726 
+2025-05-19 10:06:08,153 - 	time_step: 1400, epoch: 16 | train_loss: 1.1486427 | cval_loss: 1.1565487 | cval_ic: 0.1302 
+2025-05-19 10:06:19,674 - 	time_step: 1500, epoch: 16 | train_loss: 1.1556436 | cval_loss: 1.1918292 | cval_ic: 0.1703 
+2025-05-19 10:06:30,623 - 	time_step: 1600, epoch: 16 | train_loss: 1.1873459 | cval_loss: 1.2730803 | cval_ic: -0.0137 
+2025-05-19 10:07:00,120 - Epoch: 15 | Time: 215.37s 
+2025-05-19 10:07:00,121 - Train Loss: 1.1918 | Val Loss: 1.2003 | Test Loss: 1.2171 | Val IC Mean: 0.1281| Test IC Mean: 0.0991 
+2025-05-19 10:07:00,129 - Updating learning rate to 9.454924404868861e-05 
+2025-05-19 10:07:12,942 - 	time_step: 100, epoch: 17 | train_loss: 1.1981316 | cval_loss: 1.1384093 | cval_ic: 0.2137 
+2025-05-19 10:07:24,424 - 	time_step: 200, epoch: 17 | train_loss: 1.2130200 | cval_loss: 1.1567857 | cval_ic: 0.1007 
+2025-05-19 10:07:36,038 - 	time_step: 300, epoch: 17 | train_loss: 1.2542388 | cval_loss: 1.1924664 | cval_ic: 0.1498 
+2025-05-19 10:07:47,615 - 	time_step: 400, epoch: 17 | train_loss: 1.2128961 | cval_loss: 1.2133070 | cval_ic: 0.0860 
+2025-05-19 10:07:59,264 - 	time_step: 500, epoch: 17 | train_loss: 1.2058773 | cval_loss: 1.1490887 | cval_ic: 0.2909 
+2025-05-19 10:08:10,948 - 	time_step: 600, epoch: 17 | train_loss: 1.2043446 | cval_loss: 1.1650246 | cval_ic: 0.2233 
+2025-05-19 10:08:22,645 - 	time_step: 700, epoch: 17 | train_loss: 1.1755601 | cval_loss: 1.1465507 | cval_ic: 0.2652 
+2025-05-19 10:08:34,255 - 	time_step: 800, epoch: 17 | train_loss: 1.2021750 | cval_loss: 1.1486046 | cval_ic: 0.1610 
+2025-05-19 10:08:45,885 - 	time_step: 900, epoch: 17 | train_loss: 1.1728776 | cval_loss: 1.1796445 | cval_ic: 0.2387 
+2025-05-19 10:08:57,423 - 	time_step: 1000, epoch: 17 | train_loss: 1.2157700 | cval_loss: 1.2400506 | cval_ic: 0.1001 
+2025-05-19 10:09:08,932 - 	time_step: 1100, epoch: 17 | train_loss: 1.2369543 | cval_loss: 1.2563299 | cval_ic: 0.0094 
+2025-05-19 10:09:20,517 - 	time_step: 1200, epoch: 17 | train_loss: 1.1899472 | cval_loss: 1.1645516 | cval_ic: 0.1180 
+2025-05-19 10:09:32,040 - 	time_step: 1300, epoch: 17 | train_loss: 1.2134775 | cval_loss: 1.1806499 | cval_ic: 0.2092 
+2025-05-19 10:09:43,613 - 	time_step: 1400, epoch: 17 | train_loss: 1.2060077 | cval_loss: 1.2345319 | cval_ic: 0.1774 
+2025-05-19 10:09:55,230 - 	time_step: 1500, epoch: 17 | train_loss: 1.2169588 | cval_loss: 1.1713805 | cval_ic: 0.2166 
+2025-05-19 10:10:06,070 - 	time_step: 1600, epoch: 17 | train_loss: 1.2394270 | cval_loss: 1.2480705 | cval_ic: -0.0164 
+2025-05-19 10:10:35,233 - Epoch: 16 | Time: 215.10s 
+2025-05-19 10:10:35,233 - Train Loss: 1.1894 | Val Loss: 1.2008 | Test Loss: 1.2161 | Val IC Mean: 0.1219| Test IC Mean: 0.0882 
+2025-05-19 10:10:35,233 - Updating learning rate to 9.263076715080263e-05 
+2025-05-19 10:10:47,962 - 	time_step: 100, epoch: 18 | train_loss: 1.0959973 | cval_loss: 1.2056221 | cval_ic: 0.1845 
+2025-05-19 10:10:59,491 - 	time_step: 200, epoch: 18 | train_loss: 1.1996660 | cval_loss: 1.1776383 | cval_ic: 0.1916 
+2025-05-19 10:11:10,969 - 	time_step: 300, epoch: 18 | train_loss: 1.1911794 | cval_loss: 1.1812671 | cval_ic: 0.1616 
+2025-05-19 10:11:22,336 - 	time_step: 400, epoch: 18 | train_loss: 1.1280621 | cval_loss: 1.2005111 | cval_ic: 0.0818 
+2025-05-19 10:11:33,763 - 	time_step: 500, epoch: 18 | train_loss: 1.2073892 | cval_loss: 1.1888077 | cval_ic: 0.2512 
+2025-05-19 10:11:45,010 - 	time_step: 600, epoch: 18 | train_loss: 1.1365100 | cval_loss: 1.2086129 | cval_ic: 0.0852 
+2025-05-19 10:11:55,460 - 	time_step: 700, epoch: 18 | train_loss: 1.1338261 | cval_loss: 1.1752783 | cval_ic: 0.2415 
+2025-05-19 10:12:06,078 - 	time_step: 800, epoch: 18 | train_loss: 1.1258432 | cval_loss: 1.1978979 | cval_ic: 0.2462 
+2025-05-19 10:12:16,658 - 	time_step: 900, epoch: 18 | train_loss: 1.2151544 | cval_loss: 1.1801941 | cval_ic: 0.1721 
+2025-05-19 10:12:27,025 - 	time_step: 1000, epoch: 18 | train_loss: 1.1631688 | cval_loss: 1.1451312 | cval_ic: 0.1669 
+2025-05-19 10:12:37,949 - 	time_step: 1100, epoch: 18 | train_loss: 1.2053022 | cval_loss: 1.2286619 | cval_ic: 0.1444 
+2025-05-19 10:12:49,180 - 	time_step: 1200, epoch: 18 | train_loss: 1.1222863 | cval_loss: 1.1637115 | cval_ic: 0.0901 
+2025-05-19 10:13:00,386 - 	time_step: 1300, epoch: 18 | train_loss: 1.2196589 | cval_loss: 1.1480365 | cval_ic: 0.2173 
+2025-05-19 10:13:11,542 - 	time_step: 1400, epoch: 18 | train_loss: 1.2481056 | cval_loss: 1.1070130 | cval_ic: 0.2951 
+2025-05-19 10:13:22,715 - 	time_step: 1500, epoch: 18 | train_loss: 1.1921537 | cval_loss: 1.2163094 | cval_ic: 0.1642 
+2025-05-19 10:13:33,460 - 	time_step: 1600, epoch: 18 | train_loss: 1.2354352 | cval_loss: 1.2956706 | cval_ic: -0.0413 
+2025-05-19 10:14:03,496 - Epoch: 17 | Time: 208.26s 
+2025-05-19 10:14:03,496 - Train Loss: 1.1873 | Val Loss: 1.2004 | Test Loss: 1.2168 | Val IC Mean: 0.1278| Test IC Mean: 0.0964 
+2025-05-19 10:14:03,496 - Updating learning rate to 9.044945863032985e-05 
+2025-05-19 10:14:14,951 - 	time_step: 100, epoch: 19 | train_loss: 1.1372409 | cval_loss: 1.1742053 | cval_ic: 0.1827 
+2025-05-19 10:14:25,350 - 	time_step: 200, epoch: 19 | train_loss: 1.2171944 | cval_loss: 1.2245135 | cval_ic: 0.1140 
+2025-05-19 10:14:35,694 - 	time_step: 300, epoch: 19 | train_loss: 1.1883457 | cval_loss: 1.2147025 | cval_ic: 0.1895 
+2025-05-19 10:14:45,863 - 	time_step: 400, epoch: 19 | train_loss: 1.1871477 | cval_loss: 1.2278763 | cval_ic: -0.0072 
+2025-05-19 10:14:57,253 - 	time_step: 500, epoch: 19 | train_loss: 1.1785783 | cval_loss: 1.2348082 | cval_ic: 0.0463 
+2025-05-19 10:15:10,011 - 	time_step: 600, epoch: 19 | train_loss: 1.1881737 | cval_loss: 1.2144638 | cval_ic: 0.1011 
+2025-05-19 10:15:23,025 - 	time_step: 700, epoch: 19 | train_loss: 1.1930130 | cval_loss: 1.1801763 | cval_ic: 0.2251 
+2025-05-19 10:15:35,877 - 	time_step: 800, epoch: 19 | train_loss: 1.1971041 | cval_loss: 1.2537110 | cval_ic: 0.1465 
+2025-05-19 10:15:48,766 - 	time_step: 900, epoch: 19 | train_loss: 1.1961347 | cval_loss: 1.1896454 | cval_ic: 0.2248 
+2025-05-19 10:16:02,203 - 	time_step: 1000, epoch: 19 | train_loss: 1.1931080 | cval_loss: 1.2370640 | cval_ic: 0.0608 
+2025-05-19 10:16:14,316 - 	time_step: 1100, epoch: 19 | train_loss: 1.1693345 | cval_loss: 1.2084483 | cval_ic: 0.1136 
+2025-05-19 10:16:25,761 - 	time_step: 1200, epoch: 19 | train_loss: 1.2073544 | cval_loss: 1.1884446 | cval_ic: 0.1476 
+2025-05-19 10:16:37,000 - 	time_step: 1300, epoch: 19 | train_loss: 1.1932304 | cval_loss: 1.1682689 | cval_ic: 0.1789 
+2025-05-19 10:16:48,250 - 	time_step: 1400, epoch: 19 | train_loss: 1.1081318 | cval_loss: 1.1813856 | cval_ic: 0.2269 
+2025-05-19 10:16:59,510 - 	time_step: 1500, epoch: 19 | train_loss: 1.1557939 | cval_loss: 1.2285808 | cval_ic: 0.1480 
+2025-05-19 10:17:10,312 - 	time_step: 1600, epoch: 19 | train_loss: 1.2048870 | cval_loss: 1.2678919 | cval_ic: 0.0104 
+2025-05-19 10:17:39,434 - Epoch: 18 | Time: 215.94s 
+2025-05-19 10:17:39,434 - Train Loss: 1.1846 | Val Loss: 1.2034 | Test Loss: 1.2217 | Val IC Mean: 0.1243| Test IC Mean: 0.0889 
+2025-05-19 10:17:39,434 - Updating learning rate to 8.801876697965768e-05 
+2025-05-19 10:17:51,817 - 	time_step: 100, epoch: 20 | train_loss: 1.1191149 | cval_loss: 1.1730750 | cval_ic: 0.2036 
+2025-05-19 10:18:03,116 - 	time_step: 200, epoch: 20 | train_loss: 1.1794649 | cval_loss: 1.2485238 | cval_ic: 0.1378 
+2025-05-19 10:18:14,393 - 	time_step: 300, epoch: 20 | train_loss: 1.1531919 | cval_loss: 1.2426994 | cval_ic: 0.1497 
+2025-05-19 10:18:25,616 - 	time_step: 400, epoch: 20 | train_loss: 1.1942937 | cval_loss: 1.2002474 | cval_ic: 0.1117 
+2025-05-19 10:18:36,844 - 	time_step: 500, epoch: 20 | train_loss: 1.2063441 | cval_loss: 1.2060347 | cval_ic: 0.1676 
+2025-05-19 10:18:48,151 - 	time_step: 600, epoch: 20 | train_loss: 1.2074456 | cval_loss: 1.1347724 | cval_ic: 0.2716 
+2025-05-19 10:18:59,428 - 	time_step: 700, epoch: 20 | train_loss: 1.1322626 | cval_loss: 1.0954669 | cval_ic: 0.1914 
+2025-05-19 10:19:10,650 - 	time_step: 800, epoch: 20 | train_loss: 1.1958948 | cval_loss: 1.2299724 | cval_ic: 0.1137 
+2025-05-19 10:19:21,845 - 	time_step: 900, epoch: 20 | train_loss: 1.2076571 | cval_loss: 1.1347129 | cval_ic: 0.2946 
+2025-05-19 10:19:33,102 - 	time_step: 1000, epoch: 20 | train_loss: 1.1906466 | cval_loss: 1.1447620 | cval_ic: 0.2468 
+2025-05-19 10:19:44,337 - 	time_step: 1100, epoch: 20 | train_loss: 1.2419450 | cval_loss: 1.2422948 | cval_ic: 0.0194 
+2025-05-19 10:19:55,706 - 	time_step: 1200, epoch: 20 | train_loss: 1.1675067 | cval_loss: 1.1013895 | cval_ic: 0.3033 
+2025-05-19 10:20:06,983 - 	time_step: 1300, epoch: 20 | train_loss: 1.2548339 | cval_loss: 1.2106411 | cval_ic: 0.1473 
+2025-05-19 10:20:18,186 - 	time_step: 1400, epoch: 20 | train_loss: 1.1726842 | cval_loss: 1.1965392 | cval_ic: 0.1968 
+2025-05-19 10:20:29,551 - 	time_step: 1500, epoch: 20 | train_loss: 1.1984525 | cval_loss: 1.2058818 | cval_ic: 0.2413 
+2025-05-19 10:20:39,779 - 	time_step: 1600, epoch: 20 | train_loss: 1.1665459 | cval_loss: 1.2852784 | cval_ic: 0.0259 
+2025-05-19 10:21:07,648 - Epoch: 19 | Time: 208.21s 
+2025-05-19 10:21:07,649 - Train Loss: 1.1820 | Val Loss: 1.2010 | Test Loss: 1.2174 | Val IC Mean: 0.1229| Test IC Mean: 0.0885 
+2025-05-19 10:21:07,649 - Updating learning rate to 8.535367822109947e-05 
+2025-05-19 10:21:19,779 - 	time_step: 100, epoch: 21 | train_loss: 1.2439193 | cval_loss: 1.1537052 | cval_ic: 0.1584 
+2025-05-19 10:21:30,867 - 	time_step: 200, epoch: 21 | train_loss: 1.1424959 | cval_loss: 1.2111311 | cval_ic: 0.2121 
+2025-05-19 10:21:44,416 - 	time_step: 300, epoch: 21 | train_loss: 1.1430147 | cval_loss: 1.2279234 | cval_ic: 0.1761 
+2025-05-19 10:21:57,966 - 	time_step: 400, epoch: 21 | train_loss: 1.1908898 | cval_loss: 1.1738198 | cval_ic: 0.1358 
+2025-05-19 10:22:10,388 - 	time_step: 500, epoch: 21 | train_loss: 1.1513199 | cval_loss: 1.2271917 | cval_ic: 0.1269 
+2025-05-19 10:22:23,628 - 	time_step: 600, epoch: 21 | train_loss: 1.1541758 | cval_loss: 1.2253463 | cval_ic: 0.1811 
+2025-05-19 10:22:36,898 - 	time_step: 700, epoch: 21 | train_loss: 1.1158223 | cval_loss: 1.2412038 | cval_ic: 0.0971 
+2025-05-19 10:22:49,381 - 	time_step: 800, epoch: 21 | train_loss: 1.1768330 | cval_loss: 1.1331170 | cval_ic: 0.2523 
+2025-05-19 10:23:00,164 - 	time_step: 900, epoch: 21 | train_loss: 1.2117903 | cval_loss: 1.1727835 | cval_ic: 0.2098 
+2025-05-19 10:23:11,084 - 	time_step: 1000, epoch: 21 | train_loss: 1.2267623 | cval_loss: 1.1565692 | cval_ic: 0.1813 
+2025-05-19 10:23:22,001 - 	time_step: 1100, epoch: 21 | train_loss: 1.1757783 | cval_loss: 1.2109084 | cval_ic: 0.1317 
+2025-05-19 10:23:32,927 - 	time_step: 1200, epoch: 21 | train_loss: 1.1938484 | cval_loss: 1.1328627 | cval_ic: 0.2227 
+2025-05-19 10:23:44,521 - 	time_step: 1300, epoch: 21 | train_loss: 1.1892600 | cval_loss: 1.1315459 | cval_ic: 0.2705 
+2025-05-19 10:23:55,861 - 	time_step: 1400, epoch: 21 | train_loss: 1.1915938 | cval_loss: 1.1916021 | cval_ic: 0.2084 
+2025-05-19 10:24:07,288 - 	time_step: 1500, epoch: 21 | train_loss: 1.1844445 | cval_loss: 1.1877788 | cval_ic: 0.2443 
+2025-05-19 10:24:18,165 - 	time_step: 1600, epoch: 21 | train_loss: 1.2215829 | cval_loss: 1.2840270 | cval_ic: -0.0106 
+2025-05-19 10:24:46,359 - Epoch: 20 | Time: 218.71s 
+2025-05-19 10:24:46,359 - Train Loss: 1.1794 | Val Loss: 1.2031 | Test Loss: 1.2199 | Val IC Mean: 0.1201| Test IC Mean: 0.0898 
+2025-05-19 10:24:46,359 - -----------Early stopping---------- 
+2025-05-19 10:24:46,367 - last model saved with test ic : 0.0898 
+2025-05-19 10:24:59,357 - GRU final model test IC: 0.0898 
+2025-05-19 10:24:59,357 - GRU pred_arr shape:(242, 3873) 
+2025-05-19 10:25:53,773 - LightGBM test IC: 0.0985 
+2025-05-19 10:26:26,337 - xgBoost test IC: 0.1017 
+2025-05-19 10:33:26,068 - catBoost test IC: 0.1019 
+2025-05-19 10:33:26,076 - gbdt_pred_arr shape:(242, 3873) 

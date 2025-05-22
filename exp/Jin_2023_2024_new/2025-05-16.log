@@ -1,0 +1,465 @@
+2025-05-16 13:38:37,759 - Config loaded: {'task_name': 'Jin_2023_2024', 'train_model': 'rollingtrain', 'time_period': '2023-2024', 'factor_name': 'DrJin129', 'device': 'cuda:6', 'model_type': 'AttGRU', 'input_dim': 129, 'window_size': 30, 'hidden_dim': 128, 'num_layers': 3, 'output_dim': 1, 'dropout': 0.0, 'num_heads': 4, 'seq_len': 32, 'enc_in': 312, 'dec_in': 312, 'c_out': 312, 'down_sampling_layers': 2, 'down_sampling_window': 2, 'e_layers': 2, 'down_sampling_method': 'avg', 'decomp_method': 'moving_avg', 'moving_avg': 25, 'pred_len': 1, 'd_ff': 32, 'use_norm': 0, 'learning_rate': 0.0001, 'shuffle_time': True, 'early_stop_patience': 5, 'train_epochs': 50, 'num_val_windows': 100, 'val_sample_mode': 'random', 'loss': 'MHMSE', 'pct_start': 0.2, 'lradj': 'cos', 'exp_path': '/home/hongkou/TimeSeries/exp/Jin_2023_2024_new', 'cross_train': False, 'Ding128_alb_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_label/', 'Ding128_alb_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_label/', 'Ding128_amc_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_mktcap/', 'Ding128_amc_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_mktcap/', 'Ding128_label_path': '/home/hongkou/chenx/data_warehouse/labels/', 'CY312_factor_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/factors', 'CY312_label_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/labels', 'CY312_rollinglbl_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label_align_factor', 'CY312_rollinglabel_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label', 'CY312_rollingmkt_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_market_align_factor', 'DrJin129_hal_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/factors/', 'DrJin129_all_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/allday_factors/', 'DrJin129_label_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/labels/', 'DrJin129_rollinglbl_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label_align_factor/', 'DrJin129_rollinglabel_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label/', 'DrJin129_rollingmkt_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_market_align_factor/', 'min5_factor_path': '/home/hongkou/chenx/data_warehouse/5min_factors/factors/', 'min5_label_path': '/home/hongkou/chenx/data_warehouse/5min_factors/lables/'} 
+2025-05-16 13:38:37,759 - Using device: cuda:6 
+2025-05-16 13:38:37,784 - Using model: AttGRU 
+2025-05-16 13:38:37,784 - Using criterion: mse_reg_mh(
+  (mh): multihead_loss()
+) 
+2025-05-16 13:59:44,067 - Config loaded: {'task_name': 'Jin_2023_2024', 'train_model': 'rollingtrain', 'time_period': '2023-2024', 'factor_name': 'DrJin129', 'device': 'cuda:4', 'model_type': 'AttGRU', 'input_dim': 129, 'window_size': 30, 'hidden_dim': 128, 'num_layers': 3, 'output_dim': 1, 'dropout': 0.0, 'num_heads': 4, 'seq_len': 32, 'enc_in': 312, 'dec_in': 312, 'c_out': 312, 'down_sampling_layers': 2, 'down_sampling_window': 2, 'e_layers': 2, 'down_sampling_method': 'avg', 'decomp_method': 'moving_avg', 'moving_avg': 25, 'pred_len': 1, 'd_ff': 32, 'use_norm': 0, 'learning_rate': 0.0001, 'shuffle_time': True, 'early_stop_patience': 5, 'train_epochs': 50, 'num_val_windows': 100, 'val_sample_mode': 'random', 'loss': 'MHMSE', 'pct_start': 0.2, 'lradj': 'cos', 'exp_path': '/home/hongkou/TimeSeries/exp/Jin_2023_2024_new', 'cross_train': False, 'Ding128_alb_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_label/', 'Ding128_alb_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_label/', 'Ding128_amc_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_mktcap/', 'Ding128_amc_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_mktcap/', 'Ding128_label_path': '/home/hongkou/chenx/data_warehouse/labels/', 'CY312_factor_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/factors', 'CY312_label_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/labels', 'CY312_rollinglbl_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label_align_factor', 'CY312_rollinglabel_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label', 'CY312_rollingmkt_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_market_align_factor', 'DrJin129_hal_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/factors/', 'DrJin129_all_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/allday_factors/', 'DrJin129_label_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/labels/', 'DrJin129_rollinglbl_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label_align_factor/', 'DrJin129_rollinglabel_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label/', 'DrJin129_rollingmkt_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_market_align_factor/', 'min5_factor_path': '/home/hongkou/chenx/data_warehouse/5min_factors/factors/', 'min5_label_path': '/home/hongkou/chenx/data_warehouse/5min_factors/lables/'} 
+2025-05-16 13:59:44,067 - Using device: cuda:4 
+2025-05-16 13:59:44,090 - Using model: AttGRU 
+2025-05-16 13:59:44,090 - Using criterion: mse_reg_mh(
+  (mh): multihead_loss()
+) 
+2025-05-16 14:24:03,205 - Config loaded: {'task_name': 'Jin_2023_2024', 'train_model': 'rollingtrain', 'time_period': '2023-2024', 'factor_name': 'DrJin129', 'device': 'cuda:5', 'model_type': 'AttGRU', 'input_dim': 129, 'window_size': 30, 'hidden_dim': 128, 'num_layers': 3, 'output_dim': 1, 'dropout': 0.0, 'num_heads': 4, 'seq_len': 32, 'enc_in': 312, 'dec_in': 312, 'c_out': 312, 'down_sampling_layers': 2, 'down_sampling_window': 2, 'e_layers': 2, 'down_sampling_method': 'avg', 'decomp_method': 'moving_avg', 'moving_avg': 25, 'pred_len': 1, 'd_ff': 32, 'use_norm': 0, 'learning_rate': 0.0001, 'shuffle_time': True, 'early_stop_patience': 3, 'train_epochs': 50, 'num_val_windows': 100, 'val_sample_mode': 'random', 'loss': 'MHMSE', 'pct_start': 0.2, 'lradj': 'cos', 'exp_path': '/home/hongkou/TimeSeries/exp/Jin_2023_2024_new', 'cross_train': False, 'Ding128_alb_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_label/', 'Ding128_alb_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_label/', 'Ding128_amc_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_mktcap/', 'Ding128_amc_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_mktcap/', 'Ding128_label_path': '/home/hongkou/chenx/data_warehouse/labels/', 'CY312_factor_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/factors', 'CY312_label_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/labels', 'CY312_rollinglbl_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label_align_factor', 'CY312_rollinglabel_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label', 'CY312_rollingmkt_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_market_align_factor', 'DrJin129_hal_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/factors/', 'DrJin129_all_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/allday_factors/', 'DrJin129_label_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/labels/', 'DrJin129_rollinglbl_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label_align_factor/', 'DrJin129_rollinglabel_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label/', 'DrJin129_rollingmkt_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_market_align_factor/', 'min5_factor_path': '/home/hongkou/chenx/data_warehouse/5min_factors/factors/', 'min5_label_path': '/home/hongkou/chenx/data_warehouse/5min_factors/lables/'} 
+2025-05-16 14:24:03,205 - Using device: cuda:5 
+2025-05-16 14:24:03,230 - Using model: AttGRU 
+2025-05-16 14:24:03,231 - Using criterion: mse_reg_mh(
+  (mh): multihead_loss()
+) 
+2025-05-16 14:32:41,754 - Config loaded: {'task_name': 'Jin_2023_2024', 'train_model': 'rollingtrain', 'time_period': '2023-2024', 'factor_name': 'DrJin129', 'device': 'cuda:6', 'model_type': 'AttGRU', 'input_dim': 129, 'window_size': 30, 'hidden_dim': 128, 'num_layers': 3, 'output_dim': 1, 'dropout': 0.0, 'num_heads': 4, 'seq_len': 32, 'enc_in': 312, 'dec_in': 312, 'c_out': 312, 'down_sampling_layers': 2, 'down_sampling_window': 2, 'e_layers': 2, 'down_sampling_method': 'avg', 'decomp_method': 'moving_avg', 'moving_avg': 25, 'pred_len': 1, 'd_ff': 32, 'use_norm': 0, 'learning_rate': 0.0001, 'shuffle_time': True, 'early_stop_patience': 3, 'train_epochs': 50, 'num_val_windows': 100, 'val_sample_mode': 'random', 'loss': 'MHMSE', 'pct_start': 0.2, 'lradj': 'cos', 'exp_path': '/home/hongkou/TimeSeries/exp/Jin_2023_2024_new', 'cross_train': False, 'Ding128_alb_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_label/', 'Ding128_alb_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_label/', 'Ding128_amc_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_mktcap/', 'Ding128_amc_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_mktcap/', 'Ding128_label_path': '/home/hongkou/chenx/data_warehouse/labels/', 'CY312_factor_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/factors', 'CY312_label_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/labels', 'CY312_rollinglbl_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label_align_factor', 'CY312_rollinglabel_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label', 'CY312_rollingmkt_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_market_align_factor', 'DrJin129_hal_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/factors/', 'DrJin129_all_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/allday_factors/', 'DrJin129_label_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/labels/', 'DrJin129_rollinglbl_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label_align_factor/', 'DrJin129_rollinglabel_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label/', 'DrJin129_rollingmkt_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_market_align_factor/', 'min5_factor_path': '/home/hongkou/chenx/data_warehouse/5min_factors/factors/', 'min5_label_path': '/home/hongkou/chenx/data_warehouse/5min_factors/lables/'} 
+2025-05-16 14:32:41,754 - Using device: cuda:6 
+2025-05-16 14:32:41,799 - Using model: AttGRU 
+2025-05-16 14:32:41,799 - Using criterion: mse_reg_mh(
+  (mh): multihead_loss()
+) 
+2025-05-16 15:45:28,712 - Config loaded: {'task_name': 'Jin_2023_2024', 'train_model': 'rollingtrain', 'time_period': '2023-2024', 'factor_name': 'DrJin129', 'device': 'cuda:4', 'model_type': 'AttGRU', 'input_dim': 129, 'window_size': 30, 'hidden_dim': 128, 'num_layers': 3, 'output_dim': 1, 'dropout': 0.0, 'num_heads': 4, 'seq_len': 32, 'enc_in': 312, 'dec_in': 312, 'c_out': 312, 'down_sampling_layers': 2, 'down_sampling_window': 2, 'e_layers': 2, 'down_sampling_method': 'avg', 'decomp_method': 'moving_avg', 'moving_avg': 25, 'pred_len': 1, 'd_ff': 32, 'use_norm': 0, 'learning_rate': 0.0001, 'shuffle_time': True, 'early_stop_patience': 3, 'train_epochs': 50, 'num_val_windows': 100, 'val_sample_mode': 'random', 'loss': 'MHMSE', 'pct_start': 0.2, 'lradj': 'TST', 'exp_path': '/home/hongkou/TimeSeries/exp/Jin_2023_2024_new', 'cross_train': False, 'Ding128_alb_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_label/', 'Ding128_alb_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_label/', 'Ding128_amc_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_mktcap/', 'Ding128_amc_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_mktcap/', 'Ding128_label_path': '/home/hongkou/chenx/data_warehouse/labels/', 'CY312_factor_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/factors', 'CY312_label_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/labels', 'CY312_rollinglbl_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label_align_factor', 'CY312_rollinglabel_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label', 'CY312_rollingmkt_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_market_align_factor', 'DrJin129_hal_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/factors/', 'DrJin129_all_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/allday_factors/', 'DrJin129_label_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/labels/', 'DrJin129_rollinglbl_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label_align_factor/', 'DrJin129_rollinglabel_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label/', 'DrJin129_rollingmkt_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_market_align_factor/', 'min5_factor_path': '/home/hongkou/chenx/data_warehouse/5min_factors/factors/', 'min5_label_path': '/home/hongkou/chenx/data_warehouse/5min_factors/lables/'} 
+2025-05-16 15:45:28,712 - Using device: cuda:4 
+2025-05-16 15:45:28,739 - Using model: AttGRU 
+2025-05-16 15:45:28,739 - Using criterion: mse_reg_mh(
+  (mh): multihead_loss()
+) 
+2025-05-16 15:48:58,186 - Config loaded: {'task_name': 'Jin_2023_2024', 'train_model': 'rollingtrain', 'time_period': '2023-2024', 'factor_name': 'DrJin129', 'device': 'cuda:4', 'model_type': 'AttGRU', 'input_dim': 129, 'window_size': 30, 'hidden_dim': 128, 'num_layers': 3, 'output_dim': 1, 'dropout': 0.0, 'num_heads': 4, 'seq_len': 32, 'enc_in': 312, 'dec_in': 312, 'c_out': 312, 'down_sampling_layers': 2, 'down_sampling_window': 2, 'e_layers': 2, 'down_sampling_method': 'avg', 'decomp_method': 'moving_avg', 'moving_avg': 25, 'pred_len': 1, 'd_ff': 32, 'use_norm': 0, 'learning_rate': 0.0001, 'shuffle_time': True, 'early_stop_patience': 3, 'train_epochs': 50, 'num_val_windows': 100, 'val_sample_mode': 'random', 'loss': 'MHMSE', 'pct_start': 0.2, 'lradj': 'TST', 'exp_path': '/home/hongkou/TimeSeries/exp/Jin_2023_2024_new', 'cross_train': False, 'Ding128_alb_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_label/', 'Ding128_alb_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_label/', 'Ding128_amc_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_mktcap/', 'Ding128_amc_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_mktcap/', 'Ding128_label_path': '/home/hongkou/chenx/data_warehouse/labels/', 'CY312_factor_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/factors', 'CY312_label_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/labels', 'CY312_rollinglbl_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label_align_factor', 'CY312_rollinglabel_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label', 'CY312_rollingmkt_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_market_align_factor', 'DrJin129_hal_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/factors/', 'DrJin129_all_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/allday_factors/', 'DrJin129_label_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/labels/', 'DrJin129_rollinglbl_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label_align_factor/', 'DrJin129_rollinglabel_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label/', 'DrJin129_rollingmkt_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_market_align_factor/', 'min5_factor_path': '/home/hongkou/chenx/data_warehouse/5min_factors/factors/', 'min5_label_path': '/home/hongkou/chenx/data_warehouse/5min_factors/lables/'} 
+2025-05-16 15:48:58,187 - Using device: cuda:4 
+2025-05-16 15:48:58,212 - Using model: AttGRU 
+2025-05-16 15:48:58,212 - Using criterion: mse_reg_mh(
+  (mh): multihead_loss()
+) 
+2025-05-16 15:56:16,344 - Config loaded: {'task_name': 'Jin_2023_2024', 'train_model': 'rollingtrain', 'time_period': '2023-2024', 'factor_name': 'DrJin129', 'device': 'cuda:4', 'model_type': 'AttGRU', 'input_dim': 129, 'window_size': 30, 'hidden_dim': 128, 'num_layers': 3, 'output_dim': 1, 'dropout': 0.0, 'num_heads': 4, 'seq_len': 32, 'enc_in': 312, 'dec_in': 312, 'c_out': 312, 'down_sampling_layers': 2, 'down_sampling_window': 2, 'e_layers': 2, 'down_sampling_method': 'avg', 'decomp_method': 'moving_avg', 'moving_avg': 25, 'pred_len': 1, 'd_ff': 32, 'use_norm': 0, 'learning_rate': 0.0001, 'shuffle_time': True, 'early_stop_patience': 3, 'train_epochs': 50, 'num_val_windows': 300, 'val_sample_mode': 'random', 'loss': 'MHMSE', 'pct_start': 0.2, 'lradj': 'TST', 'exp_path': '/home/hongkou/TimeSeries/exp/Jin_2023_2024_new', 'cross_train': False, 'Ding128_alb_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_label/', 'Ding128_alb_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_label/', 'Ding128_amc_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_mktcap/', 'Ding128_amc_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_mktcap/', 'Ding128_label_path': '/home/hongkou/chenx/data_warehouse/labels/', 'CY312_factor_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/factors', 'CY312_label_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/labels', 'CY312_rollinglbl_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label_align_factor', 'CY312_rollinglabel_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label', 'CY312_rollingmkt_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_market_align_factor', 'DrJin129_hal_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/factors/', 'DrJin129_all_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/allday_factors/', 'DrJin129_label_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/labels/', 'DrJin129_rollinglbl_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label_align_factor/', 'DrJin129_rollinglabel_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label/', 'DrJin129_rollingmkt_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_market_align_factor/', 'min5_factor_path': '/home/hongkou/chenx/data_warehouse/5min_factors/factors/', 'min5_label_path': '/home/hongkou/chenx/data_warehouse/5min_factors/lables/'} 
+2025-05-16 15:56:16,344 - Using device: cuda:4 
+2025-05-16 15:56:16,366 - Using model: AttGRU 
+2025-05-16 15:56:16,367 - Using criterion: mse_reg_mh(
+  (mh): multihead_loss()
+) 
+2025-05-16 16:21:49,095 - Config loaded: {'task_name': 'Jin_2023_2024', 'train_model': 'rollingtrain', 'time_period': '2023-2024', 'factor_name': 'DrJin129', 'device': 'cuda:1', 'model_type': 'AttGRU', 'input_dim': 129, 'window_size': 30, 'hidden_dim': 128, 'num_layers': 3, 'output_dim': 1, 'dropout': 0.0, 'num_heads': 4, 'seq_len': 32, 'enc_in': 312, 'dec_in': 312, 'c_out': 312, 'down_sampling_layers': 2, 'down_sampling_window': 2, 'e_layers': 2, 'down_sampling_method': 'avg', 'decomp_method': 'moving_avg', 'moving_avg': 25, 'pred_len': 1, 'd_ff': 32, 'use_norm': 0, 'learning_rate': 0.0001, 'shuffle_time': True, 'early_stop_patience': 3, 'train_epochs': 50, 'num_val_windows': 300, 'val_sample_mode': 'random', 'loss': 'MHMSE', 'pct_start': 0.2, 'lradj': 'TST', 'exp_path': '/home/hongkou/TimeSeries/exp/Jin_2023_2024_new', 'cross_train': False, 'Ding128_alb_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_label/', 'Ding128_alb_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_label/', 'Ding128_amc_inner_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/align_with_mktcap/', 'Ding128_amc_outer_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/Ding_factors/factors_outer/align_with_mktcap/', 'Ding128_label_path': '/home/hongkou/chenx/data_warehouse/labels/', 'CY312_factor_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/factors', 'CY312_label_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/labels', 'CY312_rollinglbl_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label_align_factor', 'CY312_rollinglabel_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_label', 'CY312_rollingmkt_align_path': '/home/hongkou/chenx/data_warehouse/CY_1430_factors/r_market_align_factor', 'DrJin129_hal_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/factors/', 'DrJin129_all_factor_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/allday_factors/', 'DrJin129_label_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors/labels/', 'DrJin129_rollinglbl_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label_align_factor/', 'DrJin129_rollinglabel_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_label/', 'DrJin129_rollingmkt_align_path': '/home/USB_DRIVE3/data_CX/chenx/data_warehouse/DrJin_factors_new/r_market_align_factor/', 'min5_factor_path': '/home/hongkou/chenx/data_warehouse/5min_factors/factors/', 'min5_label_path': '/home/hongkou/chenx/data_warehouse/5min_factors/lables/'} 
+2025-05-16 16:21:49,095 - Using device: cuda:1 
+2025-05-16 16:21:49,121 - Using model: AttGRU 
+2025-05-16 16:21:49,121 - Using criterion: mse_reg_mh(
+  (mh): multihead_loss()
+) 
+2025-05-16 16:22:03,121 - 	time_step: 100, epoch: 1 | train_loss: 1.1895845 | cval_loss: 1.1776465 | cval_ic: -0.0244 
+2025-05-16 16:22:13,707 - 	time_step: 200, epoch: 1 | train_loss: 1.1881697 | cval_loss: 1.2036301 | cval_ic: 0.0131 
+2025-05-16 16:22:24,441 - 	time_step: 300, epoch: 1 | train_loss: 1.2200762 | cval_loss: 1.2276772 | cval_ic: 0.0525 
+2025-05-16 16:22:35,210 - 	time_step: 400, epoch: 1 | train_loss: 1.2537482 | cval_loss: 1.1892512 | cval_ic: -0.0539 
+2025-05-16 16:22:46,001 - 	time_step: 500, epoch: 1 | train_loss: 1.2509197 | cval_loss: 1.2246329 | cval_ic: 0.0215 
+2025-05-16 16:22:56,816 - 	time_step: 600, epoch: 1 | train_loss: 1.2167075 | cval_loss: 1.2284627 | cval_ic: -0.0644 
+2025-05-16 16:23:07,676 - 	time_step: 700, epoch: 1 | train_loss: 1.2106314 | cval_loss: 1.2304475 | cval_ic: -0.0825 
+2025-05-16 16:23:18,399 - 	time_step: 800, epoch: 1 | train_loss: 1.2461067 | cval_loss: 1.2274656 | cval_ic: -0.0182 
+2025-05-16 16:23:29,155 - 	time_step: 900, epoch: 1 | train_loss: 1.2038778 | cval_loss: 1.2452039 | cval_ic: -0.0718 
+2025-05-16 16:23:40,039 - 	time_step: 1000, epoch: 1 | train_loss: 1.2193766 | cval_loss: 1.2255720 | cval_ic: -0.0090 
+2025-05-16 16:23:50,936 - 	time_step: 1100, epoch: 1 | train_loss: 1.1906106 | cval_loss: 1.1819711 | cval_ic: -0.0650 
+2025-05-16 16:24:01,685 - 	time_step: 1200, epoch: 1 | train_loss: 1.1619301 | cval_loss: 1.1754936 | cval_ic: 0.0534 
+2025-05-16 16:24:12,454 - 	time_step: 1300, epoch: 1 | train_loss: 1.2537616 | cval_loss: 1.2362545 | cval_ic: -0.0635 
+2025-05-16 16:24:47,329 - Epoch: 0 | Time: 177.31s 
+2025-05-16 16:24:47,330 - Train Loss: 1.2241 | Val Loss: 1.2179 | Test Loss: 1.2204 | Val IC Mean: 0.0131| Test IC Mean: 0.0070 
+2025-05-16 16:24:47,334 - Updating learning rate to 6.349626647549365e-06 
+2025-05-16 16:24:47,337 - best model saved with test ic : 0.0070 
+2025-05-16 16:24:59,597 - 	time_step: 100, epoch: 2 | train_loss: 1.2068164 | cval_loss: 1.1868368 | cval_ic: -0.0010 
+2025-05-16 16:25:10,202 - 	time_step: 200, epoch: 2 | train_loss: 1.2287720 | cval_loss: 1.1901294 | cval_ic: -0.0161 
+2025-05-16 16:25:20,886 - 	time_step: 300, epoch: 2 | train_loss: 1.2212601 | cval_loss: 1.2202446 | cval_ic: -0.0136 
+2025-05-16 16:25:31,436 - 	time_step: 400, epoch: 2 | train_loss: 1.2279533 | cval_loss: 1.2471145 | cval_ic: 0.0622 
+2025-05-16 16:25:42,126 - 	time_step: 500, epoch: 2 | train_loss: 1.2680910 | cval_loss: 1.1448395 | cval_ic: 0.1084 
+2025-05-16 16:25:52,742 - 	time_step: 600, epoch: 2 | train_loss: 1.2198037 | cval_loss: 1.2344736 | cval_ic: -0.0913 
+2025-05-16 16:26:03,446 - 	time_step: 700, epoch: 2 | train_loss: 1.2160524 | cval_loss: 1.2003005 | cval_ic: -0.0250 
+2025-05-16 16:26:14,093 - 	time_step: 800, epoch: 2 | train_loss: 1.2184495 | cval_loss: 1.2365901 | cval_ic: 0.0351 
+2025-05-16 16:26:24,779 - 	time_step: 900, epoch: 2 | train_loss: 1.2489463 | cval_loss: 1.1786435 | cval_ic: 0.0605 
+2025-05-16 16:26:35,402 - 	time_step: 1000, epoch: 2 | train_loss: 1.1601803 | cval_loss: 1.2398989 | cval_ic: 0.0232 
+2025-05-16 16:26:46,053 - 	time_step: 1100, epoch: 2 | train_loss: 1.2345262 | cval_loss: 1.2691784 | cval_ic: -0.0493 
+2025-05-16 16:26:56,845 - 	time_step: 1200, epoch: 2 | train_loss: 1.1921868 | cval_loss: 1.1899813 | cval_ic: 0.0015 
+2025-05-16 16:27:07,432 - 	time_step: 1300, epoch: 2 | train_loss: 1.2190816 | cval_loss: 1.2425040 | cval_ic: -0.0405 
+2025-05-16 16:27:41,284 - Epoch: 1 | Time: 173.95s 
+2025-05-16 16:27:41,285 - Train Loss: 1.2225 | Val Loss: 1.2164 | Test Loss: 1.2202 | Val IC Mean: 0.0331| Test IC Mean: 0.0168 
+2025-05-16 16:27:41,289 - Updating learning rate to 1.3168475532577731e-05 
+2025-05-16 16:27:41,292 - best model saved with test ic : 0.0168 
+2025-05-16 16:27:53,108 - 	time_step: 100, epoch: 3 | train_loss: 1.2075093 | cval_loss: 1.2119446 | cval_ic: 0.1019 
+2025-05-16 16:28:03,696 - 	time_step: 200, epoch: 3 | train_loss: 1.2273219 | cval_loss: 1.2009228 | cval_ic: 0.0176 
+2025-05-16 16:28:14,315 - 	time_step: 300, epoch: 3 | train_loss: 1.2106529 | cval_loss: 1.1687086 | cval_ic: 0.0580 
+2025-05-16 16:28:25,028 - 	time_step: 400, epoch: 3 | train_loss: 1.2265106 | cval_loss: 1.2008584 | cval_ic: 0.0614 
+2025-05-16 16:28:35,668 - 	time_step: 500, epoch: 3 | train_loss: 1.1851666 | cval_loss: 1.2294495 | cval_ic: -0.0010 
+2025-05-16 16:28:46,237 - 	time_step: 600, epoch: 3 | train_loss: 1.2228513 | cval_loss: 1.2166921 | cval_ic: 0.0943 
+2025-05-16 16:28:56,820 - 	time_step: 700, epoch: 3 | train_loss: 1.2051841 | cval_loss: 1.2528000 | cval_ic: 0.0033 
+2025-05-16 16:29:07,442 - 	time_step: 800, epoch: 3 | train_loss: 1.2491459 | cval_loss: 1.1857126 | cval_ic: 0.0493 
+2025-05-16 16:29:18,388 - 	time_step: 900, epoch: 3 | train_loss: 1.2410098 | cval_loss: 1.2093227 | cval_ic: 0.0681 
+2025-05-16 16:29:29,071 - 	time_step: 1000, epoch: 3 | train_loss: 1.2533525 | cval_loss: 1.2293658 | cval_ic: 0.0908 
+2025-05-16 16:29:39,925 - 	time_step: 1100, epoch: 3 | train_loss: 1.2254988 | cval_loss: 1.1663182 | cval_ic: 0.0777 
+2025-05-16 16:29:50,704 - 	time_step: 1200, epoch: 3 | train_loss: 1.2183115 | cval_loss: 1.2722996 | cval_ic: 0.0737 
+2025-05-16 16:30:01,479 - 	time_step: 1300, epoch: 3 | train_loss: 1.1708198 | cval_loss: 1.2537483 | cval_ic: 0.0713 
+2025-05-16 16:30:35,648 - Epoch: 2 | Time: 174.36s 
+2025-05-16 16:30:35,649 - Train Loss: 1.2206 | Val Loss: 1.2144 | Test Loss: 1.2207 | Val IC Mean: 0.0611| Test IC Mean: 0.0287 
+2025-05-16 16:30:35,652 - Updating learning rate to 2.3788973778173612e-05 
+2025-05-16 16:30:35,655 - best model saved with test ic : 0.0287 
+2025-05-16 16:30:47,385 - 	time_step: 100, epoch: 4 | train_loss: 1.2388790 | cval_loss: 1.1882589 | cval_ic: 0.0634 
+2025-05-16 16:30:58,007 - 	time_step: 200, epoch: 4 | train_loss: 1.1985389 | cval_loss: 1.2224082 | cval_ic: 0.1094 
+2025-05-16 16:31:08,618 - 	time_step: 300, epoch: 4 | train_loss: 1.2175651 | cval_loss: 1.2290688 | cval_ic: 0.0544 
+2025-05-16 16:31:19,348 - 	time_step: 400, epoch: 4 | train_loss: 1.1847845 | cval_loss: 1.1549263 | cval_ic: 0.0171 
+2025-05-16 16:31:29,993 - 	time_step: 500, epoch: 4 | train_loss: 1.2059777 | cval_loss: 1.2274008 | cval_ic: 0.1177 
+2025-05-16 16:31:40,720 - 	time_step: 600, epoch: 4 | train_loss: 1.2113287 | cval_loss: 1.2231557 | cval_ic: 0.0773 
+2025-05-16 16:31:51,487 - 	time_step: 700, epoch: 4 | train_loss: 1.2267810 | cval_loss: 1.2630862 | cval_ic: 0.0820 
+2025-05-16 16:32:02,162 - 	time_step: 800, epoch: 4 | train_loss: 1.2002373 | cval_loss: 1.2270375 | cval_ic: 0.0715 
+2025-05-16 16:32:12,746 - 	time_step: 900, epoch: 4 | train_loss: 1.2150919 | cval_loss: 1.2234075 | cval_ic: 0.0019 
+2025-05-16 16:32:23,427 - 	time_step: 1000, epoch: 4 | train_loss: 1.2038321 | cval_loss: 1.2133418 | cval_ic: 0.1480 
+2025-05-16 16:32:34,293 - 	time_step: 1100, epoch: 4 | train_loss: 1.2153406 | cval_loss: 1.2276497 | cval_ic: 0.0178 
+2025-05-16 16:32:45,020 - 	time_step: 1200, epoch: 4 | train_loss: 1.2228336 | cval_loss: 1.1443529 | cval_ic: 0.0905 
+2025-05-16 16:32:55,807 - 	time_step: 1300, epoch: 4 | train_loss: 1.1300693 | cval_loss: 1.2275600 | cval_ic: 0.1130 
+2025-05-16 16:33:30,102 - Epoch: 3 | Time: 174.45s 
+2025-05-16 16:33:30,103 - Train Loss: 1.2177 | Val Loss: 1.2110 | Test Loss: 1.2211 | Val IC Mean: 0.0819| Test IC Mean: 0.0384 
+2025-05-16 16:33:30,107 - Updating learning rate to 3.7171362813999385e-05 
+2025-05-16 16:33:30,110 - best model saved with test ic : 0.0384 
+2025-05-16 16:33:41,957 - 	time_step: 100, epoch: 5 | train_loss: 1.2077495 | cval_loss: 1.2426120 | cval_ic: 0.0234 
+2025-05-16 16:33:52,819 - 	time_step: 200, epoch: 5 | train_loss: 1.1921353 | cval_loss: 1.2005585 | cval_ic: 0.1533 
+2025-05-16 16:34:03,686 - 	time_step: 300, epoch: 5 | train_loss: 1.2383569 | cval_loss: 1.1746674 | cval_ic: 0.1012 
+2025-05-16 16:34:14,438 - 	time_step: 400, epoch: 5 | train_loss: 1.2275091 | cval_loss: 1.1801175 | cval_ic: 0.0003 
+2025-05-16 16:34:25,241 - 	time_step: 500, epoch: 5 | train_loss: 1.2280006 | cval_loss: 1.2519962 | cval_ic: 0.0505 
+2025-05-16 16:34:35,992 - 	time_step: 600, epoch: 5 | train_loss: 1.1479748 | cval_loss: 1.2539114 | cval_ic: 0.0153 
+2025-05-16 16:34:46,685 - 	time_step: 700, epoch: 5 | train_loss: 1.2353030 | cval_loss: 1.2386688 | cval_ic: 0.0234 
+2025-05-16 16:34:57,309 - 	time_step: 800, epoch: 5 | train_loss: 1.2341286 | cval_loss: 1.1830369 | cval_ic: 0.1351 
+2025-05-16 16:35:07,865 - 	time_step: 900, epoch: 5 | train_loss: 1.2334521 | cval_loss: 1.2226648 | cval_ic: 0.1196 
+2025-05-16 16:35:18,497 - 	time_step: 1000, epoch: 5 | train_loss: 1.2511096 | cval_loss: 1.2313228 | cval_ic: 0.0809 
+2025-05-16 16:35:29,096 - 	time_step: 1100, epoch: 5 | train_loss: 1.1795690 | cval_loss: 1.1951059 | cval_ic: 0.0792 
+2025-05-16 16:35:39,882 - 	time_step: 1200, epoch: 5 | train_loss: 1.2163256 | cval_loss: 1.1817216 | cval_ic: 0.0603 
+2025-05-16 16:35:50,591 - 	time_step: 1300, epoch: 5 | train_loss: 1.2493402 | cval_loss: 1.2111254 | cval_ic: 0.0234 
+2025-05-16 16:36:24,523 - Epoch: 4 | Time: 174.41s 
+2025-05-16 16:36:24,523 - Train Loss: 1.2145 | Val Loss: 1.2087 | Test Loss: 1.2212 | Val IC Mean: 0.0926| Test IC Mean: 0.0439 
+2025-05-16 16:36:24,527 - Updating learning rate to 5.2005491894786345e-05 
+2025-05-16 16:36:24,530 - best model saved with test ic : 0.0439 
+2025-05-16 16:36:36,287 - 	time_step: 100, epoch: 6 | train_loss: 1.2434822 | cval_loss: 1.1905564 | cval_ic: 0.1844 
+2025-05-16 16:36:46,881 - 	time_step: 200, epoch: 6 | train_loss: 1.1895758 | cval_loss: 1.2813931 | cval_ic: 0.0559 
+2025-05-16 16:36:57,647 - 	time_step: 300, epoch: 6 | train_loss: 1.2305002 | cval_loss: 1.2179412 | cval_ic: 0.0808 
+2025-05-16 16:37:08,306 - 	time_step: 400, epoch: 6 | train_loss: 1.1868048 | cval_loss: 1.2131085 | cval_ic: 0.1580 
+2025-05-16 16:37:18,855 - 	time_step: 500, epoch: 6 | train_loss: 1.2949710 | cval_loss: 1.1623430 | cval_ic: 0.1415 
+2025-05-16 16:37:29,451 - 	time_step: 600, epoch: 6 | train_loss: 1.2257212 | cval_loss: 1.2377982 | cval_ic: 0.0879 
+2025-05-16 16:37:40,024 - 	time_step: 700, epoch: 6 | train_loss: 1.1770154 | cval_loss: 1.2252891 | cval_ic: 0.1320 
+2025-05-16 16:37:50,832 - 	time_step: 800, epoch: 6 | train_loss: 1.2850618 | cval_loss: 1.2531149 | cval_ic: 0.0659 
+2025-05-16 16:38:01,508 - 	time_step: 900, epoch: 6 | train_loss: 1.3024697 | cval_loss: 1.1927941 | cval_ic: 0.1087 
+2025-05-16 16:38:12,129 - 	time_step: 1000, epoch: 6 | train_loss: 1.1756188 | cval_loss: 1.2628039 | cval_ic: -0.0029 
+2025-05-16 16:38:22,714 - 	time_step: 1100, epoch: 6 | train_loss: 1.2345966 | cval_loss: 1.2148153 | cval_ic: -0.0144 
+2025-05-16 16:38:33,325 - 	time_step: 1200, epoch: 6 | train_loss: 1.1754351 | cval_loss: 1.1831119 | cval_ic: 0.1741 
+2025-05-16 16:38:43,995 - 	time_step: 1300, epoch: 6 | train_loss: 1.2088051 | cval_loss: 1.2002231 | cval_ic: 0.1537 
+2025-05-16 16:39:17,885 - Epoch: 5 | Time: 173.36s 
+2025-05-16 16:39:17,886 - Train Loss: 1.2118 | Val Loss: 1.2086 | Test Loss: 1.2257 | Val IC Mean: 0.1112| Test IC Mean: 0.0556 
+2025-05-16 16:39:17,890 - Updating learning rate to 6.6839083312976e-05 
+2025-05-16 16:39:17,893 - best model saved with test ic : 0.0556 
+2025-05-16 16:39:29,627 - 	time_step: 100, epoch: 7 | train_loss: 1.1706765 | cval_loss: 1.2752036 | cval_ic: 0.1426 
+2025-05-16 16:39:40,133 - 	time_step: 200, epoch: 7 | train_loss: 1.1866558 | cval_loss: 1.1836314 | cval_ic: 0.1653 
+2025-05-16 16:39:50,663 - 	time_step: 300, epoch: 7 | train_loss: 1.2389529 | cval_loss: 1.1657753 | cval_ic: 0.2074 
+2025-05-16 16:40:01,335 - 	time_step: 400, epoch: 7 | train_loss: 1.2209026 | cval_loss: 1.2032968 | cval_ic: 0.1564 
+2025-05-16 16:40:11,913 - 	time_step: 500, epoch: 7 | train_loss: 1.2147282 | cval_loss: 1.1591825 | cval_ic: 0.2561 
+2025-05-16 16:40:22,648 - 	time_step: 600, epoch: 7 | train_loss: 1.2181988 | cval_loss: 1.2373412 | cval_ic: 0.1751 
+2025-05-16 16:40:33,439 - 	time_step: 700, epoch: 7 | train_loss: 1.1977242 | cval_loss: 1.2254608 | cval_ic: 0.0777 
+2025-05-16 16:40:44,165 - 	time_step: 800, epoch: 7 | train_loss: 1.2242912 | cval_loss: 1.1707481 | cval_ic: 0.2188 
+2025-05-16 16:40:55,018 - 	time_step: 900, epoch: 7 | train_loss: 1.1963305 | cval_loss: 1.2250943 | cval_ic: 0.1470 
+2025-05-16 16:41:05,617 - 	time_step: 1000, epoch: 7 | train_loss: 1.1916697 | cval_loss: 1.2472827 | cval_ic: 0.0486 
+2025-05-16 16:41:16,386 - 	time_step: 1100, epoch: 7 | train_loss: 1.2030752 | cval_loss: 1.2103961 | cval_ic: 0.0954 
+2025-05-16 16:41:27,230 - 	time_step: 1200, epoch: 7 | train_loss: 1.2231933 | cval_loss: 1.2626007 | cval_ic: 0.0866 
+2025-05-16 16:41:38,130 - 	time_step: 1300, epoch: 7 | train_loss: 1.1860504 | cval_loss: 1.1848737 | cval_ic: 0.1328 
+2025-05-16 16:42:11,965 - Epoch: 6 | Time: 174.07s 
+2025-05-16 16:42:11,966 - Train Loss: 1.2100 | Val Loss: 1.2050 | Test Loss: 1.2197 | Val IC Mean: 0.1045| Test IC Mean: 0.0454 
+2025-05-16 16:42:11,970 - Updating learning rate to 8.021991199877507e-05 
+2025-05-16 16:42:23,837 - 	time_step: 100, epoch: 8 | train_loss: 1.1257967 | cval_loss: 1.1677114 | cval_ic: 0.1130 
+2025-05-16 16:42:34,540 - 	time_step: 200, epoch: 8 | train_loss: 1.2356544 | cval_loss: 1.2033379 | cval_ic: 0.1764 
+2025-05-16 16:42:45,318 - 	time_step: 300, epoch: 8 | train_loss: 1.2269375 | cval_loss: 1.1491091 | cval_ic: 0.1653 
+2025-05-16 16:42:56,021 - 	time_step: 400, epoch: 8 | train_loss: 1.2060336 | cval_loss: 1.2031997 | cval_ic: 0.1419 
+2025-05-16 16:43:06,751 - 	time_step: 500, epoch: 8 | train_loss: 1.2040986 | cval_loss: 1.1176132 | cval_ic: 0.1396 
+2025-05-16 16:43:17,622 - 	time_step: 600, epoch: 8 | train_loss: 1.2362546 | cval_loss: 1.1941561 | cval_ic: 0.1219 
+2025-05-16 16:43:28,278 - 	time_step: 700, epoch: 8 | train_loss: 1.1645644 | cval_loss: 1.1822782 | cval_ic: 0.1855 
+2025-05-16 16:43:38,913 - 	time_step: 800, epoch: 8 | train_loss: 1.2385079 | cval_loss: 1.1976672 | cval_ic: 0.1813 
+2025-05-16 16:43:49,538 - 	time_step: 900, epoch: 8 | train_loss: 1.1930474 | cval_loss: 1.2077552 | cval_ic: 0.1645 
+2025-05-16 16:44:00,295 - 	time_step: 1000, epoch: 8 | train_loss: 1.1843832 | cval_loss: 1.2238830 | cval_ic: 0.1262 
+2025-05-16 16:44:10,936 - 	time_step: 1100, epoch: 8 | train_loss: 1.2093166 | cval_loss: 1.2881274 | cval_ic: 0.0140 
+2025-05-16 16:44:21,525 - 	time_step: 1200, epoch: 8 | train_loss: 1.2492886 | cval_loss: 1.1875360 | cval_ic: 0.0528 
+2025-05-16 16:44:32,288 - 	time_step: 1300, epoch: 8 | train_loss: 1.2033432 | cval_loss: 1.2222341 | cval_ic: 0.0547 
+2025-05-16 16:45:06,440 - Epoch: 7 | Time: 174.47s 
+2025-05-16 16:45:06,441 - Train Loss: 1.2086 | Val Loss: 1.2037 | Test Loss: 1.2218 | Val IC Mean: 0.1163| Test IC Mean: 0.0530 
+2025-05-16 16:45:06,445 - Updating learning rate to 9.083797996691499e-05 
+2025-05-16 16:45:18,297 - 	time_step: 100, epoch: 9 | train_loss: 1.1530538 | cval_loss: 1.2032508 | cval_ic: 0.0583 
+2025-05-16 16:45:28,988 - 	time_step: 200, epoch: 9 | train_loss: 1.2667390 | cval_loss: 1.2271231 | cval_ic: 0.0490 
+2025-05-16 16:45:39,730 - 	time_step: 300, epoch: 9 | train_loss: 1.1885989 | cval_loss: 1.2412739 | cval_ic: 0.0846 
+2025-05-16 16:45:50,484 - 	time_step: 400, epoch: 9 | train_loss: 1.2230096 | cval_loss: 1.2269158 | cval_ic: 0.0755 
+2025-05-16 16:46:01,271 - 	time_step: 500, epoch: 9 | train_loss: 1.2204324 | cval_loss: 1.1317022 | cval_ic: 0.2427 
+2025-05-16 16:46:11,919 - 	time_step: 600, epoch: 9 | train_loss: 1.2230444 | cval_loss: 1.1607779 | cval_ic: 0.1732 
+2025-05-16 16:46:22,604 - 	time_step: 700, epoch: 9 | train_loss: 1.2078941 | cval_loss: 1.2155778 | cval_ic: 0.0859 
+2025-05-16 16:46:33,214 - 	time_step: 800, epoch: 9 | train_loss: 1.1815931 | cval_loss: 1.2535505 | cval_ic: -0.0150 
+2025-05-16 16:46:44,027 - 	time_step: 900, epoch: 9 | train_loss: 1.1959089 | cval_loss: 1.2029209 | cval_ic: 0.1311 
+2025-05-16 16:46:54,675 - 	time_step: 1000, epoch: 9 | train_loss: 1.1291493 | cval_loss: 1.2210838 | cval_ic: 0.0881 
+2025-05-16 16:47:05,394 - 	time_step: 1100, epoch: 9 | train_loss: 1.1717914 | cval_loss: 1.1868336 | cval_ic: 0.1898 
+2025-05-16 16:47:16,053 - 	time_step: 1200, epoch: 9 | train_loss: 1.2246044 | cval_loss: 1.2522572 | cval_ic: 0.0774 
+2025-05-16 16:47:26,887 - 	time_step: 1300, epoch: 9 | train_loss: 1.2672647 | cval_loss: 1.1638176 | cval_ic: 0.1259 
+2025-05-16 16:48:00,749 - Epoch: 8 | Time: 174.30s 
+2025-05-16 16:48:00,749 - Train Loss: 1.2072 | Val Loss: 1.2051 | Test Loss: 1.2204 | Val IC Mean: 0.0964| Test IC Mean: 0.0370 
+2025-05-16 16:48:00,749 - Updating learning rate to 9.76537665739194e-05 
+2025-05-16 16:48:12,545 - 	time_step: 100, epoch: 10 | train_loss: 1.2369194 | cval_loss: 1.2221267 | cval_ic: 0.0818 
+2025-05-16 16:48:23,092 - 	time_step: 200, epoch: 10 | train_loss: 1.2541344 | cval_loss: 1.2030927 | cval_ic: 0.1101 
+2025-05-16 16:48:35,122 - 	time_step: 300, epoch: 10 | train_loss: 1.1865593 | cval_loss: 1.1821334 | cval_ic: 0.1514 
+2025-05-16 16:48:46,897 - 	time_step: 400, epoch: 10 | train_loss: 1.2407966 | cval_loss: 1.2211945 | cval_ic: 0.0132 
+2025-05-16 16:48:58,562 - 	time_step: 500, epoch: 10 | train_loss: 1.1527941 | cval_loss: 1.1649379 | cval_ic: 0.1977 
+2025-05-16 16:49:11,149 - 	time_step: 600, epoch: 10 | train_loss: 1.1169741 | cval_loss: 1.2331039 | cval_ic: 0.1402 
+2025-05-16 16:49:22,352 - 	time_step: 700, epoch: 10 | train_loss: 1.2302859 | cval_loss: 1.2210449 | cval_ic: 0.1060 
+2025-05-16 16:49:32,786 - 	time_step: 800, epoch: 10 | train_loss: 1.1875240 | cval_loss: 1.1712443 | cval_ic: 0.1093 
+2025-05-16 16:49:43,372 - 	time_step: 900, epoch: 10 | train_loss: 1.2343783 | cval_loss: 1.2080956 | cval_ic: 0.0647 
+2025-05-16 16:49:54,036 - 	time_step: 1000, epoch: 10 | train_loss: 1.2779176 | cval_loss: 1.2249161 | cval_ic: 0.2025 
+2025-05-16 16:50:04,630 - 	time_step: 1100, epoch: 10 | train_loss: 1.1838367 | cval_loss: 1.2406191 | cval_ic: 0.0889 
+2025-05-16 16:50:15,393 - 	time_step: 1200, epoch: 10 | train_loss: 1.2251692 | cval_loss: 1.2092744 | cval_ic: 0.1075 
+2025-05-16 16:50:26,294 - 	time_step: 1300, epoch: 10 | train_loss: 1.1291944 | cval_loss: 1.2414547 | cval_ic: 0.1040 
+2025-05-16 16:51:00,694 - Epoch: 9 | Time: 179.95s 
+2025-05-16 16:51:00,694 - Train Loss: 1.2061 | Val Loss: 1.2026 | Test Loss: 1.2217 | Val IC Mean: 0.1250| Test IC Mean: 0.0618 
+2025-05-16 16:51:00,698 - Updating learning rate to 9.999999991819554e-05 
+2025-05-16 16:51:00,701 - best model saved with test ic : 0.0618 
+2025-05-16 16:51:12,736 - 	time_step: 100, epoch: 11 | train_loss: 1.2031018 | cval_loss: 1.2033358 | cval_ic: 0.1653 
+2025-05-16 16:51:23,695 - 	time_step: 200, epoch: 11 | train_loss: 1.2207320 | cval_loss: 1.1848832 | cval_ic: 0.1134 
+2025-05-16 16:51:34,632 - 	time_step: 300, epoch: 11 | train_loss: 1.2069621 | cval_loss: 1.2083213 | cval_ic: 0.1243 
+2025-05-16 16:51:47,954 - 	time_step: 400, epoch: 11 | train_loss: 1.2199036 | cval_loss: 1.2481481 | cval_ic: 0.0857 
+2025-05-16 16:52:06,166 - 	time_step: 500, epoch: 11 | train_loss: 1.2412930 | cval_loss: 1.2170026 | cval_ic: 0.1636 
+2025-05-16 16:52:24,187 - 	time_step: 600, epoch: 11 | train_loss: 1.1924883 | cval_loss: 1.2309408 | cval_ic: 0.0168 
+2025-05-16 16:52:41,836 - 	time_step: 700, epoch: 11 | train_loss: 1.1927663 | cval_loss: 1.1784897 | cval_ic: 0.1162 
+2025-05-16 16:52:57,813 - 	time_step: 800, epoch: 11 | train_loss: 1.2198558 | cval_loss: 1.2643732 | cval_ic: 0.0028 
+2025-05-16 16:53:08,709 - 	time_step: 900, epoch: 11 | train_loss: 1.1569970 | cval_loss: 1.2064648 | cval_ic: 0.0678 
+2025-05-16 16:53:19,720 - 	time_step: 1000, epoch: 11 | train_loss: 1.2564230 | cval_loss: 1.2176739 | cval_ic: 0.1287 
+2025-05-16 16:53:30,831 - 	time_step: 1100, epoch: 11 | train_loss: 1.1611669 | cval_loss: 1.2237980 | cval_ic: 0.1306 
+2025-05-16 16:53:41,889 - 	time_step: 1200, epoch: 11 | train_loss: 1.2178136 | cval_loss: 1.2236930 | cval_ic: 0.1482 
+2025-05-16 16:53:52,859 - 	time_step: 1300, epoch: 11 | train_loss: 1.2212753 | cval_loss: 1.2350737 | cval_ic: 0.1046 
+2025-05-16 16:54:27,789 - Epoch: 10 | Time: 207.09s 
+2025-05-16 16:54:27,789 - Train Loss: 1.2043 | Val Loss: 1.2031 | Test Loss: 1.2198 | Val IC Mean: 0.1057| Test IC Mean: 0.0450 
+2025-05-16 16:54:27,790 - Updating learning rate to 9.984564281747436e-05 
+2025-05-16 16:54:40,133 - 	time_step: 100, epoch: 12 | train_loss: 1.1932672 | cval_loss: 1.1843612 | cval_ic: 0.1857 
+2025-05-16 16:54:51,200 - 	time_step: 200, epoch: 12 | train_loss: 1.2395777 | cval_loss: 1.2352066 | cval_ic: 0.1181 
+2025-05-16 16:55:02,138 - 	time_step: 300, epoch: 12 | train_loss: 1.1651641 | cval_loss: 1.2446150 | cval_ic: 0.0547 
+2025-05-16 16:55:13,177 - 	time_step: 400, epoch: 12 | train_loss: 1.2597965 | cval_loss: 1.2563256 | cval_ic: 0.1337 
+2025-05-16 16:55:24,199 - 	time_step: 500, epoch: 12 | train_loss: 1.2308768 | cval_loss: 1.1219128 | cval_ic: 0.2990 
+2025-05-16 16:55:35,316 - 	time_step: 600, epoch: 12 | train_loss: 1.1827619 | cval_loss: 1.1908587 | cval_ic: 0.0817 
+2025-05-16 16:55:46,470 - 	time_step: 700, epoch: 12 | train_loss: 1.2222483 | cval_loss: 1.1853137 | cval_ic: 0.1358 
+2025-05-16 16:55:57,472 - 	time_step: 800, epoch: 12 | train_loss: 1.1878327 | cval_loss: 1.2078390 | cval_ic: 0.1130 
+2025-05-16 16:56:08,446 - 	time_step: 900, epoch: 12 | train_loss: 1.1293895 | cval_loss: 1.2471670 | cval_ic: 0.1865 
+2025-05-16 16:56:19,486 - 	time_step: 1000, epoch: 12 | train_loss: 1.2306484 | cval_loss: 1.2045246 | cval_ic: 0.1742 
+2025-05-16 16:56:30,554 - 	time_step: 1100, epoch: 12 | train_loss: 1.1872902 | cval_loss: 1.2033008 | cval_ic: 0.1158 
+2025-05-16 16:56:41,619 - 	time_step: 1200, epoch: 12 | train_loss: 1.2270634 | cval_loss: 1.1601727 | cval_ic: 0.1999 
+2025-05-16 16:56:52,639 - 	time_step: 1300, epoch: 12 | train_loss: 1.1264819 | cval_loss: 1.2218450 | cval_ic: 0.0534 
+2025-05-16 16:57:27,454 - Epoch: 11 | Time: 179.66s 
+2025-05-16 16:57:27,454 - Train Loss: 1.2031 | Val Loss: 1.2006 | Test Loss: 1.2212 | Val IC Mean: 0.1306| Test IC Mean: 0.0658 
+2025-05-16 16:57:27,458 - Updating learning rate to 9.938397198649171e-05 
+2025-05-16 16:57:27,461 - best model saved with test ic : 0.0658 
+2025-05-16 16:57:39,616 - 	time_step: 100, epoch: 13 | train_loss: 1.2037112 | cval_loss: 1.1922138 | cval_ic: 0.1915 
+2025-05-16 16:57:50,721 - 	time_step: 200, epoch: 13 | train_loss: 1.2749208 | cval_loss: 1.2223923 | cval_ic: 0.2214 
+2025-05-16 16:58:01,836 - 	time_step: 300, epoch: 13 | train_loss: 1.1764435 | cval_loss: 1.2086337 | cval_ic: 0.1916 
+2025-05-16 16:58:13,107 - 	time_step: 400, epoch: 13 | train_loss: 1.1770000 | cval_loss: 1.1752520 | cval_ic: 0.1960 
+2025-05-16 16:58:23,960 - 	time_step: 500, epoch: 13 | train_loss: 1.1809509 | cval_loss: 1.0959404 | cval_ic: 0.2549 
+2025-05-16 16:58:34,861 - 	time_step: 600, epoch: 13 | train_loss: 1.2086376 | cval_loss: 1.2137465 | cval_ic: 0.0791 
+2025-05-16 16:58:45,926 - 	time_step: 700, epoch: 13 | train_loss: 1.1980227 | cval_loss: 1.2956519 | cval_ic: 0.0416 
+2025-05-16 16:58:57,048 - 	time_step: 800, epoch: 13 | train_loss: 1.2045963 | cval_loss: 1.1697459 | cval_ic: 0.1779 
+2025-05-16 16:59:08,059 - 	time_step: 900, epoch: 13 | train_loss: 1.1458652 | cval_loss: 1.1414495 | cval_ic: 0.2435 
+2025-05-16 16:59:18,986 - 	time_step: 1000, epoch: 13 | train_loss: 1.1310271 | cval_loss: 1.1899229 | cval_ic: 0.1043 
+2025-05-16 16:59:30,179 - 	time_step: 1100, epoch: 13 | train_loss: 1.2320316 | cval_loss: 1.1874471 | cval_ic: 0.1441 
+2025-05-16 16:59:41,173 - 	time_step: 1200, epoch: 13 | train_loss: 1.2478025 | cval_loss: 1.1661315 | cval_ic: 0.1919 
+2025-05-16 16:59:52,267 - 	time_step: 1300, epoch: 13 | train_loss: 1.1916612 | cval_loss: 1.1622449 | cval_ic: 0.2316 
+2025-05-16 17:00:27,091 - Epoch: 12 | Time: 179.63s 
+2025-05-16 17:00:27,091 - Train Loss: 1.2016 | Val Loss: 1.2001 | Test Loss: 1.2197 | Val IC Mean: 0.1289| Test IC Mean: 0.0632 
+2025-05-16 17:00:27,095 - Updating learning rate to 9.861783377944174e-05 
+2025-05-16 17:00:39,439 - 	time_step: 100, epoch: 14 | train_loss: 1.1941974 | cval_loss: 1.1608952 | cval_ic: 0.1935 
+2025-05-16 17:00:50,544 - 	time_step: 200, epoch: 14 | train_loss: 1.1642878 | cval_loss: 1.2149069 | cval_ic: 0.1331 
+2025-05-16 17:01:01,668 - 	time_step: 300, epoch: 14 | train_loss: 1.2015722 | cval_loss: 1.1516523 | cval_ic: 0.1941 
+2025-05-16 17:01:12,715 - 	time_step: 400, epoch: 14 | train_loss: 1.1590632 | cval_loss: 1.2101358 | cval_ic: 0.2339 
+2025-05-16 17:01:23,825 - 	time_step: 500, epoch: 14 | train_loss: 1.2601979 | cval_loss: 1.2643816 | cval_ic: 0.0074 
+2025-05-16 17:01:34,767 - 	time_step: 600, epoch: 14 | train_loss: 1.2540706 | cval_loss: 1.2394812 | cval_ic: 0.1085 
+2025-05-16 17:01:45,838 - 	time_step: 700, epoch: 14 | train_loss: 1.1912990 | cval_loss: 1.1883270 | cval_ic: 0.2069 
+2025-05-16 17:01:56,714 - 	time_step: 800, epoch: 14 | train_loss: 1.2213783 | cval_loss: 1.0703673 | cval_ic: 0.3350 
+2025-05-16 17:02:07,613 - 	time_step: 900, epoch: 14 | train_loss: 1.1939211 | cval_loss: 1.2100620 | cval_ic: 0.1729 
+2025-05-16 17:02:18,588 - 	time_step: 1000, epoch: 14 | train_loss: 1.1631198 | cval_loss: 1.2644724 | cval_ic: 0.0456 
+2025-05-16 17:02:29,739 - 	time_step: 1100, epoch: 14 | train_loss: 1.2049103 | cval_loss: 1.2226485 | cval_ic: 0.1140 
+2025-05-16 17:02:40,738 - 	time_step: 1200, epoch: 14 | train_loss: 1.1954107 | cval_loss: 1.1510061 | cval_ic: 0.1904 
+2025-05-16 17:02:51,802 - 	time_step: 1300, epoch: 14 | train_loss: 1.1656247 | cval_loss: 1.2188094 | cval_ic: 0.1860 
+2025-05-16 17:03:26,589 - Epoch: 13 | Time: 179.49s 
+2025-05-16 17:03:26,589 - Train Loss: 1.2002 | Val Loss: 1.1996 | Test Loss: 1.2193 | Val IC Mean: 0.1293| Test IC Mean: 0.0620 
+2025-05-16 17:03:26,593 - Updating learning rate to 9.755195169313772e-05 
+2025-05-16 17:03:38,829 - 	time_step: 100, epoch: 15 | train_loss: 1.1912081 | cval_loss: 1.2164575 | cval_ic: 0.0959 
+2025-05-16 17:03:49,914 - 	time_step: 200, epoch: 15 | train_loss: 1.1887254 | cval_loss: 1.2366735 | cval_ic: 0.0972 
+2025-05-16 17:04:01,068 - 	time_step: 300, epoch: 15 | train_loss: 1.1539115 | cval_loss: 1.2064801 | cval_ic: 0.1183 
+2025-05-16 17:04:12,240 - 	time_step: 400, epoch: 15 | train_loss: 1.1612899 | cval_loss: 1.1693497 | cval_ic: 0.2743 
+2025-05-16 17:04:23,251 - 	time_step: 500, epoch: 15 | train_loss: 1.1954720 | cval_loss: 1.2549245 | cval_ic: 0.1411 
+2025-05-16 17:04:34,257 - 	time_step: 600, epoch: 15 | train_loss: 1.2483916 | cval_loss: 1.1565338 | cval_ic: 0.1561 
+2025-05-16 17:04:45,333 - 	time_step: 700, epoch: 15 | train_loss: 1.2491213 | cval_loss: 1.2246764 | cval_ic: 0.0681 
+2025-05-16 17:04:56,416 - 	time_step: 800, epoch: 15 | train_loss: 1.1807073 | cval_loss: 1.2755303 | cval_ic: 0.0048 
+2025-05-16 17:05:07,584 - 	time_step: 900, epoch: 15 | train_loss: 1.2205386 | cval_loss: 1.2714423 | cval_ic: 0.0586 
+2025-05-16 17:05:18,595 - 	time_step: 1000, epoch: 15 | train_loss: 1.2407906 | cval_loss: 1.2191859 | cval_ic: 0.1272 
+2025-05-16 17:05:29,706 - 	time_step: 1100, epoch: 15 | train_loss: 1.2724994 | cval_loss: 1.1227821 | cval_ic: 0.1628 
+2025-05-16 17:05:40,741 - 	time_step: 1200, epoch: 15 | train_loss: 1.2141376 | cval_loss: 1.1770487 | cval_ic: 0.1548 
+2025-05-16 17:05:51,788 - 	time_step: 1300, epoch: 15 | train_loss: 1.1916397 | cval_loss: 1.2505695 | cval_ic: 0.0428 
+2025-05-16 17:06:26,613 - Epoch: 14 | Time: 180.02s 
+2025-05-16 17:06:26,614 - Train Loss: 1.1990 | Val Loss: 1.2009 | Test Loss: 1.2200 | Val IC Mean: 0.1167| Test IC Mean: 0.0498 
+2025-05-16 17:06:26,614 - Updating learning rate to 9.619289724508349e-05 
+2025-05-16 17:06:38,824 - 	time_step: 100, epoch: 16 | train_loss: 1.2186749 | cval_loss: 1.1965371 | cval_ic: 0.0997 
+2025-05-16 17:06:49,819 - 	time_step: 200, epoch: 16 | train_loss: 1.1743382 | cval_loss: 1.1747783 | cval_ic: 0.1571 
+2025-05-16 17:07:00,854 - 	time_step: 300, epoch: 16 | train_loss: 1.2558780 | cval_loss: 1.2280838 | cval_ic: 0.1102 
+2025-05-16 17:07:11,847 - 	time_step: 400, epoch: 16 | train_loss: 1.2049189 | cval_loss: 1.1947912 | cval_ic: 0.2284 
+2025-05-16 17:07:22,795 - 	time_step: 500, epoch: 16 | train_loss: 1.2164339 | cval_loss: 1.2385738 | cval_ic: 0.0938 
+2025-05-16 17:07:33,774 - 	time_step: 600, epoch: 16 | train_loss: 1.2038383 | cval_loss: 1.1846688 | cval_ic: 0.0793 
+2025-05-16 17:07:44,943 - 	time_step: 700, epoch: 16 | train_loss: 1.2302247 | cval_loss: 1.1977397 | cval_ic: 0.2333 
+2025-05-16 17:07:56,196 - 	time_step: 800, epoch: 16 | train_loss: 1.1463158 | cval_loss: 1.1778138 | cval_ic: 0.1427 
+2025-05-16 17:08:07,453 - 	time_step: 900, epoch: 16 | train_loss: 1.1761211 | cval_loss: 1.2064384 | cval_ic: 0.1377 
+2025-05-16 17:08:18,813 - 	time_step: 1000, epoch: 16 | train_loss: 1.1779239 | cval_loss: 1.1659456 | cval_ic: 0.1810 
+2025-05-16 17:08:29,879 - 	time_step: 1100, epoch: 16 | train_loss: 1.1420236 | cval_loss: 1.0878619 | cval_ic: 0.2804 
+2025-05-16 17:08:40,786 - 	time_step: 1200, epoch: 16 | train_loss: 1.2727258 | cval_loss: 1.2123696 | cval_ic: 0.0589 
+2025-05-16 17:08:51,893 - 	time_step: 1300, epoch: 16 | train_loss: 1.2125872 | cval_loss: 1.0615141 | cval_ic: 0.3180 
+2025-05-16 17:09:26,913 - Epoch: 15 | Time: 180.30s 
+2025-05-16 17:09:26,913 - Train Loss: 1.1974 | Val Loss: 1.1988 | Test Loss: 1.2189 | Val IC Mean: 0.1315| Test IC Mean: 0.0672 
+2025-05-16 17:09:26,917 - Updating learning rate to 9.454904945788277e-05 
+2025-05-16 17:09:26,920 - best model saved with test ic : 0.0672 
+2025-05-16 17:09:39,163 - 	time_step: 100, epoch: 17 | train_loss: 1.1528455 | cval_loss: 1.1753879 | cval_ic: 0.0783 
+2025-05-16 17:09:50,157 - 	time_step: 200, epoch: 17 | train_loss: 1.2567194 | cval_loss: 1.2118022 | cval_ic: 0.1604 
+2025-05-16 17:10:01,090 - 	time_step: 300, epoch: 17 | train_loss: 1.2333388 | cval_loss: 1.2233925 | cval_ic: 0.1726 
+2025-05-16 17:10:12,280 - 	time_step: 400, epoch: 17 | train_loss: 1.2312775 | cval_loss: 1.1818652 | cval_ic: 0.2056 
+2025-05-16 17:10:23,497 - 	time_step: 500, epoch: 17 | train_loss: 1.1941072 | cval_loss: 1.2307098 | cval_ic: 0.1460 
+2025-05-16 17:10:34,552 - 	time_step: 600, epoch: 17 | train_loss: 1.1836317 | cval_loss: 1.2090774 | cval_ic: 0.1177 
+2025-05-16 17:10:45,729 - 	time_step: 700, epoch: 17 | train_loss: 1.1868868 | cval_loss: 1.1917273 | cval_ic: 0.1685 
+2025-05-16 17:10:56,996 - 	time_step: 800, epoch: 17 | train_loss: 1.1952373 | cval_loss: 1.1524758 | cval_ic: 0.2122 
+2025-05-16 17:11:08,087 - 	time_step: 900, epoch: 17 | train_loss: 1.1634759 | cval_loss: 1.1752793 | cval_ic: 0.1085 
+2025-05-16 17:11:19,209 - 	time_step: 1000, epoch: 17 | train_loss: 1.2505634 | cval_loss: 1.1743803 | cval_ic: 0.1895 
+2025-05-16 17:11:30,206 - 	time_step: 1100, epoch: 17 | train_loss: 1.1957211 | cval_loss: 1.2158540 | cval_ic: 0.1932 
+2025-05-16 17:11:41,299 - 	time_step: 1200, epoch: 17 | train_loss: 1.1948591 | cval_loss: 1.1744560 | cval_ic: 0.2321 
+2025-05-16 17:11:52,372 - 	time_step: 1300, epoch: 17 | train_loss: 1.1200271 | cval_loss: 1.2028422 | cval_ic: 0.2430 
+2025-05-16 17:12:27,118 - Epoch: 16 | Time: 180.20s 
+2025-05-16 17:12:27,118 - Train Loss: 1.1963 | Val Loss: 1.1988 | Test Loss: 1.2209 | Val IC Mean: 0.1360| Test IC Mean: 0.0699 
+2025-05-16 17:12:27,122 - Updating learning rate to 9.263054319977848e-05 
+2025-05-16 17:12:27,125 - best model saved with test ic : 0.0699 
+2025-05-16 17:12:39,637 - 	time_step: 100, epoch: 18 | train_loss: 1.2138792 | cval_loss: 1.2002594 | cval_ic: 0.1405 
+2025-05-16 17:12:50,758 - 	time_step: 200, epoch: 18 | train_loss: 1.1689258 | cval_loss: 1.2027844 | cval_ic: 0.1686 
+2025-05-16 17:13:01,912 - 	time_step: 300, epoch: 18 | train_loss: 1.1425625 | cval_loss: 1.2307825 | cval_ic: 0.1617 
+2025-05-16 17:13:13,024 - 	time_step: 400, epoch: 18 | train_loss: 1.2309788 | cval_loss: 1.1575826 | cval_ic: 0.2317 
+2025-05-16 17:13:24,010 - 	time_step: 500, epoch: 18 | train_loss: 1.2102960 | cval_loss: 1.1378618 | cval_ic: 0.2322 
+2025-05-16 17:13:34,974 - 	time_step: 600, epoch: 18 | train_loss: 1.2135381 | cval_loss: 1.2162551 | cval_ic: 0.1686 
+2025-05-16 17:13:45,853 - 	time_step: 700, epoch: 18 | train_loss: 1.2561717 | cval_loss: 1.1711355 | cval_ic: 0.1212 
+2025-05-16 17:13:56,863 - 	time_step: 800, epoch: 18 | train_loss: 1.1319010 | cval_loss: 1.1807312 | cval_ic: 0.2051 
+2025-05-16 17:14:07,747 - 	time_step: 900, epoch: 18 | train_loss: 1.1829307 | cval_loss: 1.1477045 | cval_ic: 0.2126 
+2025-05-16 17:14:18,602 - 	time_step: 1000, epoch: 18 | train_loss: 1.2159965 | cval_loss: 1.2151812 | cval_ic: 0.1864 
+2025-05-16 17:14:29,491 - 	time_step: 1100, epoch: 18 | train_loss: 1.2566152 | cval_loss: 1.2084910 | cval_ic: 0.2488 
+2025-05-16 17:14:40,315 - 	time_step: 1200, epoch: 18 | train_loss: 1.2084945 | cval_loss: 1.2035123 | cval_ic: 0.1161 
+2025-05-16 17:14:51,083 - 	time_step: 1300, epoch: 18 | train_loss: 1.1576648 | cval_loss: 1.2639292 | cval_ic: 0.1556 
+2025-05-16 17:15:25,547 - Epoch: 17 | Time: 178.42s 
+2025-05-16 17:15:25,547 - Train Loss: 1.1952 | Val Loss: 1.1983 | Test Loss: 1.2187 | Val IC Mean: 0.1304| Test IC Mean: 0.0614 
+2025-05-16 17:15:25,551 - Updating learning rate to 9.044920669981993e-05 
+2025-05-16 17:15:37,604 - 	time_step: 100, epoch: 19 | train_loss: 1.2775567 | cval_loss: 1.1649154 | cval_ic: 0.1933 
+2025-05-16 17:15:48,807 - 	time_step: 200, epoch: 19 | train_loss: 1.1753365 | cval_loss: 1.1769278 | cval_ic: 0.0875 
+2025-05-16 17:15:59,802 - 	time_step: 300, epoch: 19 | train_loss: 1.2002785 | cval_loss: 1.2110368 | cval_ic: 0.1659 
+2025-05-16 17:16:10,745 - 	time_step: 400, epoch: 19 | train_loss: 1.1943678 | cval_loss: 1.1441300 | cval_ic: 0.1909 
+2025-05-16 17:16:21,534 - 	time_step: 500, epoch: 19 | train_loss: 1.2068280 | cval_loss: 1.2483652 | cval_ic: 0.0596 
+2025-05-16 17:16:32,437 - 	time_step: 600, epoch: 19 | train_loss: 1.2216811 | cval_loss: 1.2184622 | cval_ic: 0.0773 
+2025-05-16 17:16:43,260 - 	time_step: 700, epoch: 19 | train_loss: 1.1357985 | cval_loss: 1.1842204 | cval_ic: 0.1317 
+2025-05-16 17:16:54,245 - 	time_step: 800, epoch: 19 | train_loss: 1.1778858 | cval_loss: 1.2502338 | cval_ic: 0.1893 
+2025-05-16 17:17:05,148 - 	time_step: 900, epoch: 19 | train_loss: 1.1697123 | cval_loss: 1.2074915 | cval_ic: 0.1311 
+2025-05-16 17:17:15,992 - 	time_step: 1000, epoch: 19 | train_loss: 1.2220997 | cval_loss: 1.1366217 | cval_ic: 0.1816 
+2025-05-16 17:17:26,775 - 	time_step: 1100, epoch: 19 | train_loss: 1.1342947 | cval_loss: 1.1504825 | cval_ic: 0.1971 
+2025-05-16 17:17:37,714 - 	time_step: 1200, epoch: 19 | train_loss: 1.1858755 | cval_loss: 1.2142248 | cval_ic: 0.0607 
+2025-05-16 17:17:48,572 - 	time_step: 1300, epoch: 19 | train_loss: 1.2581637 | cval_loss: 1.2207382 | cval_ic: 0.1316 
+2025-05-16 17:18:22,972 - Epoch: 18 | Time: 177.42s 
+2025-05-16 17:18:22,972 - Train Loss: 1.1940 | Val Loss: 1.1977 | Test Loss: 1.2189 | Val IC Mean: 0.1363| Test IC Mean: 0.0698 
+2025-05-16 17:18:22,976 - Updating learning rate to 8.801848862289736e-05 
+2025-05-16 17:18:34,913 - 	time_step: 100, epoch: 20 | train_loss: 1.1767101 | cval_loss: 1.1333913 | cval_ic: 0.2373 
+2025-05-16 17:18:45,570 - 	time_step: 200, epoch: 20 | train_loss: 1.2033734 | cval_loss: 1.1886677 | cval_ic: 0.1332 
+2025-05-16 17:18:56,394 - 	time_step: 300, epoch: 20 | train_loss: 1.1591845 | cval_loss: 1.1279950 | cval_ic: 0.2934 
+2025-05-16 17:19:07,154 - 	time_step: 400, epoch: 20 | train_loss: 1.1333357 | cval_loss: 1.2057178 | cval_ic: 0.2051 
+2025-05-16 17:19:18,075 - 	time_step: 500, epoch: 20 | train_loss: 1.1996491 | cval_loss: 1.1864804 | cval_ic: 0.0820 
+2025-05-16 17:19:28,984 - 	time_step: 600, epoch: 20 | train_loss: 1.0872098 | cval_loss: 1.2088648 | cval_ic: 0.1474 
+2025-05-16 17:19:39,897 - 	time_step: 700, epoch: 20 | train_loss: 1.1809767 | cval_loss: 1.1004653 | cval_ic: 0.3139 
+2025-05-16 17:19:50,850 - 	time_step: 800, epoch: 20 | train_loss: 1.2410127 | cval_loss: 1.2556638 | cval_ic: 0.0792 
+2025-05-16 17:20:01,924 - 	time_step: 900, epoch: 20 | train_loss: 1.1320604 | cval_loss: 1.1400483 | cval_ic: 0.2642 
+2025-05-16 17:20:12,697 - 	time_step: 1000, epoch: 20 | train_loss: 1.2497010 | cval_loss: 1.2490689 | cval_ic: 0.1169 
+2025-05-16 17:20:23,556 - 	time_step: 1100, epoch: 20 | train_loss: 1.1811413 | cval_loss: 1.1679389 | cval_ic: 0.1400 
+2025-05-16 17:20:34,322 - 	time_step: 1200, epoch: 20 | train_loss: 1.2014661 | cval_loss: 1.1466136 | cval_ic: 0.1177 
+2025-05-16 17:20:45,113 - 	time_step: 1300, epoch: 20 | train_loss: 1.1719087 | cval_loss: 1.2230248 | cval_ic: 0.1169 
+2025-05-16 17:21:19,544 - Epoch: 19 | Time: 176.57s 
+2025-05-16 17:21:19,545 - Train Loss: 1.1927 | Val Loss: 1.1991 | Test Loss: 1.2217 | Val IC Mean: 0.1368| Test IC Mean: 0.0687 
+2025-05-16 17:21:19,545 - Updating learning rate to 8.535337515425074e-05 
+2025-05-16 17:21:31,476 - 	time_step: 100, epoch: 21 | train_loss: 1.1495060 | cval_loss: 1.1682851 | cval_ic: 0.2307 
+2025-05-16 17:21:42,289 - 	time_step: 200, epoch: 21 | train_loss: 1.2019089 | cval_loss: 1.1622430 | cval_ic: 0.1841 
+2025-05-16 17:21:53,091 - 	time_step: 300, epoch: 21 | train_loss: 1.1214129 | cval_loss: 1.1887504 | cval_ic: 0.2209 
+2025-05-16 17:22:04,002 - 	time_step: 400, epoch: 21 | train_loss: 1.2780111 | cval_loss: 1.1000946 | cval_ic: 0.3289 
+2025-05-16 17:22:14,946 - 	time_step: 500, epoch: 21 | train_loss: 1.1681610 | cval_loss: 1.2414901 | cval_ic: 0.0624 
+2025-05-16 17:22:25,816 - 	time_step: 600, epoch: 21 | train_loss: 1.2227017 | cval_loss: 1.2357500 | cval_ic: 0.0585 
+2025-05-16 17:22:36,774 - 	time_step: 700, epoch: 21 | train_loss: 1.2501248 | cval_loss: 1.1975094 | cval_ic: 0.1048 
+2025-05-16 17:22:47,762 - 	time_step: 800, epoch: 21 | train_loss: 1.1668034 | cval_loss: 1.1808285 | cval_ic: 0.1038 
+2025-05-16 17:22:58,671 - 	time_step: 900, epoch: 21 | train_loss: 1.1403472 | cval_loss: 1.1773442 | cval_ic: 0.2392 
+2025-05-16 17:23:09,452 - 	time_step: 1000, epoch: 21 | train_loss: 1.1569732 | cval_loss: 1.2151203 | cval_ic: 0.1676 
+2025-05-16 17:23:20,265 - 	time_step: 1100, epoch: 21 | train_loss: 1.2207657 | cval_loss: 1.1969268 | cval_ic: 0.0855 
+2025-05-16 17:23:31,265 - 	time_step: 1200, epoch: 21 | train_loss: 1.1023368 | cval_loss: 1.1805842 | cval_ic: 0.2300 
+2025-05-16 17:23:42,070 - 	time_step: 1300, epoch: 21 | train_loss: 1.2662272 | cval_loss: 1.1562604 | cval_ic: 0.2535 
+2025-05-16 17:24:16,198 - Epoch: 20 | Time: 176.65s 
+2025-05-16 17:24:16,198 - Train Loss: 1.1916 | Val Loss: 1.1994 | Test Loss: 1.2199 | Val IC Mean: 0.1248| Test IC Mean: 0.0576 
+2025-05-16 17:24:16,198 - Updating learning rate to 8.247029760465449e-05 
+2025-05-16 17:24:28,225 - 	time_step: 100, epoch: 22 | train_loss: 1.2095106 | cval_loss: 1.1848520 | cval_ic: 0.1504 
+2025-05-16 17:24:39,236 - 	time_step: 200, epoch: 22 | train_loss: 1.2192043 | cval_loss: 1.2320341 | cval_ic: 0.1008 
+2025-05-16 17:24:50,103 - 	time_step: 300, epoch: 22 | train_loss: 1.1676366 | cval_loss: 1.1932455 | cval_ic: 0.2063 
+2025-05-16 17:25:01,052 - 	time_step: 400, epoch: 22 | train_loss: 1.1993718 | cval_loss: 1.2246133 | cval_ic: 0.1060 
+2025-05-16 17:25:11,941 - 	time_step: 500, epoch: 22 | train_loss: 1.1732920 | cval_loss: 1.1919826 | cval_ic: 0.0725 
+2025-05-16 17:25:23,000 - 	time_step: 600, epoch: 22 | train_loss: 1.2249448 | cval_loss: 1.2069870 | cval_ic: 0.1547 
+2025-05-16 17:25:33,823 - 	time_step: 700, epoch: 22 | train_loss: 1.2122245 | cval_loss: 1.2366887 | cval_ic: 0.0862 
+2025-05-16 17:25:44,679 - 	time_step: 800, epoch: 22 | train_loss: 1.1340562 | cval_loss: 1.1644099 | cval_ic: 0.2236 
+2025-05-16 17:25:55,462 - 	time_step: 900, epoch: 22 | train_loss: 1.2034607 | cval_loss: 1.1362368 | cval_ic: 0.2571 
+2025-05-16 17:26:06,233 - 	time_step: 1000, epoch: 22 | train_loss: 1.2250198 | cval_loss: 1.1991006 | cval_ic: 0.1606 
+2025-05-16 17:26:17,086 - 	time_step: 1100, epoch: 22 | train_loss: 1.1990936 | cval_loss: 1.1504464 | cval_ic: 0.2306 
+2025-05-16 17:26:27,840 - 	time_step: 1200, epoch: 22 | train_loss: 1.1217152 | cval_loss: 1.1190228 | cval_ic: 0.1650 
+2025-05-16 17:26:38,661 - 	time_step: 1300, epoch: 22 | train_loss: 1.2523668 | cval_loss: 1.1864884 | cval_ic: 0.0636 
+2025-05-16 17:27:12,944 - Epoch: 21 | Time: 176.75s 
+2025-05-16 17:27:12,944 - Train Loss: 1.1904 | Val Loss: 1.1973 | Test Loss: 1.2191 | Val IC Mean: 0.1340| Test IC Mean: 0.0655 
+2025-05-16 17:27:12,948 - Updating learning rate to 7.938703110592242e-05 
+2025-05-16 17:27:25,210 - 	time_step: 100, epoch: 23 | train_loss: 1.1758285 | cval_loss: 1.0947200 | cval_ic: 0.3146 
+2025-05-16 17:27:36,155 - 	time_step: 200, epoch: 23 | train_loss: 1.2331553 | cval_loss: 1.1205763 | cval_ic: 0.2338 
+2025-05-16 17:27:47,025 - 	time_step: 300, epoch: 23 | train_loss: 1.2104501 | cval_loss: 1.2501690 | cval_ic: 0.0809 
+2025-05-16 17:27:57,975 - 	time_step: 400, epoch: 23 | train_loss: 1.1802012 | cval_loss: 1.1257708 | cval_ic: 0.2971 
+2025-05-16 17:28:08,848 - 	time_step: 500, epoch: 23 | train_loss: 1.1501439 | cval_loss: 1.1329716 | cval_ic: 0.2447 
+2025-05-16 17:28:19,626 - 	time_step: 600, epoch: 23 | train_loss: 1.1709936 | cval_loss: 1.2059289 | cval_ic: 0.0650 
+2025-05-16 17:28:30,483 - 	time_step: 700, epoch: 23 | train_loss: 1.1767176 | cval_loss: 1.2308515 | cval_ic: 0.0551 
+2025-05-16 17:28:41,465 - 	time_step: 800, epoch: 23 | train_loss: 1.2559997 | cval_loss: 1.1838624 | cval_ic: 0.1390 
+2025-05-16 17:28:52,360 - 	time_step: 900, epoch: 23 | train_loss: 1.1724727 | cval_loss: 1.1513797 | cval_ic: 0.1793 
+2025-05-16 17:29:03,203 - 	time_step: 1000, epoch: 23 | train_loss: 1.1465328 | cval_loss: 1.2578269 | cval_ic: 0.0894 
+2025-05-16 17:29:14,014 - 	time_step: 1100, epoch: 23 | train_loss: 1.1856240 | cval_loss: 1.1192672 | cval_ic: 0.1320 
+2025-05-16 17:29:25,033 - 	time_step: 1200, epoch: 23 | train_loss: 1.1100740 | cval_loss: 1.2399093 | cval_ic: 0.1257 
+2025-05-16 17:29:36,050 - 	time_step: 1300, epoch: 23 | train_loss: 1.1456949 | cval_loss: 1.2757552 | cval_ic: 0.0691 
+2025-05-16 17:30:10,576 - Epoch: 22 | Time: 177.63s 
+2025-05-16 17:30:10,577 - Train Loss: 1.1891 | Val Loss: 1.1988 | Test Loss: 1.2197 | Val IC Mean: 0.1230| Test IC Mean: 0.0518 
+2025-05-16 17:30:10,577 - Updating learning rate to 7.612258502130935e-05 
+2025-05-16 17:30:22,602 - 	time_step: 100, epoch: 24 | train_loss: 1.2064604 | cval_loss: 1.2121246 | cval_ic: 0.0520 
+2025-05-16 17:30:33,435 - 	time_step: 200, epoch: 24 | train_loss: 1.2083818 | cval_loss: 1.2303702 | cval_ic: 0.1190 
+2025-05-16 17:30:44,123 - 	time_step: 300, epoch: 24 | train_loss: 1.1722428 | cval_loss: 1.2166747 | cval_ic: 0.0868 
+2025-05-16 17:30:54,937 - 	time_step: 400, epoch: 24 | train_loss: 1.2367299 | cval_loss: 1.2222924 | cval_ic: 0.1604 
+2025-05-16 17:31:05,716 - 	time_step: 500, epoch: 24 | train_loss: 1.1651342 | cval_loss: 1.1866359 | cval_ic: 0.2001 
+2025-05-16 17:31:16,564 - 	time_step: 600, epoch: 24 | train_loss: 1.2564113 | cval_loss: 1.1889654 | cval_ic: 0.2284 
+2025-05-16 17:31:27,689 - 	time_step: 700, epoch: 24 | train_loss: 1.1738787 | cval_loss: 1.1433967 | cval_ic: 0.2488 
+2025-05-16 17:31:38,651 - 	time_step: 800, epoch: 24 | train_loss: 1.1954594 | cval_loss: 1.0985179 | cval_ic: 0.2070 
+2025-05-16 17:31:49,501 - 	time_step: 900, epoch: 24 | train_loss: 1.2250488 | cval_loss: 1.1895827 | cval_ic: 0.1231 
+2025-05-16 17:32:00,312 - 	time_step: 1000, epoch: 24 | train_loss: 1.1698399 | cval_loss: 1.2189648 | cval_ic: 0.1604 
+2025-05-16 17:32:11,026 - 	time_step: 1100, epoch: 24 | train_loss: 1.1604712 | cval_loss: 1.2314960 | cval_ic: 0.1060 
+2025-05-16 17:32:21,818 - 	time_step: 1200, epoch: 24 | train_loss: 1.2720273 | cval_loss: 1.1804264 | cval_ic: 0.1367 
+2025-05-16 17:32:32,679 - 	time_step: 1300, epoch: 24 | train_loss: 1.0964410 | cval_loss: 1.2249196 | cval_ic: 0.1735 
+2025-05-16 17:33:07,056 - Epoch: 23 | Time: 176.48s 
+2025-05-16 17:33:07,056 - Train Loss: 1.1880 | Val Loss: 1.1989 | Test Loss: 1.2216 | Val IC Mean: 0.1361| Test IC Mean: 0.0688 
+2025-05-16 17:33:07,056 - Updating learning rate to 7.269708574646541e-05 
+2025-05-16 17:33:19,067 - 	time_step: 100, epoch: 25 | train_loss: 1.1871033 | cval_loss: 1.1780496 | cval_ic: 0.2121 
+2025-05-16 17:33:29,905 - 	time_step: 200, epoch: 25 | train_loss: 1.1982362 | cval_loss: 1.2048721 | cval_ic: 0.0384 
+2025-05-16 17:33:40,722 - 	time_step: 300, epoch: 25 | train_loss: 1.1600598 | cval_loss: 1.1681511 | cval_ic: 0.1763 
+2025-05-16 17:33:51,596 - 	time_step: 400, epoch: 25 | train_loss: 1.1797893 | cval_loss: 1.1576564 | cval_ic: 0.1850 
+2025-05-16 17:34:02,561 - 	time_step: 500, epoch: 25 | train_loss: 1.1645714 | cval_loss: 1.1305165 | cval_ic: 0.1615 
+2025-05-16 17:34:13,524 - 	time_step: 600, epoch: 25 | train_loss: 1.1760683 | cval_loss: 1.2255311 | cval_ic: 0.2266 
+2025-05-16 17:34:24,460 - 	time_step: 700, epoch: 25 | train_loss: 1.1654785 | cval_loss: 1.1003263 | cval_ic: 0.2500 
+2025-05-16 17:34:35,363 - 	time_step: 800, epoch: 25 | train_loss: 1.1639934 | cval_loss: 1.1925784 | cval_ic: 0.1749 
+2025-05-16 17:34:46,198 - 	time_step: 900, epoch: 25 | train_loss: 1.1534702 | cval_loss: 1.1938353 | cval_ic: 0.1652 
+2025-05-16 17:34:57,241 - 	time_step: 1000, epoch: 25 | train_loss: 1.1847831 | cval_loss: 1.1721928 | cval_ic: 0.2104 
+2025-05-16 17:35:08,288 - 	time_step: 1100, epoch: 25 | train_loss: 1.1832715 | cval_loss: 1.1675786 | cval_ic: 0.1717 
+2025-05-16 17:35:19,181 - 	time_step: 1200, epoch: 25 | train_loss: 1.2068524 | cval_loss: 1.1968597 | cval_ic: 0.1833 
+2025-05-16 17:35:29,972 - 	time_step: 1300, epoch: 25 | train_loss: 1.1601040 | cval_loss: 1.1993366 | cval_ic: 0.0742 
+2025-05-16 17:36:04,142 - Epoch: 24 | Time: 177.09s 
+2025-05-16 17:36:04,142 - Train Loss: 1.1870 | Val Loss: 1.1986 | Test Loss: 1.2203 | Val IC Mean: 0.1254| Test IC Mean: 0.0524 
+2025-05-16 17:36:04,142 - -----------Early stopping---------- 
+2025-05-16 17:36:04,146 - last model saved with test ic : 0.0524 
+2025-05-16 17:36:17,392 - GRU final model test IC: 0.0524 
+2025-05-16 17:36:17,392 - GRU pred_arr shape:(242, 3873) 
+2025-05-16 17:37:14,074 - LightGBM test IC: 0.0626 
+2025-05-16 17:37:48,894 - xgBoost test IC: 0.0638 
+2025-05-16 17:43:26,543 - catBoost test IC: 0.0640 
+2025-05-16 17:43:26,554 - gbdt_pred_arr shape:(242, 3873) 
