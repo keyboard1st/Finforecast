@@ -131,8 +131,8 @@ def minute_align_fix_with_market(factor_value:pd.DataFrame, marketcap:pd.DataFra
     marketcap = marketcap.reindex(columns=common_cols)
     factor_value = factor_value.apply(adjust_row, axis=1)
     marketcap.index = pd.to_datetime(marketcap.index)
-    upsampled = marketcap.reindex(factor_value.index.normalize())
-    upsampled.index = factor_value.index
+    factor_value.index = pd.to_datetime(factor_value.index)
+    upsampled = marketcap.reindex(factor_value.index)
     factor_value = factor_value.where(upsampled>0)
 
     return factor_value

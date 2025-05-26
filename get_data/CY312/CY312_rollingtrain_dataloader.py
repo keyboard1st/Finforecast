@@ -50,16 +50,16 @@ def load_CY312rolling_x_parquet(x_type='CY_factor_lbl_align', sample_set = 'inne
     target_cols = label.columns
     file_list = [os.path.join(config.CY312_rollingmkt_align_path, f'{time_period}/F{i}_mkt_{sample_set}.parquet') for i in range(1, 313)]
 
-    with futures.ThreadPoolExecutor(max_workers=24) as executor:
+    def _load_std_and_select(path: str) -> pd.DataFrame:
+        df = pd.read_parquet(path)  # 读全表
+        df = standard(df)  # 行标准化
         if x_type == 'CY_factor_lbl_align':
-            def _load_and_proc(path):
-                df = pd.read_parquet(path)  # 读入全部列
-                df = standard(df)  # 先行标准化
-                return df.loc[:, target_cols]
+            # 仅在 lbl_align 模式下做列对齐
+            df = df.loc[:, target_cols]
+        return df
 
-            processed = list(executor.map(_load_and_proc, file_list))
-        elif x_type == 'CY_factor_mkt_align':
-            processed = list(executor.map(pd.read_parquet, file_list))
+    with futures.ThreadPoolExecutor(max_workers=24) as executor:
+        processed = list(executor.map(_load_std_and_select, file_list))
     factor_arr = np.array([df.values for df in processed]).transpose(2, 1, 0)
     return factor_arr
 

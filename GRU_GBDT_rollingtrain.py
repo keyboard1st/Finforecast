@@ -174,7 +174,7 @@ def rollingtrain_GRU_and_GBDT(config, TimeSeries_trainloader, TimeSeries_valiloa
 if __name__=='__main__':
     # from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingtrain_TimeSeriesLoader, get_DrJin129_rollingtrain_CrossSectionDatasetLoader
     from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingtrain_TimeSeriesLoader, get_CY312_rollingtrain_CrossSectionLoader
-    # config.task_name = 'CY_2023_2024_std'
+    # config.task_name = 'CY_2023_2024_twoGRU'
     # config.time_period = '2023-2024'
     # config.device = 'cuda:1'
 

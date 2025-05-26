@@ -36,9 +36,9 @@ from config import get_config
 
 class path:
     # models:
-    exp_path = '/home/hongkou/TimeSeries/exp/CY_2021_2022_std'
-    time_period = '2021-2022'
-    GRU_model_path = os.path.join(exp_path, 'models/last_model.pth')
+    exp_path = '/home/hongkou/TimeSeries/exp/CY_2023_2024_std'
+    time_period = '2023-2024'
+    GRU_model_path = os.path.join(exp_path, 'models/best_model.pth')
     lgbm_path = os.path.join(exp_path, 'models/lgbm.txt')
     cat_path = os.path.join(exp_path, 'models/catb.cbm')
     xgb_path = os.path.join(exp_path, 'models/xgb.xgb')
@@ -181,11 +181,11 @@ if __name__ == '__main__':
     backtest_res = {}
     for name, pred_df in tqdm(model_pred_df_dict.items()):
         pred_df = pred_df.astype(np.float32)
-        backtest_res[name] = backtest_strategy(pred_df, labels,market_cap)
+        backtest_res[name] = backtest_strategy(pred_df, labels, market_cap)
 
     plot_model_metrics_and_save(backtest_res, path.plot_path)
 
-    plot_ic_bar(ic_dict, path.plot_path)
+    # plot_ic_bar(ic_dict, path.plot_path)
 
 
 

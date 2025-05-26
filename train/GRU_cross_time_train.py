@@ -42,6 +42,57 @@ def validate_one_epoch(val_dataloader, model, criterion):
     avg_ic = np.mean(ic_list) if ic_list else 0
     return total_loss, avg_ic
 
+def train_one_epoch(config, epoch, model, train_dataloader, window_size, model_optim, criterion, scaler, scheduler, logger):
+    '''
+    :input:训练一轮所需参数
+    :return: 训练一轮的loss
+    '''
+    model.train()
+    train_loss = []
+
+    for time_step, (batch_x, batch_y) in enumerate(train_dataloader):
+        # print("train batch_x device", batch_x.device)
+        model.train()
+        batch_x = batch_x.float()
+        batch_y = batch_y.float()
+
+        batch_x, batch_y_dropna = filter_and_fillna(batch_x, batch_y)
+        # print("train batch_x device", batch_x.device)
+        if batch_x.shape[0] == 0:
+            print(f"{time_step} no valid x")
+            continue
+
+        model_optim.zero_grad()
+        n_chunks = 4
+        xb_chunks = torch.chunk(batch_x, n_chunks, dim=0)
+        yb_chunks = torch.chunk(batch_y_dropna, n_chunks, dim=0)
+        for xb_sub, y_sub in zip(xb_chunks, yb_chunks):
+            # xb_sub.shape == [B_i, T, C], y_sub.shape == [B_i, ...]
+            with torch.autocast(device_type="cuda", dtype=torch.float16):
+                out = model(xb_sub)
+                # print("out put device", out.device)
+                loss = criterion(out, y_sub)
+                scaler.scale(loss / n_chunks).backward()
+        scaler.step(model_optim)
+        scaler.update()
+
+        train_loss.append(loss.item())
+
+
+        if (time_step + 1) % 100 == 0:
+            logger.info(
+                "\ttime_step: {0}, epoch: {1} | train_loss: {2:.7f}".format(
+                    time_step + 1, epoch + 1, loss.item()))
+
+        if config.lradj == 'TST':
+            scheduler.step()
+    if train_loss:
+        epoch_train_loss = np.mean(train_loss)
+    else:
+        raise ValueError("No training loss")
+
+    return epoch_train_loss, model
+
 def train_one_epoch_and_validate(config, epoch, model, train_dataloader, window_size, idx, cache, model_optim, criterion, scaler, scheduler, logger):
     '''
     :input:训练一轮所需参数
@@ -146,6 +197,73 @@ def GRU_pred_market(mkt_align_x_loader, model):
             pred_list.append(pred_cpu)
     pred_arr = np.concatenate([p.reshape(-1, p.shape[0]) for p in pred_list], axis=0)
     return pred_arr
+
+# 普通训练
+def norm_train(config, train_dataloader, val_dataloader, test_dataloader, model, early_stopping, model_optim, criterion, scheduler, logger, scaler):
+    device = torch.device(config.device if torch.cuda.is_available() else 'cpu')
+    # print("train",device)
+    window_size, lradj, exp_path, train_epochs = config.window_size, config.lradj, config.exp_path, config.train_epochs
+
+    if not os.path.exists(os.path.join(exp_path, 'models/')):
+        os.makedirs(os.path.join(exp_path, 'models/'))
+    # model and loss
+    model = model.to(device)
+    # print("model.device:", next(model.parameters()).device)
+    criterion = criterion.to(device)
+
+    # metrics
+    best_ic = 0
+    metrics = TrainingMetrics(exp_path)
+
+    # ---------train epochs-------------
+    for epoch in range(train_epochs):
+        epoch_time = time.time()
+
+        # -----------train one epoch and validate---------------
+        epoch_train_loss, model = train_one_epoch(config, epoch, model, train_dataloader, window_size, model_optim, criterion, scaler, scheduler, logger)
+
+        vali_loss, vali_ic_mean = validate_one_epoch(val_dataloader, model, criterion)
+        test_loss, test_ic_mean = validate_one_epoch(test_dataloader, model, criterion)
+
+        logger.info("Epoch: {} | Time: {:.2f}s".format(epoch, time.time() - epoch_time))
+        logger.info("Train Loss: {:.4f} | Val Loss: {:.4f} | Test Loss: {:.4f} | Val IC Mean: {:.4f}| Test IC Mean: {:.4f}".format(epoch_train_loss, vali_loss, test_loss, vali_ic_mean, test_ic_mean))
+
+        early_model_path = os.path.join(exp_path, 'models/early_model.pth')
+        early_stopping(vali_loss, model, early_model_path)
+        if early_stopping.early_stop:
+            logger.info("-----------Early stopping----------")
+            break
+
+        if lradj == 'TST':
+            logger.info('Updating learning rate to {}'.format(scheduler.get_last_lr()[0]))
+        elif lradj == 'cos':
+            scheduler.step(epoch)
+            logger.info('Updating learning rate to {}'.format(scheduler.get_last_lr()[0]))
+
+        metrics.add_metrics(
+            epoch=epoch,
+            train_loss=epoch_train_loss,
+            val_loss=vali_loss,
+            test_loss=test_loss,
+            val_ic_mean=vali_ic_mean,
+            test_ic_mean=test_ic_mean,
+            lr=model_optim.param_groups[0]['lr']
+        )
+
+        best_model_path = os.path.join(exp_path, 'models/best_model.pth')
+        if best_ic < test_ic_mean:
+            best_ic = test_ic_mean
+            torch.save(model.state_dict(), best_model_path)
+            logger.info(f"best model saved with test ic : {best_ic:.4f}")
+
+    last_model_path = os.path.join(exp_path, 'models/last_model.pth')
+    torch.save(model.state_dict(), last_model_path)
+    logger.info(f"last model saved with test ic : {test_ic_mean:.4f}")
+    metrics.plot_loss(prefix="final_")
+    metrics.plot_ic(prefix="final_")
+    metrics.plot_lr(prefix="final_")
+    df_metrics = metrics.to_dataframe()
+    return model, df_metrics
 
 # 普通训练并滚动验证
 def train_and_cross_time_train(config, train_dataloader, val_dataloader, test_dataloader, model, early_stopping, model_optim, criterion, scheduler, logger, scaler):
