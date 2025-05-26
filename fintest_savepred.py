@@ -1,32 +1,24 @@
-import os
-import torch
-import joblib
-import numpy as np
-import pandas as pd
-from tqdm import tqdm
+import warnings
 from copy import deepcopy
-
-from metrics.backtest import *
-from metrics.calculate_ic import models_ic_plot, plot_ic_bar
-from model.GRU_model import *
-from model.GRU_attention import AttGRU
-from model.TimeMixer import TimeMixer
-
-
-from train.GBDT_trainer import tree_test, tree_pred
-from train.GRU_cross_time_train import GRU_fin_test, GRU_pred_market
-
-# from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingtrain_TimeSeriesLoader, get_DrJin129_rollingtrain_CrossSectionDatasetLoader
-# from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingfintest_TimeSeriesLoader, get_DrJin129_rollingfintest_CrossSectionDatasetLoader
-from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingtrain_TimeSeriesLoader, get_CY312_rollingtrain_CrossSectionLoader
-from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingfintest_TimeSeriesloader, get_CY312_rollingfintest_CrossSectionLoader
 
 import lightgbm as lgb
 import xgboost as xgb
-import catboost as catb
-from catboost import CatBoostRegressor, Pool
+from catboost import CatBoostRegressor
 
-import warnings
+from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingfintest_TimeSeriesloader, \
+    get_CY312_rollingfintest_CrossSectionLoader
+# from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingtrain_TimeSeriesLoader, get_DrJin129_rollingtrain_CrossSectionDatasetLoader
+# from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingfintest_TimeSeriesLoader, get_DrJin129_rollingfintest_CrossSectionDatasetLoader
+from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingtrain_TimeSeriesLoader, \
+    get_CY312_rollingtrain_CrossSectionLoader
+from metrics.backtest import *
+from metrics.calculate_ic import ic_between_models_plot
+from model.GRU_attention import AttGRU
+from model.GRU_model import *
+from model.TimeMixer import TimeMixer
+from train.GBDT_trainer import tree_test, tree_pred
+from train.GRU_cross_time_train import GRU_fin_test, GRU_pred_market
+
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -39,6 +31,8 @@ class path:
     exp_path = '/home/hongkou/TimeSeries/exp/CY_2023_2024_std'
     time_period = '2023-2024'
     GRU_model_path = os.path.join(exp_path, 'models/best_model.pth')
+    use_minute_model = True
+    minuter_model_path = os.path.join(exp_path, '/home/hongkou/TimeSeries/exp/minute10_2021_2022/models/best_model.pth')
     lgbm_path = os.path.join(exp_path, 'models/lgbm.txt')
     cat_path = os.path.join(exp_path, 'models/catb.cbm')
     xgb_path = os.path.join(exp_path, 'models/xgb.xgb')
@@ -81,6 +75,8 @@ elif config.model_type == 'AttGRU':
 else:
     raise ValueError("model_type must be GRU or BiGRU")
 
+
+
 # load model from path
 state_dict = torch.load(path.GRU_model_path, map_location='cpu')
 # 加载 state_dict
@@ -88,6 +84,18 @@ GRU_model.load_state_dict(state_dict)
 # 然后将模型移动到 GPU（如果你需要）
 GRU_model = GRU_model.to(device)
 print(f'loading GRU model from{path.GRU_model_path}')
+
+if config.use_minute_model:
+    print(f'loading minute model from{path.minuter_model_path}')
+    Minute_model = TimeMixer(config)
+    # load model from path
+    minute_state_dict = torch.load(path.minuter_model_path, map_location='cpu')
+    # 加载 state_dict
+    Minute_model.load_state_dict(minute_state_dict)
+    # 然后将模型移动到 GPU（如果你需要）
+    Minute_model = Minute_model.to(device)
+    print(f'loading minute model from {path.minuter_model_path}')
+
 
 xgb_model = xgb.XGBRegressor()
 xgb_model.load_model(path.xgb_path)
@@ -98,10 +106,11 @@ models = {
     "GRU": GRU_model,
     "XGBoost": xgb_model,
     "LightGBM": lgb_model,
-    "CatBoost": cat_model
+    "CatBoost": cat_model,
+    "Minute": Minute_model if config.use_minute_model else None
 }
 
-def test_all_model(TimeSeries_xy_loader, CrossSection_xy_loader, **models):
+def test_all_model(TimeSeries_xy_loader, CrossSection_xy_loader, Minute_xy_loader = None, **models):
     model_pred_dict = {}  # 用来存各个模型的 pred_arr
     for name, model in models.items():
         if name == 'GRU':
@@ -111,6 +120,12 @@ def test_all_model(TimeSeries_xy_loader, CrossSection_xy_loader, **models):
             print("GRU true shape ", GRU_true.shape)
             model_pred_dict[name] = GRU_pred_arr
             model_pred_dict['label'] = GRU_true
+        elif name == 'Minute' and config.use_minute_model:
+            print('----------------------Minute test-----------------------')
+            Minute_pred_arr, Minute_true = GRU_fin_test(Minute_xy_loader, model)
+            print("Minute pred shape ", Minute_pred_arr.shape)
+            print("Minute true shape ", Minute_true.shape)
+            model_pred_dict[name] = Minute_pred_arr
         else:
             print(f'----------------------{name} test-----------------------')
             cur_loader = deepcopy(CrossSection_xy_loader)
@@ -119,15 +134,9 @@ def test_all_model(TimeSeries_xy_loader, CrossSection_xy_loader, **models):
             print(f"{name} true shape ", tree_true.shape)
             model_pred_dict[name] = tree_pred_arr
 
-    model_pred_dict['LightGBM & CatBoost'] = (model_pred_dict['LightGBM'] + model_pred_dict['CatBoost']) / 2
-    model_pred_dict['LightGBM & XGBoost & CatBoost'] = (model_pred_dict['XGBoost'] + model_pred_dict['LightGBM'] + model_pred_dict['CatBoost']) / 3
-    model_pred_dict['GRU & LightGBM'] = (model_pred_dict['GRU'] + model_pred_dict['LightGBM']) / 2
-    model_pred_dict['GRU & LightGBM & CatBoost'] = model_pred_dict['GRU'] / 2 + model_pred_dict['LightGBM'] / 4 + model_pred_dict['CatBoost'] / 4
-    model_pred_dict['GRU & LightGBM & CatBoost & XgBoost'] = model_pred_dict['GRU'] / 2 + model_pred_dict['LightGBM'] / 6 + model_pred_dict['CatBoost'] / 6 + model_pred_dict['XGBoost'] / 6
-
     return model_pred_dict
 
-def pred_all_model(TimeSeries_x_loader, CrossSection_x_loader, index_and_clos, **models):
+def pred_all_model(TimeSeries_x_loader, CrossSection_x_loader, index_and_clos, Minute_x_loader = None, **models):
     model_pred_df_dict = {}
     for name, model in models.items():
         if name == 'GRU':
@@ -138,6 +147,14 @@ def pred_all_model(TimeSeries_x_loader, CrossSection_x_loader, index_and_clos, *
             GRU_fin_pred_df.index = index_and_clos.index
             GRU_fin_pred_df.columns = index_and_clos.columns
             model_pred_df_dict[name] = GRU_fin_pred_df
+        elif name == 'Minute' and config.use_minute_model:
+            print('----------------------Minute Pred-----------------------')
+            Minute_pred_arr = GRU_pred_market(Minute_x_loader, model)
+            print("Minute pred shape ", Minute_pred_arr.shape)
+            Minute_fin_pred_df = pd.DataFrame(Minute_pred_arr)
+            Minute_fin_pred_df.index = index_and_clos.index
+            Minute_fin_pred_df.columns = index_and_clos.columns
+            model_pred_df_dict[name] = Minute_fin_pred_df
         else:
             print(f'----------------------{name} Pred-----------------------')
             cur_loader = deepcopy(CrossSection_x_loader)
@@ -150,11 +167,12 @@ def pred_all_model(TimeSeries_x_loader, CrossSection_x_loader, index_and_clos, *
 
     model_pred_df_dict['LightGBM & CatBoost'] = (model_pred_df_dict['LightGBM'] + model_pred_df_dict['CatBoost']) / 2
     model_pred_df_dict['LightGBM & XGBoost & CatBoost'] = (model_pred_df_dict['XGBoost'] + model_pred_df_dict['LightGBM'] + model_pred_df_dict['CatBoost']) / 3
-    model_pred_df_dict['GRU & LightGBM'] = (model_pred_df_dict['GRU'] + model_pred_df_dict['LightGBM']) / 2
-    model_pred_df_dict['GRU & LightGBM & CatBoost'] = model_pred_df_dict['GRU'] / 2 + model_pred_df_dict['LightGBM'] / 4 + model_pred_df_dict['CatBoost'] / 4
-    model_pred_df_dict['GRU & LightGBM & CatBoost & XgBoost'] = model_pred_df_dict['GRU'] / 2 + model_pred_df_dict['LightGBM'] / 6 + model_pred_df_dict['CatBoost'] / 6 + model_pred_df_dict['XGBoost'] / 6
 
     return model_pred_df_dict
+
+def model_mixer(model_pred_df_dict):
+    print('----------------------model_mixer-----------------------')
+
 
 def save_pred(model_pred_df_dict):
     ic_dict = {}
@@ -174,7 +192,7 @@ if __name__ == '__main__':
     trees_mkt_align_x_loader = get_CY312_rollingfintest_CrossSectionLoader(time_period=path.time_period)
     # test all models and caluculate TEST ic
     model_pred_dict = test_all_model(GRU_label_align_xy_loader, tree_label_align_xy_loader, **models)
-    models_ic_plot(model_pred_dict, path.plot_path)
+    ic_between_models_plot(model_pred_dict, path.plot_path)
     model_pred_df_dict = pred_all_model(GRU_mkt_align_x_loader, trees_mkt_align_x_loader, index_and_clos, **models)
     ic_dict = save_pred(model_pred_df_dict)
     # 开始回测

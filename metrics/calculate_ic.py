@@ -1,7 +1,6 @@
-from matplotlib import pyplot as plt
-import pandas as pd
 import numpy as np
-import torch
+import pandas as pd
+from matplotlib import pyplot as plt
 
 
 def ic_between_timestep(pred, y):
@@ -36,7 +35,7 @@ def ic_between_arr_new(pred, y):
             ic_list.append(ic)
     return np.nanmean(ic_list)
 
-def models_ic_plot(model_pred_dict, save_path):
+def ic_between_models_plot(model_pred_dict, save_path):
 
     true = model_pred_dict['label']
     model_pred_dict.pop('label', None)
