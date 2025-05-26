@@ -1,25 +1,22 @@
+import os
+import random
+import warnings
+from copy import deepcopy
+
+import numpy as np
 import torch.optim as optim
 from torch.optim import lr_scheduler
 
-from model.losses import get_criterion
-from model.GRU_model import *
-from model.GRU_attention import AttGRU
-from model.TimeMixer import TimeMixer
-import lightgbm as lgb
-
-from utils.tools import EarlyStopping
 from metrics.calculate_ic import ic_between_arr
 from metrics.log import *
-
-from train.GRU_cross_time_train import train_and_cross_time_train, GRU_fin_test
+from model.GRU_attention import AttGRU
+from model.GRU_model import *
+from model.TimeMixer import TimeMixer
+from model.losses import get_criterion
 from train.GBDT_trainer import lgb_train_and_test, xgb_train_and_test, cat_train_and_test
+from train.GRU_cross_time_train import train_and_cross_time_train, GRU_fin_test
+from utils.tools import EarlyStopping
 
-import os
-import gc
-import warnings
-import numpy as np
-import random
-from copy import deepcopy
 warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -32,7 +29,7 @@ sys.path.append(PROJECT_ROOT)
 from config import get_config
 config = get_config()
 
-random_seed = 42
+random_seed = config.random_seed
 random.seed(random_seed)
 np.random.seed(random_seed)
 
@@ -172,15 +169,15 @@ def rollingtrain_GRU_and_GBDT(config, TimeSeries_trainloader, TimeSeries_valiloa
 
 
 if __name__=='__main__':
-    # from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingtrain_TimeSeriesLoader, get_DrJin129_rollingtrain_CrossSectionDatasetLoader
-    from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingtrain_TimeSeriesLoader, get_CY312_rollingtrain_CrossSectionLoader
+    from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingtrain_TimeSeriesLoader, get_DrJin129_rollingtrain_CrossSectionDatasetLoader
+    # from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingtrain_TimeSeriesLoader, get_CY312_rollingtrain_CrossSectionLoader
     # config.task_name = 'CY_2023_2024_twoGRU'
     # config.time_period = '2023-2024'
     # config.device = 'cuda:1'
 
-    TimeSeries_trainloader, TimeSeries_valiloader, TimeSeries_testloader = get_CY312_rollingtrain_TimeSeriesLoader(batchsize = 1, shuffle_time = config.shuffle_time, window_size = config.window_size,
+    TimeSeries_trainloader, TimeSeries_valiloader, TimeSeries_testloader = get_DrJin129_rollingtrain_TimeSeriesLoader(batchsize = 1, shuffle_time = config.shuffle_time, window_size = config.window_size,
                                                                                                                       num_val_windows = config.num_val_windows, val_sample_mode = 'random', time_period = config.time_period, config=config)
-    CrossSection_trainloader, CrossSection_testloader = get_CY312_rollingtrain_CrossSectionLoader(batchsize="all", shuffle_time=False, time_period = config.time_period)
+    CrossSection_trainloader, CrossSection_testloader = get_DrJin129_rollingtrain_CrossSectionDatasetLoader(batchsize="all", shuffle_time=False, time_period = config.time_period)
     rollingtrain_GRU_and_GBDT(config, TimeSeries_trainloader, TimeSeries_valiloader, TimeSeries_testloader,CrossSection_trainloader, CrossSection_testloader)
 
     # config.task_name = 'Jin_2021_2022_test'

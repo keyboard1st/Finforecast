@@ -9,14 +9,15 @@ def get_config():
     parser.add_argument('--task_name', type=str, default='minute10_2021_2022', help='实验任务')
     parser.add_argument('--train_model', type=str, default='rollingtrain',choices=['rollingtrain', 'last_year_train'], help='训练模式')
     parser.add_argument('--time_period', type=str, default='2021-2022', help='用于滚动训练的时间段标识')
-    parser.add_argument('--factor_name', type=str, default='minute10',choices=['Ding128', 'CY312', 'DrJin129', 'minute10'], help='因子类型')
+    parser.add_argument('--factor_name', type=str, default='CY312',choices=['Ding128', 'CY312', 'DrJin129', 'minute10'], help='因子类型')
     parser.add_argument('--device', type=str, default='cuda:1',help='运行设备')
+    parser.add_argument('--random_seed', type=int, default=42, help='随机种子')
 
     # 模型基础配置
     parser.add_argument('--model_type', type=str, default='TimeMixer', choices=['GRU', 'BiGRU', 'two_GRU', 'AttGRU','TimeMixer'], help='模型类型')
-    parser.add_argument('--input_dim', type=int, default=37, help='输入特征维度')
-    parser.add_argument('--window_size', type=int, default=4, help='滑动窗口大小')
-    parser.add_argument('--hidden_dim', type=int, default=16, help='隐藏层维度')
+    parser.add_argument('--input_dim', type=int, default=312, help='输入特征维度')
+    parser.add_argument('--window_size', type=int, default=30, help='滑动窗口大小')
+    parser.add_argument('--hidden_dim', type=int, default=128, help='隐藏层维度')
     parser.add_argument('--num_layers', type=int, default=3, help='网络层数')
     parser.add_argument('--output_dim', type=int, default=1, help='输出维度')
     parser.add_argument('--dropout', type=float, default=0.0, help='Dropout概率')
@@ -26,7 +27,7 @@ def get_config():
     parser.add_argument('--learning_rate', type=float, default=0.0001, help='学习率')
     parser.add_argument('--optimizer', type=str, default='Adam', choices=['Adam', 'AdamW', 'SGD'], help='优化器选择')
     parser.add_argument('--shuffle_time', default=True, help='是否打乱时间序列')
-    parser.add_argument('--early_stop_patience', type=int, default=7, help='早停等待轮数')
+    parser.add_argument('--early_stop_patience', type=int, default=3, help='早停等待轮数')
     parser.add_argument('--train_epochs', type=int, default=50, help='训练轮数')
 
     # 数据配置

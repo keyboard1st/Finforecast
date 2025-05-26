@@ -1,10 +1,10 @@
+import os
+import sys
+from concurrent import futures
+
 import numpy as np
 import pandas as pd
-import os
-from concurrent import futures
-from tqdm import tqdm
-import sys
-import os
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import torch
@@ -12,9 +12,7 @@ from torch.utils.data import Subset
 from torch.utils.data import DataLoader, Dataset, SubsetRandomSampler
 import random
 
-random_seed = 42
-random.seed(random_seed)
-np.random.seed(random_seed)
+
 
 
 
@@ -106,6 +104,10 @@ class DrJin129_rollingtrain_TimeSeriesDataset(Dataset):
 
 def get_DrJin129_rollingtrain_TimeSeriesLoader(batchsize = 1, shuffle_time = True, window_size = 30, num_val_windows = 100, val_sample_mode = 'random', time_period:str = '2021-2022', config = None):
     device = torch.device(config.device if torch.cuda.is_available() else "cpu")
+    random_seed = config.random_seed
+    random.seed(random_seed)
+    np.random.seed(random_seed)
+    print('random_seed:', random_seed)
 
     # 拼接训练集和测试集
     daydata_train = DrJin129_rollingtrain_TimeSeriesDataset('inner', window_size, time_period=time_period)

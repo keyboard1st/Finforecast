@@ -151,12 +151,12 @@ class min10_rollingfintest_TimeSeriesDataset(Dataset):
         X = self.data[:, start_idx:end_idx,:]
         return X
 
-def get_min10_rollingfintest_TimeSeriesloader(batchsize = 1, window_size = 30, time_period:str = '2021-2022', config=None):
+def get_min10_rollingfintest_TimeSeriesloader(batchsize = 1, window_size = 4, time_period:str = '2021-2022', config=None):
     device = torch.device(config.device if torch.cuda.is_available() else "cpu")
 
     # 拼接训练集和测试集
     daydata_train = min10_rollingfintest_TimeSeriesDataset('inner', window_size, time_period=time_period)
-    train_last_window = daydata_train.data[:, -window_size+1:, :]
+    train_last_window = daydata_train.data[:, -(window_size-1)*24:, :]
     daydata_test_original = min10_rollingfintest_TimeSeriesDataset('outer', window_size, time_period=time_period)
     augmented_test_data = np.concatenate(
         [train_last_window, daydata_test_original.data],
@@ -179,7 +179,7 @@ def get_min10_rollingfintest_TimeSeriesloader(batchsize = 1, window_size = 30, t
             x_tensor = x_tensor.squeeze(0)
 
             return x_tensor
-    test_dataloader = DataLoader(daydata_test, batch_size=batchsize,collate_fn=squeeze_collate)
+    test_dataloader = DataLoader(daydata_test, batch_size=batchsize, collate_fn=squeeze_collate)
 
     return test_dataloader
 
@@ -187,5 +187,7 @@ def get_min10_rollingfintest_TimeSeriesloader(batchsize = 1, window_size = 30, t
 if __name__ == '__main__':
     from config import get_config
     config = get_config()
-    train_dataloader, val_dataloader, test_dataloader = get_min10_rollingtrain_TimeSeriesLoader(batchsize = 1, shuffle_time = True, window_size = 4, num_val_windows = 100, val_sample_mode = 'random', time_period = '2023-2024', config = config)
-    print()
+    test_dataloader = get_min10_rollingfintest_TimeSeriesloader(batchsize = 1, window_size = 4, time_period = '2021-2022', config=config)
+    for i, x in enumerate(test_dataloader):
+        print(x.shape)
+        break
