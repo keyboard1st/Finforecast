@@ -1,11 +1,7 @@
 import os
+import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
-import numpy as np
-import pandas as pd
-import torch
-from torch.utils.data import DataLoader, Dataset, SubsetRandomSampler
-import sys
 sys.path.append(
     os.path.dirname(
        os.path.dirname( __file__)
@@ -16,6 +12,7 @@ from process_tools import *
 from tqdm import tqdm
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 
 
@@ -50,7 +47,8 @@ def read_factors_align_fix(file_path,mkt_inner, mkt_outer,sample_set,inner_start
         f_align_mkt_outer = minute_align_fix_with_market(f_outer, mkt_outer)
         return f_align_mkt_outer
 
-file_list = [os.path.join(config.factor_path, file) for file in sorted(os.listdir(config.factor_path))]
+exclude = {'ret30min.npy'}
+file_list = sorted(os.path.join(config.factor_path, fn) for fn in os.listdir(config.factor_path) if fn.endswith('.npy') and fn not in exclude)
 
 if __name__=='__main__':
     TIME_PERIODS = [

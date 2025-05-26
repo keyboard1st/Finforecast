@@ -1,5 +1,5 @@
 import argparse
-import os
+
 
 def get_config():
     """使用argparse配置实验参数"""
@@ -45,6 +45,7 @@ def get_config():
     parser.add_argument('--enc_in', type=int, default=37,help='Encoder 输入通道数（等同 input_dim）')
     parser.add_argument('--dec_in', type=int, default=37,help='Decoder 输入通道数（等同 input_dim）')
     parser.add_argument('--c_out', type=int, default=37,help='模型输出通道数（等同 input_dim）')
+    parser.add_argument('--d_model', type=int, default=16, help='dimension of model')
     parser.add_argument('--down_sampling_layers', type=int, default=3,help='下采样层数')
     parser.add_argument('--down_sampling_window', type=int, default=3,help='下采样窗口大小')
     parser.add_argument('--e_layers', type=int, default=3,help='PBM 层数')

@@ -1,11 +1,11 @@
+import psutil
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+
 from model.layers.Autoformer_EncDec import series_decomp
 from model.layers.Embed import DataEmbedding_wo_pos
 from model.layers.StandardNorm import Normalize
-import time
-import psutil
+
 process = psutil.Process()
 
 class DFT_series_decomp(nn.Module):
@@ -124,7 +124,7 @@ class PastDecomposableMixing(nn.Module):
         self.pred_len = configs.pred_len
         self.down_sampling_window = configs.down_sampling_window
 
-        self.layer_norm = nn.LayerNorm(configs.hidden_dim)
+        self.layer_norm = nn.LayerNorm(configs.d_model)
         self.dropout = nn.Dropout(configs.dropout)
 
         if configs.decomp_method == 'moving_avg':
@@ -141,9 +141,9 @@ class PastDecomposableMixing(nn.Module):
         self.mixing_multi_scale_trend = MultiScaleTrendMixing(configs)
 
         self.out_cross_layer = nn.Sequential(
-            nn.Linear(in_features=configs.hidden_dim, out_features=configs.d_ff),
+            nn.Linear(in_features=configs.d_model, out_features=configs.d_ff),
             nn.GELU(),
-            nn.Linear(in_features=configs.d_ff, out_features=configs.hidden_dim),
+            nn.Linear(in_features=configs.d_ff, out_features=configs.d_model),
         )
 
     def forward(self, x_list):
@@ -193,7 +193,7 @@ class TimeMixer(nn.Module):
         self.preprocess = series_decomp(configs.moving_avg)
         self.enc_in = configs.enc_in
 
-        self.enc_embedding = DataEmbedding_wo_pos(1, configs.hidden_dim, configs.dropout)
+        self.enc_embedding = DataEmbedding_wo_pos(1, configs.d_model, configs.dropout)
 
         self.layer = configs.e_layers
 
@@ -215,12 +215,12 @@ class TimeMixer(nn.Module):
         )
 
         self.projection_layer = nn.Linear(
-                configs.hidden_dim, 1, bias=True)
+                configs.d_model, 1, bias=True)
 
         self.fc = nn.Sequential(
-            nn.Linear(in_features=configs.input_dim, out_features=configs.input_dim//2),
+            nn.Linear(in_features=configs.enc_in, out_features=configs.enc_in//2),
             nn.GELU(),
-            nn.Linear(in_features=configs.input_dim//2, out_features=1),
+            nn.Linear(in_features=configs.enc_in//2, out_features=1),
         )
         self.model_name = 'TimeMixer'
 
@@ -328,19 +328,17 @@ class TimeMixer(nn.Module):
 
 if __name__=='__main__':
 
-    device = torch.device(config.device if torch.cuda.is_available() else 'cpu')
     torch.manual_seed(42)
 
     # 测试参数
     batch_size = 3773
     seq_len = 96
-    input_dim = 129
+    enc_in = 129
     class config:
         seq_len = seq_len
-        input_dim = input_dim
-        enc_in = input_dim
-        dec_in = input_dim
-        c_out = input_dim
+        enc_in = enc_in
+        dec_in = enc_in
+        c_out = enc_in
         down_sampling_layers = 3
         down_sampling_window = 2
         e_layers = 3    # pbm_layers
@@ -348,7 +346,7 @@ if __name__=='__main__':
         down_sampling_method = 'avg'
         moving_avg = 25
         pred_len = 1
-        hidden_dim = 16
+        d_model = 16
         d_ff = 32
         output_dim = 1
         dropout = 0.2
@@ -359,8 +357,7 @@ if __name__=='__main__':
     model = TimeMixer(config)
 
     # 创建随机输入数据
-    x = torch.randn(batch_size, seq_len, input_dim) # 形状 [batch_size, seq_len, input_dim]
-    x.to(device)
+    x = torch.randn(batch_size, seq_len, enc_in) # 形状 [batch_size, seq_len, input_dim]
 
     # 切换模型到评估模式
     model.eval()
