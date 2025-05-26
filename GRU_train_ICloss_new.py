@@ -1,25 +1,20 @@
+import os
+import random
+import warnings
+
+import numpy as np
 import torch.optim as optim
 from torch.optim import lr_scheduler
 
-from model.losses import get_criterion
-from model.GRU_model import *
-from model.GRU_attention import AttGRU
-from model.TimeMixer import TimeMixer
-import lightgbm as lgb
-
-from utils.tools import EarlyStopping
 from metrics.calculate_ic import ic_between_arr
 from metrics.log import *
-
+from model.GRU_attention import AttGRU
+from model.GRU_model import *
+from model.TimeMixer import TimeMixer
+from model.losses import get_criterion
 from train.GRU_cross_time_train import norm_train, GRU_fin_test
-from train.GBDT_trainer import lgb_train_and_test, xgb_train_and_test, cat_train_and_test
+from utils.tools import EarlyStopping
 
-import os
-import gc
-import warnings
-import numpy as np
-import random
-from copy import deepcopy
 warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -130,8 +125,8 @@ def GRU_train_and_test(config, TimeSeries_trainloader, TimeSeries_valiloader, Ti
 
 if __name__ == '__main__':
     from get_data.minute_factors.min_CS_dataloader import get_min10_rollingtrain_TimeSeriesLoader
-    config.task_name = 'minute10_2023_2024'
-    config.time_period = '2023-2024'
+    config.task_name = 'minute10_2021_2022'
+    config.time_period = '2021-2022'
     config.device = 'cuda:3'
     train_dataloader, val_dataloader, test_dataloader = get_min10_rollingtrain_TimeSeriesLoader(batchsize = 1, shuffle_time = True, window_size = 4, num_val_windows = 100, val_sample_mode = 'random', time_period = config.time_period, config = config)
 
