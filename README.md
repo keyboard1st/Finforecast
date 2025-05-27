@@ -37,7 +37,7 @@ Finforecast是一个用于金融alpha预测的机器学习模型库，包含了�
 - LightGBM 4.6.0
 - XGBoost 3.0.0
 - CatBoost 1.2.8
-- 
+
 ### 安装
 
 ```bash
