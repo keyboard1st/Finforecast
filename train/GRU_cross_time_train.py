@@ -1,16 +1,17 @@
-from tqdm import tqdm
-import time
-import random
-from collections import deque
 import os
-import torch
+import random
+import time
+from collections import deque
+
 import numpy as np
 import pandas as pd
+import torch
+from tqdm import tqdm
 
-from model.losses import IC_loss_double_diff
-from metrics.calculate_ic import ic_between_timestep, ic_between_arr
-from utils.fillna import filter_and_fillna, dropx_and_fillna
+from metrics.calculate_ic import ic_between_timestep
 from metrics.train_plot import TrainingMetrics
+from model.losses import IC_loss_double_diff
+from utils.fillna import filter_and_fillna
 
 
 def validate_one_epoch(val_dataloader, model, criterion):
@@ -63,7 +64,7 @@ def train_one_epoch(config, epoch, model, train_dataloader, window_size, model_o
             continue
 
         model_optim.zero_grad()
-        n_chunks = 4
+        n_chunks = 8
         xb_chunks = torch.chunk(batch_x, n_chunks, dim=0)
         yb_chunks = torch.chunk(batch_y_dropna, n_chunks, dim=0)
         for xb_sub, y_sub in zip(xb_chunks, yb_chunks):

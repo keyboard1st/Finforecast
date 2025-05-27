@@ -6,7 +6,7 @@ def get_config():
     parser = argparse.ArgumentParser(description="实验参数配置")
 
     # 训练任务配置
-    parser.add_argument('--task_name', type=str, default='minute10_2021_2022', help='实验任务')
+    parser.add_argument('--task_name', type=str, default='Jin_2021_2022_randomseed0', help='实验任务')
     parser.add_argument('--train_model', type=str, default='rollingtrain',choices=['rollingtrain', 'last_year_train'], help='训练模式')
     parser.add_argument('--time_period', type=str, default='2021-2022', help='用于滚动训练的时间段标识')
     parser.add_argument('--factor_name', type=str, default='DrJin129',choices=['Ding128', 'CY312', 'DrJin129', 'minute10'], help='因子类型')
@@ -17,7 +17,7 @@ def get_config():
     parser.add_argument('--model_type', type=str, default='AttGRU', choices=['GRU', 'BiGRU', 'two_GRU', 'AttGRU','TimeMixer'], help='模型类型')
     parser.add_argument('--input_dim', type=int, default=129, help='输入特征维度')
     parser.add_argument('--window_size', type=int, default=30, help='滑动窗口大小')
-    parser.add_argument('--hidden_dim', type=int, default=128, help='隐藏层维度')
+    parser.add_argument('--hidden_dim', type=int, default=256, help='隐藏层维度')
     parser.add_argument('--num_layers', type=int, default=3, help='网络层数')
     parser.add_argument('--output_dim', type=int, default=1, help='输出维度')
     parser.add_argument('--dropout', type=float, default=0.0, help='Dropout概率')
