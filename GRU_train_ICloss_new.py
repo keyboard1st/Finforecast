@@ -124,12 +124,12 @@ def GRU_train_and_test(config, TimeSeries_trainloader, TimeSeries_valiloader, Ti
 
 if __name__ == '__main__':
     from get_data.minute_factors.min_CS_dataloader import get_min10_rollingtrain_TimeSeriesLoader
-    config.task_name = 'minute10_2022_2023'
-    config.time_period = '2022-2023'
-    config.device = 'cuda:5'
-    config.model_type = 'TimeMixer'
-    config.early_stop_patience = 3
-    config.loss = 'MSE'
+    # config.task_name = 'minute10_2022_2023'
+    # config.time_period = '2022-2023'
+    # config.device = 'cuda:5'
+    # config.model_type = 'TimeMixer'
+    # config.early_stop_patience = 3
+    # config.loss = 'MSE'
     train_dataloader, val_dataloader, test_dataloader = get_min10_rollingtrain_TimeSeriesLoader(batchsize = 1, shuffle_time = True, window_size = 4, num_val_windows = 100, val_sample_mode = 'random', time_period = config.time_period, config = config)
 
     GRU_train_and_test(config, train_dataloader, val_dataloader, test_dataloader)

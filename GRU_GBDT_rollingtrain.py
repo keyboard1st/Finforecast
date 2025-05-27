@@ -28,7 +28,7 @@ sys.path.append(PROJECT_ROOT)
 from config import get_config
 config = get_config()
 
-random_seed = config.random_seed
+random_seed = 42
 random.seed(random_seed)
 np.random.seed(random_seed)
 
