@@ -1,4 +1,3 @@
-import os
 import random
 import warnings
 from copy import deepcopy
@@ -74,7 +73,7 @@ def rollingtrain_GRU_and_GBDT(config, TimeSeries_trainloader, TimeSeries_valiloa
         model_optim = optim.SGD(model.parameters(), lr=config.learning_rate)
     else:
         raise ValueError("optimizer error")
-    logger.info(f'Using optimizer: {model_optim}')
+    logger.info(f'Using optimizer: {model_optim.__class__.__name__}')
 
     scaler = torch.amp.GradScaler(device="cuda")
     train_steps = len(TimeSeries_trainloader)
