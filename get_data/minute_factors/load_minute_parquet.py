@@ -1,9 +1,10 @@
 import os
+import warnings
 from concurrent import futures
 
 import numpy as np
 import pandas as pd
-import warnings
+
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 def standard(df):
@@ -14,7 +15,7 @@ def load_10minute_rolling_x_parquet(x_type = 'lbl_align',sample_set = 'inner', t
     config = get_config()
     label = pd.read_parquet(os.path.join(config.min10_rolling_label_path, f'{time_period}/label_{sample_set}.parquet'))
     target_cols = label.columns
-    file_list = [os.path.join(config.min10_rolling_factor_path, f'{time_period}/F{i}_{sample_set}.parquet') for i in range(1, 38)]
+    file_list = [os.path.join(config.min10_rolling_factor_path, f'{time_period}/F{i}_{sample_set}.parquet') for i in range(1, 76)]
 
     def _load_std_and_select(path: str) -> pd.DataFrame:
         df = pd.read_parquet(path)  # 读全表
