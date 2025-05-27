@@ -1,4 +1,3 @@
-import os
 import random
 import warnings
 
@@ -72,7 +71,7 @@ def GRU_train_and_test(config, TimeSeries_trainloader, TimeSeries_valiloader, Ti
         model_optim = optim.SGD(model.parameters(), lr=config.learning_rate)
     else:
         raise ValueError("optimizer error")
-    logger.info(f'Using optimizer: {model_optim}')
+    logger.info(f'Using optimizer: {model_optim.__class__.__name__}')
 
     scaler = torch.amp.GradScaler(device="cuda")
     train_steps = len(TimeSeries_trainloader)
@@ -127,7 +126,11 @@ if __name__ == '__main__':
     from get_data.minute_factors.min_CS_dataloader import get_min10_rollingtrain_TimeSeriesLoader
     config.task_name = 'minute10_2021_2022'
     config.time_period = '2021-2022'
-    config.device = 'cuda:3'
+    config.device = 'cuda:5'
+    config.model_type = 'TimeMixer'
+    config.early_stop_patience = 3
+    config.loss = 'MSE'
+
     train_dataloader, val_dataloader, test_dataloader = get_min10_rollingtrain_TimeSeriesLoader(batchsize = 1, shuffle_time = True, window_size = 4, num_val_windows = 100, val_sample_mode = 'random', time_period = config.time_period, config = config)
 
     GRU_train_and_test(config, train_dataloader, val_dataloader, test_dataloader)
