@@ -13,9 +13,6 @@ from torch.utils.data import DataLoader, Dataset, SubsetRandomSampler
 import random
 
 
-
-
-
 def load_DrJin129rolling_x_parquet(x_type = 'Jin_factor_lbl_align', sample_set='inner', time_period:str = '2021-2022'):
     from config import get_config
     config = get_config()
@@ -322,12 +319,15 @@ if __name__ == '__main__':
     # fin_testset = next(iter(fin_testloader))
     # print(fin_testset.shape)
     # print(fin_testset[:5,:5,0])
+    class config:
+        device = 'cpu'
+        random_seed = 42
 
-    train_loader, val_loader, test_loader = get_CSDay_rollingtrainloader()
-    print(next(iter(train_loader)).shape)
-    print(next(iter(val_loader)).shape)
-    print(next(iter(test_loader)).shape)
-
+    train_loader, val_loader, test_loader = get_DrJin129_rollingtrain_TimeSeriesLoader(config = config)
+    for x,y in test_loader:
+        print(x.shape)
+        print(y.shape)
+        break
     # train_set = next(iter(xgb_trainloader))
     # test_set = next(iter(xgb_testloader))
     # print(train_set.shape, test_set.shape)

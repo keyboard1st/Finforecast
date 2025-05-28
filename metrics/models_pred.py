@@ -5,7 +5,7 @@ from copy import deepcopy
 import pandas as pd
 
 from train.GBDT_trainer import tree_test, tree_pred
-from train.GRU_cross_time_train import GRU_fin_test, GRU_pred_market
+from train.GRU_cross_time_train import GRU_pred_market_new, GRU_fin_test_new
 
 
 def test_all_model(PathConfig, TimeSeries_xy_loader, CrossSection_xy_loader, Minute_xy_loader = None, **models):
@@ -13,14 +13,14 @@ def test_all_model(PathConfig, TimeSeries_xy_loader, CrossSection_xy_loader, Min
     for name, model in models.items():
         if name == 'GRU':
             print('----------------------GRU test--------------------------')
-            GRU_pred_arr, GRU_true = GRU_fin_test(TimeSeries_xy_loader, model)
+            GRU_pred_arr, GRU_true = GRU_fin_test_new(TimeSeries_xy_loader, model)
             print("GRU pred shape ", GRU_pred_arr.shape)
             print("GRU true shape ", GRU_true.shape)
             model_pred_dict[name] = GRU_pred_arr
             model_pred_dict['label'] = GRU_true
         elif name == 'TimeMixer' and PathConfig.use_minute_model:
             print('----------------------TimeMixer test-----------------------')
-            Minute_pred_arr, Minute_true = GRU_fin_test(Minute_xy_loader, model)
+            Minute_pred_arr, Minute_true = GRU_fin_test_new(Minute_xy_loader, model)
             print("Minute pred shape ", Minute_pred_arr.shape)
             print("Minute true shape ", Minute_true.shape)
             model_pred_dict[name] = Minute_pred_arr
@@ -39,7 +39,7 @@ def pred_all_model(PathConfig, TimeSeries_x_loader, CrossSection_x_loader, index
     for name, model in models.items():
         if name == 'GRU':
             print('----------------------GRU Pred--------------------------')
-            GRU_pred_arr = GRU_pred_market(TimeSeries_x_loader, model)
+            GRU_pred_arr = GRU_pred_market_new(TimeSeries_x_loader, model)
             print("GRU pred shape ", GRU_pred_arr.shape)
             GRU_fin_pred_df = pd.DataFrame(GRU_pred_arr)
             GRU_fin_pred_df.index = index_and_clos.index
@@ -47,7 +47,7 @@ def pred_all_model(PathConfig, TimeSeries_x_loader, CrossSection_x_loader, index
             model_pred_df_dict[name] = GRU_fin_pred_df
         elif name == 'TimeMixer' and PathConfig.use_minute_model:
             print('----------------------TimeMixer Pred-----------------------')
-            Minute_pred_arr = GRU_pred_market(Minute_x_loader, model)
+            Minute_pred_arr = GRU_pred_market_new(Minute_x_loader, model)
             print("Minute pred shape ", Minute_pred_arr.shape)
             Minute_fin_pred_df = pd.DataFrame(Minute_pred_arr)
             Minute_fin_pred_df.index = index_and_clos.index

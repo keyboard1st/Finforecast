@@ -127,7 +127,7 @@ if __name__ == '__main__':
     # test all models and caluculate TEST ic
     model_pred_dict = test_all_model(PathConfig, GRU_label_align_xy_loader, tree_label_align_xy_loader, Minute_label_align_xy_loader, **models)
     ic_between_models_plot(model_pred_dict, PathConfig.plot_path)
-    model_pred_df_dict = pred_all_model(PathConfig, GRU_mkt_align_x_loader, trees_mkt_align_x_loader, Minute_mkt_align_x_loader, df_index_and_clos, **models)
+    model_pred_df_dict = pred_all_model(PathConfig, GRU_mkt_align_x_loader, trees_mkt_align_x_loader, df_index_and_clos, Minute_mkt_align_x_loader, **models)
     model_pred_df_dict = model_mixer(PathConfig, model_pred_df_dict, market_cap_df, labels_df)
     model_pred_df_dict_with_ic = save_pred(PathConfig, model_pred_df_dict, market_cap_df, labels_df)
 
