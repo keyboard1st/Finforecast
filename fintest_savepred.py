@@ -109,29 +109,42 @@ else:
 
 
 if __name__ == '__main__':
-    # from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingfintest_TimeSeriesloader, get_CY312_rollingfintest_CrossSectionLoader
-    # from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingtrain_TimeSeriesLoader, get_CY312_rollingtrain_CrossSectionLoader
-    from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingtrain_TimeSeriesLoader, get_DrJin129_rollingtrain_CrossSectionDatasetLoader
-    from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingfintest_TimeSeriesLoader, get_DrJin129_rollingfintest_CrossSectionDatasetLoader
-    from get_data.minute_factors.min_CS_dataloader import get_min10_rollingtrain_TimeSeriesLoader, get_min10_rollingfintest_TimeSeriesloader
+    # data load
+    if config.factor_name == 'CY312':
+        from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingfintest_TimeSeriesloader, get_CY312_rollingfintest_CrossSectionLoader
+        from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingtrain_TimeSeriesLoader, get_CY312_rollingtrain_CrossSectionLoader
+        _, _, GRU_label_align_xy_loader = get_CY312_rollingtrain_TimeSeriesLoader(time_period=PathConfig.time_period,config=config)
+        _, tree_label_align_xy_loader = get_CY312_rollingtrain_CrossSectionLoader(time_period=PathConfig.time_period)
+        GRU_mkt_align_x_loader = get_CY312_rollingfintest_TimeSeriesloader(time_period=PathConfig.time_period,config=config)
+        trees_mkt_align_x_loader = get_CY312_rollingfintest_CrossSectionLoader(time_period=PathConfig.time_period)
+    elif config.factor_name == 'DrJin129':
+        from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingtrain_TimeSeriesLoader, get_DrJin129_rollingtrain_CrossSectionDatasetLoader
+        from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingfintest_TimeSeriesLoader, get_DrJin129_rollingfintest_CrossSectionDatasetLoader
+        _, _, GRU_label_align_xy_loader = get_DrJin129_rollingtrain_TimeSeriesLoader(time_period=PathConfig.time_period,config=config)
+        _, tree_label_align_xy_loader = get_DrJin129_rollingtrain_CrossSectionDatasetLoader(time_period=PathConfig.time_period)
+        GRU_mkt_align_x_loader = get_DrJin129_rollingfintest_TimeSeriesLoader(time_period=PathConfig.time_period,config=config)
+        trees_mkt_align_x_loader = get_DrJin129_rollingfintest_CrossSectionDatasetLoader(time_period=PathConfig.time_period)
 
-    _, _, GRU_label_align_xy_loader = get_DrJin129_rollingtrain_TimeSeriesLoader(time_period=PathConfig.time_period, config=config)
-    _, tree_label_align_xy_loader = get_DrJin129_rollingtrain_CrossSectionDatasetLoader(time_period=PathConfig.time_period)
+    # all model test and load
+    if PathConfig.use_minute_model:
+        from get_data.minute_factors.min_CS_dataloader import get_min10_rollingtrain_TimeSeriesLoader, get_min10_rollingfintest_TimeSeriesloader
+        _, _, Minute_label_align_xy_loader = get_min10_rollingtrain_TimeSeriesLoader(time_period=PathConfig.time_period, config=config)
+        Minute_mkt_align_x_loader = get_min10_rollingfintest_TimeSeriesloader(time_period=PathConfig.time_period, config=config)
+        model_pred_dict = test_all_model(PathConfig, GRU_label_align_xy_loader, tree_label_align_xy_loader,Minute_label_align_xy_loader, **models)
+        ic_between_models_plot(model_pred_dict, PathConfig.plot_path)
+        model_pred_df_dict = pred_all_model(PathConfig, GRU_mkt_align_x_loader, trees_mkt_align_x_loader,df_index_and_clos, Minute_mkt_align_x_loader, **models)
+    else:
+        model_pred_dict = test_all_model(PathConfig, GRU_label_align_xy_loader, tree_label_align_xy_loader, **models)
+        ic_between_models_plot(model_pred_dict, PathConfig.plot_path)
+        model_pred_df_dict = pred_all_model(PathConfig, GRU_mkt_align_x_loader, trees_mkt_align_x_loader,df_index_and_clos, **models)
 
-    GRU_mkt_align_x_loader = get_DrJin129_rollingfintest_TimeSeriesLoader(time_period=PathConfig.time_period, config=config)
-    trees_mkt_align_x_loader = get_DrJin129_rollingfintest_CrossSectionDatasetLoader(time_period=PathConfig.time_period)
+    # model mixer
+    model_pred_df_dict_mixed = model_mixer(PathConfig, model_pred_df_dict, market_cap_df, labels_df)
 
-    _, _, Minute_label_align_xy_loader = get_min10_rollingtrain_TimeSeriesLoader(time_period=PathConfig.time_period, config=config)
-    Minute_mkt_align_x_loader = get_min10_rollingfintest_TimeSeriesloader(time_period=PathConfig.time_period, config=config)
+    # mixed model pred save
+    model_pred_df_dict_with_ic = save_pred(PathConfig, model_pred_df_dict_mixed, market_cap_df, labels_df)
 
-    # test all models and caluculate TEST ic
-    model_pred_dict = test_all_model(PathConfig, GRU_label_align_xy_loader, tree_label_align_xy_loader, Minute_label_align_xy_loader, **models)
-    ic_between_models_plot(model_pred_dict, PathConfig.plot_path)
-    model_pred_df_dict = pred_all_model(PathConfig, GRU_mkt_align_x_loader, trees_mkt_align_x_loader, df_index_and_clos, Minute_mkt_align_x_loader, **models)
-    model_pred_df_dict = model_mixer(PathConfig, model_pred_df_dict, market_cap_df, labels_df)
-    model_pred_df_dict_with_ic = save_pred(PathConfig, model_pred_df_dict, market_cap_df, labels_df)
-
-    # 开始回测
+    # backtest
     backtest_res = {}
     for name, pred_df in tqdm(model_pred_df_dict_with_ic.items()):
         pred_df = pred_df.astype(np.float32)
@@ -139,7 +152,6 @@ if __name__ == '__main__':
 
     plot_model_metrics_and_save(backtest_res, PathConfig.plot_path)
 
-    # plot_ic_bar(ic_dict, path.plot_path)
 
 
 

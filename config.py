@@ -14,8 +14,8 @@ def get_config():
     parser.add_argument('--random_seed', type=int, default=42, help='随机种子')
 
     # 模型基础配置
-    parser.add_argument('--model_type', type=str, default='AttGRU', choices=['GRU', 'BiGRU', 'two_GRU', 'AttGRU','TimeMixer'], help='模型类型')
-    parser.add_argument('--input_dim', type=int, default=129, help='输入特征维度')
+    parser.add_argument('--model_type', type=str, default='two_GRU', choices=['GRU', 'BiGRU', 'two_GRU', 'AttGRU','TimeMixer'], help='模型类型')
+    parser.add_argument('--input_dim', type=int, default=312, help='输入特征维度')
     parser.add_argument('--window_size', type=int, default=30, help='滑动窗口大小')
     parser.add_argument('--hidden_dim', type=int, default=128, help='隐藏层维度')
     parser.add_argument('--num_layers', type=int, default=3, help='网络层数')
@@ -35,7 +35,7 @@ def get_config():
     parser.add_argument('--val_sample_mode', type=str, default="random",choices=["random", "tail"], help='验证集采样模式')
 
     # 损失函数
-    parser.add_argument('--loss', type=str, default='MHMSE',choices=['MSE', 'MAE', 'Huber', 'MHMSE'], help='损失函数类型')
+    parser.add_argument('--loss', type=str, default='MSE',choices=['MSE', 'MAE', 'Huber', 'MHMSE'], help='损失函数类型')
 
     # 学习率调度
     parser.add_argument('--pct_start', type=float, default=0.2, help='学习率预热比例')

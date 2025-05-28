@@ -20,13 +20,10 @@ Finforecast是一个用于金融alpha预测的机器学习模型库，包含了�
 - get_data：数据加载模块，不同因子库单独处理。
 - metrics：评估模块，包含多个子模块，如backtest.py、calculate_ic.py、log.py、train_plot.py等。
 - model：模型模块，包含多个子模块，如Encoder.py、GRU_attention.py、GRU_model.py、TimeMixer.py等。
-- readme.md：README文件。
 - train：训练模块，包含多个子模块，如GBDT_trainer.py、GRU_cross_time_train.py等。
 - utils：工具模块，包含多个子模块，如fillna.py、m4_summary.py、masking.py、metrics.py、timefeatures.py、tools.py等。
 - GBDT_rollingtrain.py：单独训练所有截面模型的主文件，支持输入参数time period 可以指定滚动训练的年份。
 - GRU_GBDT_rollingtrain.py：滚动训练时序模型和截面模型的主文件，支持输入参数time period 可以指定滚动训练的年份。
-- rolling_GBDT_train.sh：滚动训练GBDT模型训练的脚本，支持同时训练多个任务。
-- rolling_train_demo.sh：GRU和GBDT模型联合训练的脚本，支持同时训练多个任务。
 
 ## 开始使用
 
