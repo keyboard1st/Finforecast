@@ -46,7 +46,11 @@ pip install -r requirements.txt
 
 ### 使用
 
-1. 配置实验参数：在config.py文件中配置实验参数，如模型类型、输入维度、隐藏层维度等。
-2. 数据加载：使用get_data模块中的函数加载数据。
-3. 模型训练：使用GRU_GBDT_rollingtrain.py模块中的函数训练模型。
-4. 模型预测：使用fintest_savepred.py文件中的函数进行模型预测。
+1. 数据加载：使用get_data模块中的函数加载数据。
+   根据不同的因子存储格式分别使用
+   ```bash
+  pip install -r requirements.txt
+  ```
+3. 配置实验参数：在config.py文件中配置实验参数，如模型类型、输入维度、隐藏层维度等。
+4. 模型训练：使用GRU_GBDT_rollingtrain.py模块中的函数训练模型。
+5. 模型预测：使用fintest_savepred.py文件中的函数进行模型预测。
