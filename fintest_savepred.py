@@ -21,7 +21,7 @@ from config import get_config
 
 # ─── Paths & Config ───────────────────────────────────────────────────────────
 config = get_config()
-config.task_name = 'Jin_2021_2022_randomseed2025'
+config.task_name = 'CY_2021_2022_std'
 config.exp_path = f'/home/hongkou/TimeSeries/exp/{config.task_name}'
 print('fin pred exp path',config.exp_path)
 class PathConfig:

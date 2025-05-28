@@ -312,8 +312,8 @@ def norm_train(config, train_dataloader, val_dataloader, test_dataloader, model,
         )
 
         best_model_path = os.path.join(exp_path, 'models/best_model.pth')
-        if best_ic < test_ic_mean:
-            best_ic = test_ic_mean
+        if best_ic < vali_ic_mean:
+            best_ic = vali_ic_mean
             torch.save(model.state_dict(), best_model_path)
             logger.info(f"best model saved with test ic : {best_ic:.4f}")
 
