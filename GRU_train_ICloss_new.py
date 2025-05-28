@@ -93,7 +93,7 @@ def GRU_train_and_test(config, TimeSeries_trainloader, TimeSeries_valiloader, Ti
                                             epochs=config.train_epochs,
                                             max_lr=config.learning_rate)
 
-        # 训练模型主函数
+    # 训练模型主函数
     trained_model, df_metrics = norm_train(config, TimeSeries_trainloader, TimeSeries_valiloader,
                                                                TimeSeries_testloader, model, early_stopping,
                                                                model_optim, criterion, scheduler, logger, scaler)
