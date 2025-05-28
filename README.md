@@ -40,17 +40,49 @@ Finforecast是一个用于金融alpha预测的机器学习模型库，包含了�
 
 ### 安装
 
-```bash
+```
 pip install -r requirements.txt
 ```
 
 ### 使用
 
 1. 数据加载：使用get_data模块中的函数加载数据。
-   根据不同的因子存储格式分别使用
-   ```bash
-  pip install -r requirements.txt
-  ```
-3. 配置实验参数：在config.py文件中配置实验参数，如模型类型、输入维度、隐藏层维度等。
-4. 模型训练：使用GRU_GBDT_rollingtrain.py模块中的函数训练模型。
-5. 模型预测：使用fintest_savepred.py文件中的函数进行模型预测。
+   根据不同的因子存储格式分别使用不同的data_align_and_save函数，最终转存成统一格式：不同年份分开储存，每个年份文件夹下每个因子储存成[B,T]大小的内外样本parquet
+
+   - 针对存储格式为每个因子单独储存的pickle，每个pickle大小为[B,T]，修改路径后运行
+      ```
+      python save_CY312.py
+      ```
+   - 针对存储格式为[C,B,T]的npy文件，文件中包含C个因子，每个因子都为大小为[B,T]的tensor，并且列名和索引名分开存储的格式，修改路径后运行
+   - 注意：如果因子分成两种类型：‘利用交易时间之前计算的因子值’和‘利用全天数据计算的因子值’，下面的脚本需要运行两次，后续时序loader中自动读取不同类型的因子拼接成时间窗口，来防止数据泄露
+      ```
+      python save_DrJin129_row.py
+      python save_DrJin129_Rolling.py
+      ```
+   - 针对存储格式为[B,T]的npy文件，不同因子单独存储的分钟频率因子，修改路径后运行
+      ```
+      python save_minute_features.py
+      python rename_minute.py # 用于重命名因子、并且保存因子名称映射表
+      ```
+   - 最后不同因子的dataset和dataloader分别保存到不同的文件夹下，可以通过调用对应因子名文件夹下的get_loader()直接使用，后续因子时间段延长时，只需要运行上面的程序更新就可以了，不需要更改get_loader
+   - 如果需要增加因子，需要修改对应文件夹下的load_x_parquet函数中，增加文件名筛选范围即可，例如因子个数从129增加到135，修改load_x_parquet函数中：path_list = path([1,130]) -> path([1,136])
+   
+
+2. 配置实验参数：在config.py文件中修改配置实验参数，如任务名称、因子类型、模型类型、模型参数等。
+3. 模型训练：使用下面命令会并行训练多个滚动训练任务（会同时训练时序模型和树模型），训练保存的模型权重会保存到对应的任务文件夹 exp/{task_name} 下。
+   ```
+   bash models_train_demo.sh
+   ```
+   - 如果需要单独训练树模型或者单独训练时序模型，修改好路径后可以直接运行下面的脚本：
+   ```
+   python GRU_train_ICloss_new.py
+   python GBDT_rollingtrain.py
+   ```
+
+
+4. 模型预测：使用fintest_savepred.py文件中的函数进行模型预测，会保存模型预测结果csv和png文件到对应的 exp/{task_name} 下。
+   ```
+   bash models_pred_demo.sh
+   ```
+   
+   
