@@ -14,7 +14,7 @@ from model.losses import IC_loss_double_diff
 from utils.fillna import filter_and_fillna
 
 
-def validate_one_epoch(val_dataloader, model, criterion):
+def validate_one_epoch(val_dataloader, model, criterion, n_chunks=4):
     """
     在训练过程中的验证
     对x填0并且dropy中的nan值
@@ -186,6 +186,41 @@ def GRU_fin_test(test_loader, model):
 
     return pred_arr, true_arr
 
+def GRU_fin_test_new(test_loader, model, n_chunks=4):
+    """
+    模型测试阶段，只需要计算IC，不计算Loss
+    对x进行填充0处理，支持分块推理以减少显存使用
+    """
+    model.eval()
+    pred_list = []
+    true_list = []
+
+    with torch.inference_mode():
+        for x, y in tqdm(test_loader, desc="Testing"):
+            x, y = x.float(), y.float()
+            x = torch.nan_to_num(x, nan=0)
+
+            x_chunks = torch.chunk(x, n_chunks, dim=0)
+            y_chunks = torch.chunk(y, n_chunks, dim=0)
+
+            pred_chunks = []
+            true_chunks = []
+            for x_sub, y_sub in zip(x_chunks, y_chunks):
+                pred = model(x_sub)
+                pred_cpu = pred.squeeze().detach().cpu().numpy()
+                y_cpu = y_sub.squeeze().detach().cpu().numpy()
+                pred_chunks.append(pred_cpu)
+                true_chunks.append(y_cpu)
+            batch_pred = np.concatenate(pred_chunks, axis=0)
+            batch_true = np.concatenate(true_chunks, axis=0)
+            pred_list.append(batch_pred)
+            true_list.append(batch_true)
+
+    true_arr = np.concatenate([p.reshape(-1, p.shape[0]) for p in true_list], axis=0)
+    pred_arr = np.concatenate([p.reshape(-1, p.shape[0]) for p in pred_list], axis=0)
+    return pred_arr, true_arr
+
+
 def GRU_pred_market(mkt_align_x_loader, model):
     model.eval()
     pred_list = []
@@ -196,6 +231,31 @@ def GRU_pred_market(mkt_align_x_loader, model):
             pred = model(x)
             pred_cpu = pred.squeeze().detach().cpu().numpy()
             pred_list.append(pred_cpu)
+    pred_arr = np.concatenate([p.reshape(-1, p.shape[0]) for p in pred_list], axis=0)
+    return pred_arr
+
+
+def GRU_pred_market_new(mkt_align_x_loader, model, n_chunks=4):
+    """
+    市场对齐数据预测函数，支持分块推理
+    """
+    model.eval()
+    pred_list = []
+
+    with torch.inference_mode():
+        for x in tqdm(mkt_align_x_loader, desc="Prediction"):
+            x = x.float()
+            x = torch.nan_to_num(x, nan=0)
+
+            x_chunks = torch.chunk(x, n_chunks, dim=0)
+            pred_chunks = []
+            for x_sub in x_chunks:
+                pred = model(x_sub)
+                pred_cpu = pred.squeeze().detach().cpu().numpy()
+                pred_chunks.append(pred_cpu)
+            batch_pred = np.concatenate(pred_chunks, axis=0)
+            pred_list.append(batch_pred)
+
     pred_arr = np.concatenate([p.reshape(-1, p.shape[0]) for p in pred_list], axis=0)
     return pred_arr
 

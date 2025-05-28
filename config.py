@@ -10,7 +10,7 @@ def get_config():
     parser.add_argument('--train_model', type=str, default='rollingtrain',choices=['rollingtrain', 'last_year_train'], help='训练模式')
     parser.add_argument('--time_period', type=str, default='2021-2022', help='用于滚动训练的时间段标识')
     parser.add_argument('--factor_name', type=str, default='DrJin129',choices=['Ding128', 'CY312', 'DrJin129', 'minute10'], help='因子类型')
-    parser.add_argument('--device', type=str, default='cpu',help='运行设备')
+    parser.add_argument('--device', type=str, default='cuda:2',help='运行设备')
     parser.add_argument('--random_seed', type=int, default=42, help='随机种子')
 
     # 模型基础配置

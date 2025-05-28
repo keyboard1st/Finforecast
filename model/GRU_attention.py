@@ -1,9 +1,7 @@
-import torch.nn as nn
 import torch
-import math
+import torch.nn as nn
 import torch.nn.functional as F
-from torch.nn.functional import scaled_dot_product_attention
-from torch.nn.attention import SDPBackend, sdpa_kernel
+
 
 class FeatureSelfAttention(nn.Module):
     def __init__(self, input_dim, num_heads=1):
@@ -130,8 +128,9 @@ class AttGRU(nn.Module):
 
 # 使用示例
 if __name__ == "__main__":
-    B, T, C = 3873, 30, 312  # 批次大小, 时间步长, 特征维度
-    x = torch.randn(B, T, C)
+    from torch.utils.data import DataLoader, TensorDataset
+    import numpy as np
+
 
     class TestConfig:
         def __init__(self):
@@ -144,10 +143,80 @@ if __name__ == "__main__":
             self.dropout = 0.2  # Dropout概率
 
 
+    def get_loader(batch_size=3873, seq_len=30, input_dim=312, n_batches=2):
+        X = torch.randn(batch_size * n_batches, seq_len, input_dim)
+        Y = torch.randn(batch_size * n_batches)
+        dataset = TensorDataset(X, Y)
+        return DataLoader(dataset, batch_size=batch_size)
+
+
+    def GRU_fin_test(test_loader, model):
+        """
+        模型测试阶段，只需要计算IC，不计算Loss
+        对x进行填充0处理
+        """
+        model.eval()
+        pred_list = []
+        true_list = []
+        # with torch.no_grad():
+        with torch.inference_mode():
+            for x, y in test_loader:
+                print('------------------------------------')
+                x, y = x.float(), y.float()
+                print("input shape",x.shape, y.shape)
+                x = torch.nan_to_num(x, nan=0)
+                pred = model(x)
+                print("pred shape", pred.shape)
+                pred_cpu = pred.squeeze().detach().cpu().numpy()  # 先detach再转CPU
+                print("pred_cpu shape", pred_cpu.shape)
+                y_cpu = y.squeeze().detach().cpu().numpy()
+                print("y_cpu shape", y_cpu.shape)
+                true_list.append(y_cpu)
+                pred_list.append(pred_cpu)
+        true_arr = np.concatenate([p.reshape(-1, p.shape[0]) for p in true_list], axis=0)
+        pred_arr = np.concatenate([p.reshape(-1, p.shape[0]) for p in pred_list], axis=0)
+
+        return pred_arr, true_arr
+
+
+    def GRU_fin_test_new(test_loader, model, n_chunks=4):
+        """
+        模型测试阶段，只需要计算IC，不计算Loss
+        对x进行填充0处理，支持分块推理以减少显存使用
+        """
+        model.eval()
+        pred_list = []
+        true_list = []
+
+        with torch.inference_mode():
+            for x, y in test_loader:
+                print('------------------------------------')
+                x, y = x.float(), y.float()
+                x = torch.nan_to_num(x, nan=0)
+
+                x_chunks = torch.chunk(x, n_chunks, dim=0)
+                y_chunks = torch.chunk(y, n_chunks, dim=0)
+                pred_chunks = []
+                true_chunks = []
+                for x_sub, y_sub in zip(x_chunks, y_chunks):
+                    pred = model(x_sub)
+                    pred_cpu = pred.squeeze().detach().cpu().numpy()
+                    y_cpu = y_sub.squeeze().detach().cpu().numpy()
+                    pred_chunks.append(pred_cpu)
+                    true_chunks.append(y_cpu)
+                batch_pred = np.concatenate(pred_chunks, axis=0)
+                batch_true = np.concatenate(true_chunks, axis=0)
+                pred_list.append(batch_pred)
+                true_list.append(batch_true)
+
+        true_arr = np.concatenate([p.reshape(-1, p.shape[0]) for p in true_list], axis=0)
+        pred_arr = np.concatenate([p.reshape(-1, p.shape[0]) for p in pred_list], axis=0)
+        return pred_arr, true_arr
 
     config = TestConfig()
     model = AttGRU(config)
-    output = model(x)
+    loader = get_loader()
 
-    print("输入形状:", x.shape)
-    print("输出形状:", output.shape)
+    pred_arr, true_arr = GRU_fin_test_new(loader, model)
+    print("pred_arr shape", pred_arr.shape)
+    print("true_arr shape", true_arr.shape)
