@@ -169,38 +169,20 @@ def rollingtrain_GRU_and_GBDT(config, TimeSeries_trainloader, TimeSeries_valiloa
 
 if __name__=='__main__':
     from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingtrain_TimeSeriesLoader, get_DrJin129_rollingtrain_CrossSectionDatasetLoader
-    # from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingtrain_TimeSeriesLoader, get_CY312_rollingtrain_CrossSectionLoader
-    # config.task_name = 'CY_2023_2024_twoGRU'
-    # config.time_period = '2023-2024'
-    # config.device = 'cuda:1'
+    from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingtrain_TimeSeriesLoader, get_CY312_rollingtrain_CrossSectionLoader
+    config.task_name = 'CY_2023_2024_twoGRU'
+    config.time_period = '2023-2024'
+    config.device = 'cuda:1'
 
-    TimeSeries_trainloader, TimeSeries_valiloader, TimeSeries_testloader = get_DrJin129_rollingtrain_TimeSeriesLoader(batchsize = 1, shuffle_time = config.shuffle_time, window_size = config.window_size,
-                                                                                                                      num_val_windows = config.num_val_windows, val_sample_mode = 'random', time_period = config.time_period, config=config)
-    CrossSection_trainloader, CrossSection_testloader = get_DrJin129_rollingtrain_CrossSectionDatasetLoader(batchsize="all", shuffle_time=False, time_period = config.time_period)
+    if config.factor_name == 'CY312':
+        TimeSeries_trainloader, TimeSeries_valiloader, TimeSeries_testloader = get_CY312_rollingtrain_TimeSeriesLoader(batchsize = 1, shuffle_time = config.shuffle_time, window_size = config.window_size,
+                                                                                                                          num_val_windows = config.num_val_windows, val_sample_mode = 'random', time_period = config.time_period, config=config)
+        CrossSection_trainloader, CrossSection_testloader = get_CY312_rollingtrain_CrossSectionLoader(batchsize="all", shuffle_time=False, time_period = config.time_period)
+    elif config.factor_name == 'DrJin129':
+        TimeSeries_trainloader, TimeSeries_valiloader, TimeSeries_testloader = get_DrJin129_rollingtrain_TimeSeriesLoader(batchsize = 1, shuffle_time = config.shuffle_time, window_size = config.window_size,
+                                                                                                                          num_val_windows = config.num_val_windows, val_sample_mode = 'random', time_period = config.time_period, config=config)
+        CrossSection_trainloader, CrossSection_testloader = get_DrJin129_rollingtrain_CrossSectionDatasetLoader(batchsize="all", shuffle_time=False, time_period = config.time_period)
+
     rollingtrain_GRU_and_GBDT(config, TimeSeries_trainloader, TimeSeries_valiloader, TimeSeries_testloader,CrossSection_trainloader, CrossSection_testloader)
 
-    # config.task_name = 'Jin_2021_2022_test'
-    # config.time_period = '2021-2022'
-    # config.exp_path = f'/home/hongkou/chenx/exp/{config.task_name}'
-    # rolling_train_exp(config, config.time_period)
-    # gc.collect()
-    # torch.cuda.empty_cache()
-    #
-    # config.task_name = 'Jin_2022_2023_test'
-    # config.time_period = '2022-2023'
-    # config.exp_path = f'/home/hongkou/chenx/exp/{config.task_name}'
-    # rolling_train_exp(config, config.time_period)
-    # gc.collect()
-    # torch.cuda.empty_cache()
-    #
-    # config.task_name = 'Jin_2023_2024_test'
-    # config.time_period = '2023-2024'
-    # config.exp_path = f'/home/hongkou/chenx/exp/{config.task_name}'
-    # rolling_train_exp(config, config.time_period)
-
-
-    # setting = f'{config.task_name}_{config.model_type}_{config.input_dim}_hd{config.hidden_dim}_' \
-    #                       f'nl{config.num_layers}_{config.output_dim}_lr{config.learning_rate}_' \
-    #                       f'esp{config.early_stop_patience}_te{config.train_epochs}_' \
-    #                       f'nvw{config.num_val_windows}_ps{config.pct_start}_la{config.lradj}'
 
