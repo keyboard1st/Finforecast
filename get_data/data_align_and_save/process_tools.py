@@ -137,3 +137,27 @@ def minute_align_fix_with_market(factor_value:pd.DataFrame, marketcap:pd.DataFra
 
     return factor_value
 
+def split_by_int_index(df:pd.DataFrame, start:int, end:int):
+    '''
+        Params:
+            df: 二维, index只有int的DataFrame.
+        Returns
+        ---
+        result
+    '''
+    result = df[(df.index >= start) & (df.index < end)]
+    return result
+
+if __name__ == '__main__':
+    start = 20200101
+    end = 20210101
+    f = pd.read_parquet(r'D:\chenxing\Finforecast\factor_warehouse\factors_pricing_raw\factor1.parquet')
+    result = split_by_int_index(f, start, end)
+    print(result.head())
+    print(result.tail())
+    print(result.shape)
+    print(f.shape)
+    print(result.index)
+    print(f.index)
+    print(result.index.dtype)
+    print(f.index.dtype)

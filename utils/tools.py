@@ -138,3 +138,33 @@ def adjustment(gt, pred):
 
 def cal_accuracy(y_pred, y_true):
     return np.mean(y_pred == y_true)
+
+
+def create_model(config):
+    """根据配置创建模型"""
+    from model.GRU_model import GRU, BiGRU, two_GRU
+    from model.GRU_attention import AttGRU
+    from model.TimeMixer import TimeMixer
+    if config.model_type == 'GRU':
+        return GRU(config)
+    elif config.model_type == 'BiGRU':
+        return BiGRU(config)
+    elif config.model_type == 'two_GRU':
+        return two_GRU(config)
+    elif config.model_type == 'AttGRU':
+        return AttGRU(config)
+    elif config.model_type == 'TimeMixer':
+        return TimeMixer(config)
+    else:
+        raise ValueError(f"不支持的模型类型: {config.model_type}")
+
+
+def calculate_ensemble_prediction(gbdt_results):
+    """计算GBDT集成预测"""
+    xgb_pred_arr = gbdt_results['xgb_pred']
+    lgb_pred_arr = gbdt_results['lgb_pred']
+    cat_pred_arr = gbdt_results['cat_pred']
+    # 验证形状一致性
+    assert xgb_pred_arr.shape == lgb_pred_arr.shape == cat_pred_arr.shape, "GBDT模型预测形状不一致"
+    # 简单平均集成
+    return (xgb_pred_arr + cat_pred_arr + lgb_pred_arr) / 3

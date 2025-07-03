@@ -54,7 +54,7 @@ class Config:
     loss: str = 'MSE'
     pct_start: float = 0.2
     lradj: str = 'TST'
-    exp_path: str = '/home/hongkou/chenx/exp/'
+    exp_path: str = 'D:\\chenxing\\Finforecast\\exp\\'
     cross_train: bool = False
 
 
@@ -116,6 +116,24 @@ def record_to_excel(df_config, df_metrics, df_result, save_path, append=False):
             df_config.to_excel(writer, sheet_name='实验配置', index=False)
             df_metrics.to_excel(writer, sheet_name='实验过程', index=False)
             df_result.to_excel(writer, sheet_name='实验结果', index=False)
+
+def save_experiment_results(df_config, df_metrics, ic_metrics, exp_path, logger=None):
+    """
+    保存实验结果到Excel
+    """
+    # 创建结构化DataFrame
+    ic_df = pd.DataFrame.from_dict(
+        ic_metrics,
+        orient='index',
+        columns=['IC Value']
+    ).reset_index().rename(columns={'index': 'Metric'})
+
+    result_df = ic_df.sort_values(by='IC Value', ascending=False)
+    
+    # 记录到Excel
+    record_to_excel(df_config, df_metrics, result_df, exp_path, append=True)
+    if logger:
+        logger.info("Experiment results saved.")
 
 # 使用示例
 if __name__ == "__main__":

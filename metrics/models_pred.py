@@ -5,7 +5,7 @@ from copy import deepcopy
 import pandas as pd
 
 from train.GBDT_trainer import tree_test, tree_pred
-from train.GRU_cross_time_train import GRU_pred_market_new, GRU_fin_test_new
+from train import GRU_pred_market_new, GRU_fin_test_new
 
 
 def test_all_model(PathConfig, TimeSeries_xy_loader, CrossSection_xy_loader, Minute_xy_loader = None, **models):
@@ -82,7 +82,7 @@ def get_weights(n):
             weights.append(list(w))
     return weights
 
-def model_mixer(PathConfig, model_pred_df_dict, market_cap_df, labels_df):
+def model_mixer(PathConfig, model_pred_df_dict, labels_df, market_cap_df=None):
     print('----------------------model mixer-----------------------')
     print('base models:', model_pred_df_dict.keys())
     if PathConfig.use_minute_model:
@@ -98,7 +98,10 @@ def model_mixer(PathConfig, model_pred_df_dict, market_cap_df, labels_df):
                     w3 * model_pred_df_dict['GBDT']
             )
             # 只在市值>0的位置计算 IC
-            masked = mix_pred.where(market_cap_df > 0)
+            if market_cap_df is not None:
+                masked = mix_pred.where(market_cap_df > 0)
+            else:
+                masked = mix_pred
             # 按列（股票）计算与 labels 的相关，再取平均
             ic = (masked.T.corrwith(labels_df.T)).mean()
             ic_records.append(((w1, w2, w3), ic, mix_pred))
@@ -117,7 +120,10 @@ def model_mixer(PathConfig, model_pred_df_dict, market_cap_df, labels_df):
         for w1, w2 in weights:
             mix_pred = (w1 * model_pred_df_dict['GRU'] + w2 * model_pred_df_dict['GBDT'])
             # 只在市值>0的位置计算 IC
-            masked = mix_pred.where(market_cap_df > 0)
+            if market_cap_df is not None:
+                masked = mix_pred.where(market_cap_df > 0)
+            else:
+                masked = mix_pred
             # 按列（股票）计算与 labels 的相关，再取平均
             ic = (masked.T.corrwith(labels_df.T)).mean()
             ic_records.append(((w1, w2), ic, mix_pred))
@@ -132,10 +138,13 @@ def model_mixer(PathConfig, model_pred_df_dict, market_cap_df, labels_df):
 
     return model_pred_df_dict
 
-def save_pred(PathConfig, model_pred_df_dict, market_cap_df, labels_df):
+def save_pred(PathConfig, model_pred_df_dict, labels_df, market_cap_df=None):
     model_pred_df_dict_with_ic = {}
     for name, pred_df in model_pred_df_dict.items():
-        pred_df_mask = pred_df.where(market_cap_df>0)
+        if market_cap_df is not None:
+            pred_df_mask = pred_df.where(market_cap_df>0)
+        else:
+            pred_df_mask = pred_df
         pred_df_mask.to_csv(os.path.join(PathConfig.save_path, f'{name}_fin_pred_mask.csv'))
         pred_ic = (pred_df_mask.T.corrwith(labels_df.T)).mean()
         print(f'{name} Pred ic: {pred_ic:.4f}')

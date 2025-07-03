@@ -108,5 +108,34 @@ def plot_ic_bar(ic_dict, save_path):
     plt.savefig(save_path, bbox_inches='tight')
     plt.show()
 
+def calculate_ic_metrics(returns_df, fin_factor, logger=None):
+    """
+    计算各种IC指标，返回字典
+    """
+    # 基础IC
+    corr = returns_df.T.corrwith(fin_factor.T)
+    if logger: logger.info(f"Final integrated IC: {corr.mean():.4f}")
+    
+    # 去除前N个时间步的IC
+    mask3_corr = returns_df.iloc[3:,:].T.corrwith(fin_factor.iloc[3:,:].T)
+    if logger: logger.info(f"Remove first 3 time steps IC: {mask3_corr.mean():.4f}")
+    
+    mask5_corr = returns_df.iloc[5:,:].T.corrwith(fin_factor.iloc[5:,:].T)
+    if logger: logger.info(f"Remove first 5 time steps IC: {mask5_corr.mean():.4f}")
+    
+    mask15_corr = returns_df.iloc[15:,:].T.corrwith(fin_factor.iloc[15:,:].T)
+    if logger: logger.info(f"Remove first 15 time steps IC: {mask15_corr.mean():.4f}")
+    
+    mask60_corr = returns_df.iloc[60:,:].T.corrwith(fin_factor.iloc[60:,:].T)
+    if logger: logger.info(f"Remove first 60 time steps IC: {mask60_corr.mean():.4f}")
+    
+    return {
+        "Final Concat IC": corr.mean(),
+        "Mask3 IC": mask3_corr.mean(),
+        "Mask5 IC": mask5_corr.mean(),
+        "Mask15 IC": mask15_corr.mean(),
+        "Mask60 IC": mask60_corr.mean()
+    }
+
 
 

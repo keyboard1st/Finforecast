@@ -6,16 +6,18 @@ def get_config():
     parser = argparse.ArgumentParser(description="实验参数配置")
 
     # 训练任务配置
-    parser.add_argument('--task_name', type=str, default='Jin_2021_2022_randomseed0', help='实验任务')
+    parser.add_argument('--task_name', type=str, default='CCB_2019_2025_AttGRU', help='实验任务')
     parser.add_argument('--train_model', type=str, default='rollingtrain',choices=['rollingtrain', 'last_year_train'], help='训练模式')
     parser.add_argument('--time_period', type=str, default='2021-2022', help='用于滚动训练的时间段标识')
-    parser.add_argument('--factor_name', type=str, default='DrJin129',choices=['Ding128', 'CY312', 'DrJin129', 'minute10'], help='因子类型')
-    parser.add_argument('--device', type=str, default='cuda:2',help='运行设备')
+    parser.add_argument('--train_time_period', type=str, default='2019-2024', help='训练集时间范围')
+    parser.add_argument('--test_time_period', type=str, default='2024-2026', help='测试集时间范围')
+    parser.add_argument('--factor_name', type=str, default='CCB',choices=['Ding128', 'CY312', 'DrJin129', 'minute10', 'CCB'], help='因子类型')
+    parser.add_argument('--device', type=str, default='cuda:0',help='运行设备')
     parser.add_argument('--random_seed', type=int, default=42, help='随机种子')
 
     # 模型基础配置
-    parser.add_argument('--model_type', type=str, default='two_GRU', choices=['GRU', 'BiGRU', 'two_GRU', 'AttGRU','TimeMixer'], help='模型类型')
-    parser.add_argument('--input_dim', type=int, default=312, help='输入特征维度')
+    parser.add_argument('--model_type', type=str, default='AttGRU', choices=['GRU', 'BiGRU', 'two_GRU', 'AttGRU','TimeMixer'], help='模型类型')
+    parser.add_argument('--input_dim', type=int, default=112, help='输入特征维度')
     parser.add_argument('--window_size', type=int, default=30, help='滑动窗口大小')
     parser.add_argument('--hidden_dim', type=int, default=128, help='隐藏层维度')
     parser.add_argument('--num_layers', type=int, default=3, help='网络层数')
@@ -26,7 +28,7 @@ def get_config():
     # 训练配置
     parser.add_argument('--learning_rate', type=float, default=0.0001, help='学习率')
     parser.add_argument('--optimizer', type=str, default='Adam', choices=['Adam', 'AdamW', 'SGD'], help='优化器选择')
-    parser.add_argument('--shuffle_time', default=True, help='是否打乱时间序列')
+    parser.add_argument('--shuffle_time', default=False, help='是否打乱时间序列')
     parser.add_argument('--early_stop_patience', type=int, default=5, help='早停等待轮数')
     parser.add_argument('--train_epochs', type=int, default=50, help='训练轮数')
 
@@ -61,8 +63,7 @@ def get_config():
     parser.add_argument('--cross_train', default=False, help='是否使用窗口交叉验证')
 
     # 路径配置
-    parser.add_argument('--exp_path', type=str, default='/home/hongkou/TimeSeries/exp/',
-                        help='实验输出路径')
+    parser.add_argument('--exp_path', type=str, default='D:\\chenxing\\Finforecast\\exp\\', help='实验输出路径')
 
     # 数据存储地址
     parser.add_argument("--Ding128_alb_inner_path",
@@ -201,6 +202,21 @@ def get_config():
         type=str,
         default=r"/home/USB_DRIVE1/Chenx_datawarehouse/10min_factors/r_label",
         help="10分钟因子对应的标签文件夹路径"
+    )
+
+
+    parser.add_argument(
+        "--CCB_factor_path",
+        type=str,
+        default=r"D:\chenxing\Finforecast\factor_warehouse\factor_aligned\r_factor",
+        help="CCB 因子文件夹路径"
+    )
+
+    parser.add_argument(
+        "--CCB_label_path",
+        type=str,
+        default=r"D:\chenxing\Finforecast\factor_warehouse\factor_aligned\r_label",
+        help="CCB 因子对应的标签文件夹路径"
     )
 
 

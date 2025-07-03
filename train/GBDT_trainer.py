@@ -147,10 +147,47 @@ def cat_train_and_test(trainloader, testloader, exp_path):
     test_pred, test_true = tree_test(testloader, model)
     return test_pred, test_true
 
-
-
-
-
+def train_gbdt_ensemble_models(train_loader, test_loader, exp_path, logger=None):
+    """
+    训练所有GBDT模型并返回预测结果字典
+    :return: dict 包含lgb、xgb、catboost的预测、真实值和IC
+    """
+    from copy import deepcopy
+    from metrics.calculate_ic import ic_between_arr
+    # 创建数据加载器的副本以避免数据冲突
+    lgb_trainloader, lgb_testloader = deepcopy(train_loader), deepcopy(test_loader)
+    xgb_trainloader, xgb_testloader = deepcopy(train_loader), deepcopy(test_loader)
+    cat_trainloader, cat_testloader = train_loader, test_loader
+    
+    # 训练LightGBM
+    if logger: logger.info("训练LightGBM模型...")
+    lgb_pred_arr, lgb_true = lgb_train_and_test(lgb_trainloader, lgb_testloader, exp_path)
+    lgb_ic = ic_between_arr(lgb_pred_arr, lgb_true)
+    if logger: logger.info(f"LightGBM测试IC: {lgb_ic:.4f}")
+    
+    # 训练XGBoost
+    if logger: logger.info("训练XGBoost模型...")
+    xgb_pred_arr, xgb_true = xgb_train_and_test(xgb_trainloader, xgb_testloader, exp_path)
+    xgb_ic = ic_between_arr(xgb_pred_arr, xgb_true)
+    if logger: logger.info(f"XGBoost测试IC: {xgb_ic:.4f}")
+    
+    # 训练CatBoost
+    if logger: logger.info("训练CatBoost模型...")
+    cat_pred_arr, cat_true = cat_train_and_test(cat_trainloader, cat_testloader, exp_path)
+    cat_ic = ic_between_arr(cat_pred_arr, cat_true)
+    if logger: logger.info(f"CatBoost测试IC: {cat_ic:.4f}")
+    
+    return {
+        'lgb_pred': lgb_pred_arr,
+        'lgb_true': lgb_true,
+        'lgb_ic': lgb_ic,
+        'xgb_pred': xgb_pred_arr,
+        'xgb_true': xgb_true,
+        'xgb_ic': xgb_ic,
+        'cat_pred': cat_pred_arr,
+        'cat_true': cat_true,
+        'cat_ic': cat_ic
+    }
 
 if __name__=='__main__':
     pass

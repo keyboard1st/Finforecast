@@ -11,7 +11,7 @@ from model.GRU_attention import AttGRU
 from model.GRU_model import *
 from model.TimeMixer import TimeMixer
 from model.losses import get_criterion
-from train.GRU_cross_time_train import norm_train, GRU_fin_test
+from train import norm_train, GRU_fin_test
 from utils.tools import EarlyStopping
 
 warnings.filterwarnings("ignore", category=UserWarning)
