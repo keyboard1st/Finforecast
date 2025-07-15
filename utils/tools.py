@@ -145,6 +145,7 @@ def create_model(config):
     from model.GRU_model import GRU, BiGRU, two_GRU
     from model.GRU_attention import AttGRU
     from model.TimeMixer import TimeMixer
+    from model.Encoder import TimeSeriesEncoder
     if config.model_type == 'GRU':
         return GRU(config)
     elif config.model_type == 'BiGRU':
@@ -153,6 +154,8 @@ def create_model(config):
         return two_GRU(config)
     elif config.model_type == 'AttGRU':
         return AttGRU(config)
+    elif config.model_type == 'Encoder':
+        return TimeSeriesEncoder(config)
     elif config.model_type == 'TimeMixer':
         return TimeMixer(config)
     else:
