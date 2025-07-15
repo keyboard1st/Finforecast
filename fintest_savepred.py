@@ -29,14 +29,15 @@ from config import get_config
 
 # ─── Paths & Config ───────────────────────────────────────────────────────────
 config = get_config()
-config.task_name = 'CCB_2019_2025_AttGRU_83'
+config.task_name = 'AttGRU_133_202401_202504'
 config.exp_path = f'D:/chenxing/Finforecast/exp/{config.task_name}'
 print('fin pred exp path',config.exp_path)
 class PathConfig:
     exp_path   = config.exp_path
-    time_period = config.test_time_period
-    start_date = int(time_period.split('-')[0])
-    end_date = int(time_period.split('-')[1])
+    train_time_period = '201901-202312'
+    test_time_period = '202401-202504'
+    start_date = int(test_time_period.split('-')[0])
+    end_date = int(test_time_period.split('-')[1])
     save_path  = os.path.join(exp_path, 'pred_csv')
     plot_path  = os.path.join(exp_path, 'plots')
 
@@ -50,16 +51,16 @@ class PathConfig:
 
     # data sources
     if config.factor_name == 'CY312':
-        market_align = f'/home/USB_DRIVE1/Chenx_datawarehouse/CY/rolling_factors/r_market_align_factor/{time_period}/F100_mkt_outer.parquet'
-        labels       = f'/home/USB_DRIVE1/Chenx_datawarehouse/CY/rolling_factors/r_label/{time_period}/label_outer.parquet'
+        market_align = f'/home/USB_DRIVE1/Chenx_datawarehouse/CY/rolling_factors/r_market_align_factor/{test_time_period}/F100_mkt_outer.parquet'
+        labels       = f'/home/USB_DRIVE1/Chenx_datawarehouse/CY/rolling_factors/r_label/{test_time_period}/label_outer.parquet'
         market_cap   = '/home/hongkou/chenx/data_warehouse/marketcap.parquet'
     elif config.factor_name == 'DrJin129':
-        market_align = f'/home/USB_DRIVE1/Chenx_datawarehouse/DrJin/factors_rolling/r_market_align_factor/{time_period}/all_F100_mkt_outer.parquet'
-        labels       = f'/home/USB_DRIVE1/Chenx_datawarehouse/DrJin/factors_rolling/r_label/{time_period}/label_outer.parquet'
+        market_align = f'/home/USB_DRIVE1/Chenx_datawarehouse/DrJin/factors_rolling/r_market_align_factor/{test_time_period}/all_F100_mkt_outer.parquet'
+        labels       = f'/home/USB_DRIVE1/Chenx_datawarehouse/DrJin/factors_rolling/r_label/{test_time_period}/label_outer.parquet'
         market_cap   = '/home/hongkou/chenx/data_warehouse/market_cap_2712_3883.parquet'
     elif config.factor_name == 'CCB':
-        factor_outer_list = [f'D:/chenxing/Finforecast/factor_warehouse/factor_aligned/r_factor/{i}-{i + 1}/F1.parquet' for i in range(start_date, end_date)]
-        labels_list = [f'D:/chenxing/Finforecast/factor_warehouse/factor_aligned/r_label/{i}-{i + 1}/label.parquet' for i in range(start_date, end_date)]
+        factor_outer_list = [f'D:/chenxing/Finforecast/factor_warehouse/factor_aligned/r_factor/{i}/F1.parquet' for i in range(start_date, end_date+1) if i % 100 <= 12 and i % 100 != 0]
+        labels_list = [f'D:/chenxing/Finforecast/factor_warehouse/factor_aligned/r_label/{i}/label_without_clip.parquet' for i in range(start_date, end_date+1) if i % 100 <= 12 and i % 100 != 0]
 
 # make sure dirs exist
 os.makedirs(PathConfig.save_path, exist_ok=True)
@@ -143,12 +144,12 @@ if __name__ == '__main__':
         GRU_mkt_align_x_loader = get_DrJin129_rollingfintest_TimeSeriesLoader(time_period=PathConfig.time_period,config=config)
         trees_mkt_align_x_loader = get_DrJin129_rollingfintest_CrossSectionDatasetLoader(time_period=PathConfig.time_period)
     elif config.factor_name == 'CCB':
-        from get_data.CCB.CCB_TimeSeries_dataloader import get_CCB_TimeSeriesDataloader, get_CCB_mkt_TimeSeriesDataloader
-        from get_data.CCB.CCB_CrossSection_dataloader import get_CCB_CrossSectionDataloader, get_CCB_MKT_CrossSectionDataloader
-        _, _, GRU_label_align_xy_loader = get_CCB_TimeSeriesDataloader(test_time_period=PathConfig.time_period,config=config)
-        _, tree_label_align_xy_loader = get_CCB_CrossSectionDataloader(test_time_period=PathConfig.time_period)
-        GRU_mkt_align_x_loader = get_CCB_mkt_TimeSeriesDataloader(test_time_period=PathConfig.time_period,config=config)
-        trees_mkt_align_x_loader = get_CCB_MKT_CrossSectionDataloader(test_time_period=PathConfig.time_period)
+        from get_data.CCB.CCB_dataloader import get_CCB_TimeSeriesDataloader, get_CCB_mkt_TimeSeriesDataloader
+        from get_data.CCB.CCB_dataloader import get_CCB_CrossSectionDataloader, get_CCB_MKT_CrossSectionDataloader
+        _, _, GRU_label_align_xy_loader = get_CCB_TimeSeriesDataloader(train_time_period=PathConfig.train_time_period,test_time_period=PathConfig.test_time_period,config=config)
+        _, tree_label_align_xy_loader = get_CCB_CrossSectionDataloader(train_time_period=PathConfig.train_time_period,test_time_period=PathConfig.test_time_period)
+        GRU_mkt_align_x_loader = get_CCB_mkt_TimeSeriesDataloader(train_time_period=PathConfig.train_time_period,test_time_period=PathConfig.test_time_period)
+        trees_mkt_align_x_loader = get_CCB_MKT_CrossSectionDataloader(train_time_period=PathConfig.train_time_period,test_time_period=PathConfig.test_time_period)
     else:
         raise ValueError("Unsupported factor_name")
     
@@ -160,14 +161,14 @@ if __name__ == '__main__':
         Minute_mkt_align_x_loader = get_min10_rollingfintest_TimeSeriesloader(time_period=PathConfig.time_period, config=config)
         model_pred_dict = test_all_model(PathConfig, GRU_label_align_xy_loader, tree_label_align_xy_loader,Minute_label_align_xy_loader, **models)
         ic_between_models_plot(model_pred_dict, PathConfig.plot_path)
-        model_pred_df_dict = pred_all_model(PathConfig, GRU_mkt_align_x_loader, trees_mkt_align_x_loader,df_index_and_clos, Minute_mkt_align_x_loader, **models)
+        model_pred_df_dict = pred_all_model(PathConfig.use_minute_model, GRU_mkt_align_x_loader, trees_mkt_align_x_loader,df_index_and_clos, Minute_mkt_align_x_loader, **models)
     else:
         model_pred_dict = test_all_model(PathConfig, GRU_label_align_xy_loader, tree_label_align_xy_loader, **models)
         ic_between_models_plot(model_pred_dict, PathConfig.plot_path)
-        model_pred_df_dict = pred_all_model(PathConfig, GRU_mkt_align_x_loader, trees_mkt_align_x_loader,df_index_and_clos, **models)
+        model_pred_df_dict = pred_all_model(PathConfig.use_minute_model, GRU_mkt_align_x_loader, trees_mkt_align_x_loader,df_index_and_clos, **models)
 
     # model mixer
-    model_pred_df_dict_mixed = model_mixer(PathConfig, model_pred_df_dict, labels_df, market_cap_df)
+    model_pred_df_dict_mixed = model_mixer(PathConfig.use_minute_model, model_pred_df_dict, labels_df, market_cap_df)
 
     # mixed model pred save
     model_pred_df_dict_with_ic = save_pred(PathConfig, model_pred_df_dict_mixed, labels_df, market_cap_df)
