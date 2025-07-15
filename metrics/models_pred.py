@@ -34,7 +34,7 @@ def test_all_model(PathConfig, TimeSeries_xy_loader, CrossSection_xy_loader, Min
 
     return model_pred_dict
 
-def pred_all_model(PathConfig, TimeSeries_x_loader, CrossSection_x_loader, index_and_clos, Minute_x_loader = None, **models):
+def pred_all_model(use_minute_model, TimeSeries_x_loader, CrossSection_x_loader, index_and_clos, Minute_x_loader = None, **models):
     model_pred_df_dict = {}
     for name, model in models.items():
         if name == 'GRU':
@@ -45,7 +45,7 @@ def pred_all_model(PathConfig, TimeSeries_x_loader, CrossSection_x_loader, index
             GRU_fin_pred_df.index = index_and_clos.index
             GRU_fin_pred_df.columns = index_and_clos.columns
             model_pred_df_dict[name] = GRU_fin_pred_df
-        elif name == 'TimeMixer' and PathConfig.use_minute_model:
+        elif name == 'TimeMixer' and use_minute_model:
             print('----------------------TimeMixer Pred-----------------------')
             Minute_pred_arr = GRU_pred_market_new(Minute_x_loader, model)
             print("Minute pred shape ", Minute_pred_arr.shape)
@@ -82,10 +82,10 @@ def get_weights(n):
             weights.append(list(w))
     return weights
 
-def model_mixer(PathConfig, model_pred_df_dict, labels_df, market_cap_df=None):
+def model_mixer(use_minute_model, model_pred_df_dict, labels_df, market_cap_df=None):
     print('----------------------model mixer-----------------------')
     print('base models:', model_pred_df_dict.keys())
-    if PathConfig.use_minute_model:
+    if use_minute_model:
         avg_pred = (model_pred_df_dict['GRU'] + model_pred_df_dict['TimeMixer'] + model_pred_df_dict['GBDT']) / 3.0
         model_pred_df_dict['0.33GRU & 0.33TimeMixer & 0.33GBDT'] = avg_pred
         weights = get_weights(3)
