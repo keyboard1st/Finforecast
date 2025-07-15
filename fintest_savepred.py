@@ -19,6 +19,7 @@ from metrics.models_pred import *
 from model.GRU_attention import AttGRU
 from model.GRU_model import *
 from model.TimeMixer import TimeMixer
+from model.Encoder import TimeSeriesEncoder
 
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
@@ -29,7 +30,7 @@ from config import get_config
 
 # ─── Paths & Config ───────────────────────────────────────────────────────────
 config = get_config()
-config.task_name = 'AttGRU_133_202401_202504'
+config.task_name = 'Encoder_hd256_133_202401_202504'
 config.exp_path = f'D:/chenxing/Finforecast/exp/{config.task_name}'
 print('fin pred exp path',config.exp_path)
 class PathConfig:
@@ -89,6 +90,8 @@ elif config.model_type == 'two_GRU':
     GRU_model = two_GRU(config)
 elif config.model_type == 'AttGRU':
     GRU_model = AttGRU(config)
+elif config.model_type == 'Encoder':
+    GRU_model = TimeSeriesEncoder(config)
 else:
     raise ValueError("Unsupported model_type")
 
