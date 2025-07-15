@@ -239,7 +239,6 @@ class ValidationSetGenerator:
             raise ValueError(f"Validation days ({config.num_val_days}) insufficient to generate windows, need at least {config.window_size} days")
         
         print(f"Validation windows can be generated: {val_windows}")
-        print("✅ Training and validation days completely isolated, no overlap")
         
         # Recreate datasets based on concatenated data
         train_dataset_new = CCB_TimeSeriesDataset(time_period='augmented_train', window_size=config.window_size, train_data_ref=train_data)
@@ -511,8 +510,6 @@ def get_CCB_dataloader(config):
         - CrossSection + Labels: train_dataloader, test_dataloader
         - CrossSection + No Labels: test_dataloader (市场预测模式)
     """
-    
-    print(f"🚀 Creating {config} DataLoader...")
     
     # 调用对应的工厂方法
     if config.data_type == 'timeseries':
