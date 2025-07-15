@@ -148,6 +148,29 @@ def split_by_int_index(df:pd.DataFrame, start:int, end:int):
     result = df[(df.index >= start) & (df.index < end)]
     return result
 
+def generate_monthly_periods(start_year=2019, start_month=1, end_year=2025, end_month=4):
+    periods = []
+    year, month = start_year, start_month
+    while (year < end_year) or (year == end_year and month <= end_month):
+        start_date = year * 10000 + month * 100 + 1
+        if month == 12:
+            end_date = (year + 1) * 10000 + 101
+        else:
+            end_date = year * 10000 + (month + 1) * 100 + 1
+        period_name = f"{year}{month:02d}"
+        periods.append({
+            "start": start_date,
+            "end": end_date,
+            "path_suffix": period_name
+        })
+        if year == end_year and month == end_month:
+            break
+        month += 1
+        if month > 12:
+            month = 1
+            year += 1
+    return periods
+
 if __name__ == '__main__':
     start = 20200101
     end = 20210101
