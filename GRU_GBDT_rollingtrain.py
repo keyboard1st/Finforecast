@@ -32,6 +32,7 @@ random_seed = 42
 random.seed(random_seed)
 np.random.seed(random_seed)
 
+
 def rollingtrain_GRU_and_GBDT(config, TimeSeries_trainloader, TimeSeries_valiloader, TimeSeries_testloader, CrossSection_trainloader, CrossSection_testloader):
     """
     滚动训练GRU和GBDT模型的主函数
@@ -83,7 +84,7 @@ def rollingtrain_GRU_and_GBDT(config, TimeSeries_trainloader, TimeSeries_valiloa
 
     # 训练GBDT模型
     logger.info("Start training GBDT models...")
-    gbdt_results = train_gbdt_ensemble_models(CrossSection_trainloader, CrossSection_testloader, config.exp_path, logger)
+    gbdt_results, lgb_model, xgb_model, cat_model = train_gbdt_ensemble_models(CrossSection_trainloader, CrossSection_testloader, config.exp_path, logger)
     
     # 计算集成预测
     gbdt_pred_arr = calculate_ensemble_prediction(gbdt_results)
@@ -105,17 +106,18 @@ def rollingtrain_GRU_and_GBDT(config, TimeSeries_trainloader, TimeSeries_valiloa
     # 保存结果
     save_experiment_results(df_config, df_metrics, ic_metrics, exp_path, logger)
 
+    return trained_model, lgb_model, xgb_model, cat_model
+
 
 if __name__=='__main__':
     from get_data.DrJin129.DrJin129_rollingtrain_dataloader import get_DrJin129_rollingtrain_TimeSeriesLoader, get_DrJin129_rollingtrain_CrossSectionDatasetLoader
     from get_data.CY312.CY312_rollingtrain_dataloader import get_CY312_rollingtrain_TimeSeriesLoader, get_CY312_rollingtrain_CrossSectionLoader
     from get_data.CCB.CCB_dataloader import get_CCB_TimeSeriesDataloader, get_CCB_CrossSectionDataloader
-    
-    # 设置配置参数
-    config.task_name = 'CCB_2019_2025_AttGRU_112_random_days'
-    config.train_time_period = '2019-2024'
-    config.test_time_period = '2024-2026'
-    config.device = 'cuda:0'
+
+    # # 设置配置参数
+    config.task_name = 'Encoder_hd256_133_202401_202504'
+    config.train_time_period = '201901-202312'
+    config.test_time_period = '202401-202504'
 
     # 根据因子类型加载数据
     if config.factor_name == 'CY312':
