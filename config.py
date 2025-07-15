@@ -6,7 +6,7 @@ def get_config():
     parser = argparse.ArgumentParser(description="实验参数配置")
 
     # 训练任务配置
-    parser.add_argument('--task_name', type=str, default='CCB_2019_2025_AttGRU', help='实验任务')
+    parser.add_argument('--task_name', type=str, default='CCB_rolling', help='实验任务')
     parser.add_argument('--train_model', type=str, default='rollingtrain',choices=['rollingtrain', 'last_year_train'], help='训练模式')
     parser.add_argument('--time_period', type=str, default='2021-2022', help='用于滚动训练的时间段标识')
     parser.add_argument('--train_time_period', type=str, default='2019-2024', help='训练集时间范围')
@@ -16,13 +16,13 @@ def get_config():
     parser.add_argument('--random_seed', type=int, default=42, help='随机种子')
 
     # 模型基础配置
-    parser.add_argument('--model_type', type=str, default='AttGRU', choices=['GRU', 'BiGRU', 'two_GRU', 'AttGRU','TimeMixer'], help='模型类型')
-    parser.add_argument('--input_dim', type=int, default=112, help='输入特征维度')
+    parser.add_argument('--model_type', type=str, default='Encoder', choices=['GRU', 'BiGRU', 'two_GRU', 'AttGRU','TimeMixer','Encoder'], help='模型类型')
+    parser.add_argument('--input_dim', type=int, default=133, help='输入特征维度')
     parser.add_argument('--window_size', type=int, default=30, help='滑动窗口大小')
-    parser.add_argument('--hidden_dim', type=int, default=128, help='隐藏层维度')
+    parser.add_argument('--hidden_dim', type=int, default=256, help='隐藏层维度')
     parser.add_argument('--num_layers', type=int, default=3, help='网络层数')
     parser.add_argument('--output_dim', type=int, default=1, help='输出维度')
-    parser.add_argument('--dropout', type=float, default=0.0, help='Dropout概率')
+    parser.add_argument('--dropout', type=float, default=0.1, help='Dropout概率')
     parser.add_argument('--num_heads', type=int, default=4, help='Attention头数')
 
     # 训练配置
