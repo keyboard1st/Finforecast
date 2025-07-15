@@ -76,7 +76,7 @@ def lgb_train_and_test(trainloader, testloader, exp_path):
 
     test_pred, test_true = tree_test(testloader, model)     # (292, 3873)
 
-    return test_pred, test_true
+    return test_pred, test_true, model
 
 def xgb_train_and_test(trainloader, testloader, exp_path):
     '''
@@ -112,7 +112,7 @@ def xgb_train_and_test(trainloader, testloader, exp_path):
     model.save_model(os.path.join(exp_path, 'models/xgb.xgb'))
 
     test_pred, test_true = tree_test(testloader, model)
-    return test_pred, test_true
+    return test_pred, test_true, model
 
 def cat_train_and_test(trainloader, testloader, exp_path):
     '''
@@ -145,7 +145,7 @@ def cat_train_and_test(trainloader, testloader, exp_path):
 
 
     test_pred, test_true = tree_test(testloader, model)
-    return test_pred, test_true
+    return test_pred, test_true, model
 
 def train_gbdt_ensemble_models(train_loader, test_loader, exp_path, logger=None):
     """
@@ -161,19 +161,19 @@ def train_gbdt_ensemble_models(train_loader, test_loader, exp_path, logger=None)
     
     # 训练LightGBM
     if logger: logger.info("训练LightGBM模型...")
-    lgb_pred_arr, lgb_true = lgb_train_and_test(lgb_trainloader, lgb_testloader, exp_path)
+    lgb_pred_arr, lgb_true, lgb_model = lgb_train_and_test(lgb_trainloader, lgb_testloader, exp_path)
     lgb_ic = ic_between_arr(lgb_pred_arr, lgb_true)
     if logger: logger.info(f"LightGBM测试IC: {lgb_ic:.4f}")
     
     # 训练XGBoost
     if logger: logger.info("训练XGBoost模型...")
-    xgb_pred_arr, xgb_true = xgb_train_and_test(xgb_trainloader, xgb_testloader, exp_path)
+    xgb_pred_arr, xgb_true, xgb_model = xgb_train_and_test(xgb_trainloader, xgb_testloader, exp_path)
     xgb_ic = ic_between_arr(xgb_pred_arr, xgb_true)
     if logger: logger.info(f"XGBoost测试IC: {xgb_ic:.4f}")
     
     # 训练CatBoost
     if logger: logger.info("训练CatBoost模型...")
-    cat_pred_arr, cat_true = cat_train_and_test(cat_trainloader, cat_testloader, exp_path)
+    cat_pred_arr, cat_true, cat_model = cat_train_and_test(cat_trainloader, cat_testloader, exp_path)
     cat_ic = ic_between_arr(cat_pred_arr, cat_true)
     if logger: logger.info(f"CatBoost测试IC: {cat_ic:.4f}")
     
@@ -187,7 +187,7 @@ def train_gbdt_ensemble_models(train_loader, test_loader, exp_path, logger=None)
         'cat_pred': cat_pred_arr,
         'cat_true': cat_true,
         'cat_ic': cat_ic
-    }
+    }, lgb_model, xgb_model, cat_model
 
 if __name__=='__main__':
     pass
