@@ -351,6 +351,16 @@ class BacktestEngine:
             # Flag to track if group analysis has been created
             group_analysis_created = False
             
+            # Calculate market average returns if labels are provided
+            market_returns = None
+            market_cumulative_returns = None
+            if labels is not None:
+                # Calculate daily market average returns (mean of each row)
+                market_returns = labels.mean(axis=1)
+                # Calculate cumulative market returns
+                market_cumulative_returns = (1 + market_returns).cumprod() - 1
+                logger.info(f"Market average returns calculated: {len(market_returns)} days")
+            
             for strategy_name, result in results_dict.items():
                 metrics = result['metrics']
                 weights = result['weights']
@@ -359,12 +369,37 @@ class BacktestEngine:
                 fig, axes = plt.subplots(2, 3, figsize=(20, 12))
                 fig.suptitle(f'Strategy Performance Analysis: {strategy_name}', fontsize=16, fontweight='bold')
                 
-                # Convert date format
-                dates = [datetime.strptime(str(d), '%Y%m%d') for d in metrics['cumulative_returns'].index]
+                # Convert date format - handle both datetime and string formats
+                try:
+                    if isinstance(metrics['cumulative_returns'].index[0], (pd.Timestamp, datetime)):
+                        dates = [d for d in metrics['cumulative_returns'].index]
+                    else:
+                        dates = [datetime.strptime(str(d), '%Y%m%d') for d in metrics['cumulative_returns'].index]
+                except:
+                    # Fallback: try to convert to datetime directly
+                    dates = pd.to_datetime(metrics['cumulative_returns'].index)
                 
-                # 1. Cumulative Returns
-                axes[0, 0].plot(dates, metrics['cumulative_returns'].values, 'b-', linewidth=2)
-                axes[0, 0].set_title('Cumulative Returns')
+                # 1. Cumulative Returns with Market Benchmark
+                axes[0, 0].plot(dates, metrics['cumulative_returns'].values, 'b-', linewidth=2, label='Strategy')
+                
+                # Add market benchmark if available
+                if market_cumulative_returns is not None:
+                    # Align market returns with strategy dates
+                    market_aligned = market_cumulative_returns.reindex(metrics['cumulative_returns'].index)
+                    if not market_aligned.empty:
+                        # Handle date format for market data
+                        try:
+                            if isinstance(market_aligned.index[0], (pd.Timestamp, datetime)):
+                                market_dates = [d for d in market_aligned.index]
+                            else:
+                                market_dates = [datetime.strptime(str(d), '%Y%m%d') for d in market_aligned.index]
+                        except:
+                            market_dates = pd.to_datetime(market_aligned.index)
+                        
+                        axes[0, 0].plot(market_dates, market_aligned.values, 'r--', linewidth=2, alpha=0.8, label='Market Average')
+                        axes[0, 0].legend()
+                
+                axes[0, 0].set_title('Cumulative Returns vs Market')
                 axes[0, 0].set_ylabel('Cumulative Returns')
                 axes[0, 0].grid(True, alpha=0.3)
                 axes[0, 0].xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
@@ -389,30 +424,79 @@ class BacktestEngine:
                 axes[0, 2].legend()
                 axes[0, 2].xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
                 
-                # 4. Daily Returns Distribution
-                axes[1, 0].hist(metrics['daily_pnl'].values, bins=50, alpha=0.7, density=True)
-                axes[1, 0].axvline(x=0, color='red', linestyle='--', alpha=0.8)
-                axes[1, 0].axvline(x=metrics['daily_pnl'].mean(), color='green', linestyle='--', alpha=0.8, label='Mean')
-                axes[1, 0].set_title('Daily Returns Distribution')
-                axes[1, 0].set_xlabel('Daily Return')
-                axes[1, 0].set_ylabel('Density')
-                axes[1, 0].legend()
-                axes[1, 0].grid(True, alpha=0.3)
+                # 4. Excess Cumulative Returns (超额累计收益曲线)
+                if market_cumulative_returns is not None:
+                    # 对齐市场累计收益和策略累计收益
+                    market_aligned = market_cumulative_returns.reindex(metrics['cumulative_returns'].index)
+                    excess_cumulative = metrics['cumulative_returns'] - market_aligned
+                    # 日期处理
+                    try:
+                        if isinstance(metrics['cumulative_returns'].index[0], (pd.Timestamp, datetime)):
+                            excess_dates = [d for d in metrics['cumulative_returns'].index]
+                        else:
+                            excess_dates = [datetime.strptime(str(d), '%Y%m%d') for d in metrics['cumulative_returns'].index]
+                    except:
+                        excess_dates = pd.to_datetime(metrics['cumulative_returns'].index)
+                    axes[1, 0].plot(excess_dates, excess_cumulative.values, 'm-', linewidth=2, label='Excess Cumulative')
+                    axes[1, 0].axhline(y=0, color='gray', linestyle='--', alpha=0.7)
+                    axes[1, 0].set_title('Excess Cumulative Returns')
+                    axes[1, 0].set_ylabel('Excess Cumulative Returns')
+                    axes[1, 0].legend()
+                    axes[1, 0].grid(True, alpha=0.3)
+                else:
+                    axes[1, 0].text(0.5, 0.5, 'No Market Data', ha='center', va='center', fontsize=12)
+                    axes[1, 0].set_title('Excess Cumulative Returns')
+                    axes[1, 0].set_ylabel('Excess Cumulative Returns')
+                    axes[1, 0].grid(True, alpha=0.3)
                 
                 # 5. Key Metrics Table
                 axes[1, 1].axis('off')
-                metrics_text = (
-                    f"Total Return: {metrics['total_return']:.2%}\n"
-                    f"Annualized Return: {metrics['annualized_return']:.2%}\n"
-                    f"Annualized Volatility: {metrics['volatility']:.2%}\n"
-                    f"Sharpe Ratio: {metrics['sharpe_ratio']:.3f}\n"
-                    f"Max Drawdown: {metrics['max_drawdown']:.2%}\n"
-                    f"Calmar Ratio: {metrics['calmar_ratio']:.3f}\n"
-                    f"Win Rate: {metrics['win_rate']:.2%}\n"
-                    f"Profit/Loss Ratio: {metrics['profit_loss_ratio']:.2f}\n"
-                    f"Avg Turnover: {metrics['turnover_series'].mean():.2%}\n"
-                    f"Avg Holdings: {metrics['strategy_config']['avg_selected_stocks']:.1f}"
-                )
+                
+                # Calculate market metrics if available
+                market_total_return = None
+                market_annualized_return = None
+                excess_return = None
+                excess_annualized_return = None
+                
+                if market_cumulative_returns is not None:
+                    # Align market returns with strategy dates
+                    market_aligned = market_cumulative_returns.reindex(metrics['cumulative_returns'].index)
+                    if not market_aligned.empty:
+                        market_total_return = market_aligned.iloc[-1]
+                        market_annualized_return = (1 + market_total_return) ** (self.trading_days_per_year / len(market_aligned)) - 1
+                        excess_return = metrics['total_return'] - market_total_return
+                        excess_annualized_return = metrics['annualized_return'] - market_annualized_return
+                
+                # Build metrics text with market comparison
+                if market_total_return is not None:
+                    metrics_text = (
+                        f"Total Return: {metrics['total_return']:.2%} (Market: {market_total_return:.2%})\n"
+                        f"Excess Return: {excess_return:.2%}\n"
+                        f"Annualized Return: {metrics['annualized_return']:.2%} (Market: {market_annualized_return:.2%})\n"
+                        f"Excess Annualized: {excess_annualized_return:.2%}\n"
+                        f"Annualized Volatility: {metrics['volatility']:.2%}\n"
+                        f"Sharpe Ratio: {metrics['sharpe_ratio']:.3f}\n"
+                        f"Max Drawdown: {metrics['max_drawdown']:.2%}\n"
+                        f"Calmar Ratio: {metrics['calmar_ratio']:.3f}\n"
+                        f"Win Rate: {metrics['win_rate']:.2%}\n"
+                        f"Profit/Loss Ratio: {metrics['profit_loss_ratio']:.2f}\n"
+                        f"Avg Turnover: {metrics['turnover_series'].mean():.2%}\n"
+                        f"Avg Holdings: {metrics['strategy_config']['avg_selected_stocks']:.1f}"
+                    )
+                else:
+                    metrics_text = (
+                        f"Total Return: {metrics['total_return']:.2%}\n"
+                        f"Annualized Return: {metrics['annualized_return']:.2%}\n"
+                        f"Annualized Volatility: {metrics['volatility']:.2%}\n"
+                        f"Sharpe Ratio: {metrics['sharpe_ratio']:.3f}\n"
+                        f"Max Drawdown: {metrics['max_drawdown']:.2%}\n"
+                        f"Calmar Ratio: {metrics['calmar_ratio']:.3f}\n"
+                        f"Win Rate: {metrics['win_rate']:.2%}\n"
+                        f"Profit/Loss Ratio: {metrics['profit_loss_ratio']:.2f}\n"
+                        f"Avg Turnover: {metrics['turnover_series'].mean():.2%}\n"
+                        f"Avg Holdings: {metrics['strategy_config']['avg_selected_stocks']:.1f}"
+                    )
+                
                 axes[1, 1].text(0.1, 0.5, 'Key Metrics:\n\n' + metrics_text, 
                                fontsize=11, verticalalignment='center',
                                bbox=dict(boxstyle='round', facecolor='lightgray', alpha=0.5))
@@ -421,7 +505,15 @@ class BacktestEngine:
                 if 'daily_metrics' in metrics:
                     daily_df = metrics['daily_metrics']
                     if not daily_df.empty:
-                        plot_dates = [datetime.strptime(str(d), '%Y%m%d') for d in daily_df['date']]
+                        # Handle date format for daily metrics
+                        try:
+                            if isinstance(daily_df['date'].iloc[0], (pd.Timestamp, datetime)):
+                                plot_dates = [d for d in daily_df['date']]
+                            else:
+                                plot_dates = [datetime.strptime(str(d), '%Y%m%d') for d in daily_df['date']]
+                        except:
+                            plot_dates = pd.to_datetime(daily_df['date'])
+                        
                         axes[1, 2].plot(plot_dates, daily_df['selected_count'], 'orange', linewidth=2, label='Selected Count')
                         axes[1, 2].plot(plot_dates, daily_df['valid_labels_count'], 'purple', linewidth=2, alpha=0.7, label='Valid Labels Count')
                         axes[1, 2].set_title('Daily Selection Statistics')
@@ -810,11 +902,13 @@ if __name__ == '__main__':
     """
     try:
         # 原有测试代码保持不变
-        exp_path = r'D:\chenxing\Finforecast\exp\CCB_2019_2025_AttGRU'
-        labels_list = [f'D:/chenxing/Finforecast/factor_warehouse/factor_aligned/r_label/{i}-{i + 1}/label.parquet' for i in range(2024, 2026)]
+        pred_path = r'D:\chenxing\Finforecast\exp\rolling_pred\AttGRU_112_202401_202504.csv'
+        save_path = r'D:\chenxing\Finforecast\exp\rolling_pred\AttGRU_112_202401_202504'
+        labels_list = [f'D:/chenxing/Finforecast/factor_warehouse/factor_aligned/r_label/{i}/label.parquet' for i in range(202401, 202505) if i % 100 <= 12 and i % 100 != 0]
         labels_df = pd.concat([pd.read_parquet(i) for i in labels_list], axis=0)
-        pred_path = os.path.join(exp_path, 'pred_csv/0.5GRU & 0.5GBDT_fin_pred_mask.csv')
         pred_df = pd.read_csv(pred_path, index_col=0).astype(np.float32)
+        print(pred_df.shape)
+        print(labels_df.shape)
         
         # 转换数据类型
         labels_df.index = labels_df.index.astype(np.int32)
@@ -839,9 +933,9 @@ if __name__ == '__main__':
         # Multiple strategy comparison example
         print("\n[Multiple Strategy Comparison]")
         strategies = [
-            {'name': 'Top 5% Strategy', 'top_pct': 0.05, 'weight_method': 'equal'},
+            # {'name': 'Top 5% Strategy', 'top_pct': 0.05, 'weight_method': 'equal'},
             {'name': 'Top 10% Strategy', 'top_pct': 0.1, 'weight_method': 'equal'},
-            {'name': 'Top 15% Strategy', 'top_pct': 0.15, 'weight_method': 'equal'},
+            # {'name': 'Top 15% Strategy', 'top_pct': 0.15, 'weight_method': 'equal'},
         ]
         
         comparison_results = engine.compare_strategies(pred_df, labels_df, strategies)
@@ -854,13 +948,7 @@ if __name__ == '__main__':
                   f"Drawdown {metrics['max_drawdown']:.2%}")
         
         # Create charts with group analysis
-        engine.create_enhanced_plots(comparison_results, pred_returns=pred_df, labels=labels_df)
-        
-        # Note: Group analysis is already included in the enhanced plots above
-        # If you want standalone group analysis, use: analyze_groups(pred_df, labels_df)
-        print("\n[Group Analysis Note]")
-        print("Group analysis (decile/quintile) is already included in the enhanced plots above.")
-        print("It shows the model's ability to rank stocks by future returns.")
+        engine.create_enhanced_plots(comparison_results, pred_returns=pred_df, labels=labels_df, save_path=save_path)
         
     except Exception as e:
         logger.error(f"Test execution failed: {e}")
